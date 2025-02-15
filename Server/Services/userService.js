@@ -24,7 +24,7 @@ export async function existingEmail(email) {
 
 export async function validateUserIdAndUpdate(user_id) {
     try {
-        const updatedUser = await UserModel.findByIdAndUpdate(user_id, { verify_email: true }, { new: true })
+        const updatedUser = await UserModel.findByIdAndUpdate(user_id, { verify_email: true }, (true && { new: true }))
         return (updatedUser ? true : false)
     }
     catch (error) {

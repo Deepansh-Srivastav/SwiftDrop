@@ -338,7 +338,8 @@ export async function forgotPasswordController(req, res) {
             success: true
         });
 
-    } catch (error) {
+    }
+    catch (error) {
         return res.status(500).json({
             message: error.message || error,
             error: true,
@@ -347,4 +348,112 @@ export async function forgotPasswordController(req, res) {
     }
 
 
+}
+
+// verify forgot password error
+export async function verifyForgotPasswordOTPController(req, res) {
+    try {
+        const { email, otp } = req.body
+
+        if (!otp || !email) {
+            return res.status(400).json({
+                message: "Email and OTP are required.",
+                error: true,
+                success: false
+            });
+        }
+
+        const existingUser = await existingEmail(email)
+
+        let currentTime = new Date()
+
+        let OTPExpiryTime = new Date(existingUser?.forgot_password_expiry);
+
+        let storedOTP = existingUser?.forgot_password_otp
+
+        if (currentTime > OTPExpiryTime) {
+            return res.status(410).json({
+                message: "OTP has expired. Please request a new OTP.",
+                error: true,
+                success: false
+            });
+        }
+
+        if (otp !== storedOTP) {
+            return res.status(400).json({
+                message: "Invalid OTP. Please check and try again.",
+                error: true,
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "OTP verified successfully.",
+            error: false,
+            success: true
+        });
+
+
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+}
+
+// reset password controller
+export async function resetPasswordController(req, res) {
+    try {
+        const { email, password, confirmPassword } = req.body
+
+        if (!email || !password || !confirmPassword) {
+            return res.status(400).json({
+                message: "All fields are required: email, password, and confirmPassword.",
+                error: true,
+                success: false
+            });
+        }
+
+        const existingUser = await existingEmail(email)
+
+        if (!existingUser) {
+            return res.status(404).json({
+                message: "User not found.",
+                error: true,
+                success: false
+            });
+        }
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({
+                message: "Passwords do not match. Please try again.",
+                error: true,
+                success: false
+            });
+        }
+
+        const encryptedPassword = await encryptPassword(password)
+
+        const updatePassword = await UserModel.findByIdAndUpdate(existingUser._id, {
+            password: encryptedPassword
+        },
+            { new: true }
+        )
+
+        return res.status(200).json({
+            message: "Password changed successfully",
+            error: false,
+            success: true,
+        })
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
 }
