@@ -11,46 +11,40 @@ export async function registerUser(payload) {
     }
 }
 
-export async function existingEmail(email) {
+export async function validateUserAndUpdate({
+    validate = true,
+    update = false,
+    email = null,
+    user_id = null,
+    payload = null,
+    showNewDataItem = false }) {
+
     try {
-        const existingUserData = await UserModel.findOne({ email })
-        return (existingUserData || null)
+        const query = user_id ? { _id: user_id } : { email: email };
 
-    }
-    catch (error) {
-        console.log(error.message);
-    }
-}
+        const existingUser = await UserModel.findOne(query);
+        
+        // console.log("Query is - ",query);
+        // console.log("existingUser - ", existingUser);
 
-export async function validateUserIdAndUpdate(user_id) {
-    try {
-        const updatedUser = await UserModel.findByIdAndUpdate(user_id, { verify_email: true }, (true && { new: true }))
-        return (updatedUser ? true : false)
-    }
-    catch (error) {
-        console.log(error.message);
-        return false;
-    }
-}
-
-export async function updateUserProfile(name, email, password, mobile, userId) {
-    try {
-        let  encryptedPassword = ''
-
-        if (password) {
-            encryptedPassword = await encryptPassword(password)
+        if (update && existingUser) {
+            const updateData = await UserModel.findOneAndUpdate(
+                query,
+                payload,
+                showNewDataItem ? { new: true } : {}
+            )
+            return updateData;
         }
 
-        const updatedUserDetails = await UserModel.findByIdAndUpdate(userId, {
-            ...(name && { name: name }),
-            ...(email && { email: email }),
-            ...(mobile && { mobile: mobile }),
-            ...(password && { password: encryptedPassword })
-        }, { new: true })
+        return existingUser;
+    }
 
-        return updatedUserDetails
-    }
     catch (error) {
-        return error.message;
+        return null;
     }
+
 }
+
+
+
+

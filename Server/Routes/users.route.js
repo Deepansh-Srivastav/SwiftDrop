@@ -27,4 +27,6 @@ userRouter.put("/forgot-password", forgotPasswordController)
 userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOTPController)
 userRouter.put("/reset-password", resetPasswordController)
 
+//Refresh token route remaining
+
 export default userRouter; 

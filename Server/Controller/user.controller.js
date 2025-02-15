@@ -14,10 +14,7 @@ import {
 import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js"
 import {
     registerUser,
-    existingEmail,
-    validateUserIdAndUpdate,
-    updateUserProfile,
-
+    validateUserAndUpdate,
 } from "../Services/userService.js"
 import generateOTP from "../Services/generateOTP.js"
 
@@ -35,7 +32,7 @@ export async function registerUserController(req, res) {
             })
         }
 
-        const existingUser = await existingEmail(email);
+        const existingUser = await validateUserAndUpdate({ email });
 
         if (existingUser) {
             return res.status(409).json({
@@ -52,8 +49,6 @@ export async function registerUserController(req, res) {
             email,
             password: encryptedPassword,
         }
-
-        let NEWLY_REGISTERED_USER_DATA = null
 
         const newUserData = await registerUser(payload)
 
@@ -96,7 +91,16 @@ export async function userEmailVerificationController(req, res) {
     try {
         const { code } = req.body
 
-        const isValidUser = await validateUserIdAndUpdate(code)
+        const payload = {
+            verify_email: true
+        }
+
+        const isValidUser = await validateUserAndUpdate({
+            update: true,
+            user_id: code,
+            payload: payload,
+            showNewDataItem: true,
+        })
 
         if (!isValidUser) {
             return res.status(400).json({
@@ -106,15 +110,11 @@ export async function userEmailVerificationController(req, res) {
             })
         }
 
-        const verifyUser = await UserModel.updateOne({ _id: code }, { verify_email: true })
-
         res.status(200).json({
             message: "User Successfully verified",
             success: true,
             error: false
         })
-
-
     }
     catch (error) {
         return res.status(500).json({
@@ -139,7 +139,7 @@ export async function loginController(req, res) {
             })
         }
 
-        const existingUser = await existingEmail(email)
+        const existingUser = await validateUserAndUpdate({ email })
 
         if (!existingUser) {
             return res.status(404).json({
@@ -159,8 +159,6 @@ export async function loginController(req, res) {
         }
 
         const isPasswordValid = await validatePassword(password, existingUser?.password)
-
-        console.log(isPasswordValid);
 
         if (!isPasswordValid) {
             return res.status(401).json({
@@ -210,6 +208,10 @@ export async function logoutController(req, res) {
 
         const userId = req.userId
 
+        const payload = {
+            refresh_token: ""
+        }
+
         const cookieOptions = {
             httpOnly: true,
             secure: true,
@@ -218,8 +220,10 @@ export async function logoutController(req, res) {
         res.clearCookie("accessToken", cookieOptions)
         res.clearCookie("refreshToken", cookieOptions)
 
-        const removeRefreshToken = await UserModel.findByIdAndUpdate(userId, {
-            refresh_token: ""
+        const removeRefreshToken = await validateUserAndUpdate({
+            update: true,
+            user_id: userId,
+            payload
         })
 
         return res.status(200).json({
@@ -276,7 +280,21 @@ export async function updateUserDetailsController(req, res) {
 
         const { name, email, password, mobile } = req.body
 
-        const updateUser = await updateUserProfile(name, email, password, mobile, verifiedUserId)
+        const encryptedPassword = await encryptPassword(password)
+
+        const payload = {
+            ...(name && { name: name }),
+            ...(email && { email: email }),
+            ...(mobile && { mobile: mobile }),
+            ...(password && { password: encryptedPassword })
+        }
+
+        const updateUser = await validateUserAndUpdate({
+            update: true,
+            user_id: verifiedUserId,
+            payload,
+            showNewDataItem: true
+        })
 
         return res.status(200).json({
             message: "User Details Updates Successfully",
@@ -301,7 +319,7 @@ export async function forgotPasswordController(req, res) {
     try {
         const { email } = req.body
 
-        const existingUser = await existingEmail(email)
+        const existingUser = await validateUserAndUpdate({email})
 
         if (!existingUser) {
             return res.status(404).json({
@@ -327,9 +345,16 @@ export async function forgotPasswordController(req, res) {
                 })
             })
 
-        const update = await UserModel.findByIdAndUpdate(existingUser._id, {
+        const payload = {
             forgot_password_otp: otp,
             forgot_password_expiry: new Date(expireTime).toISOString()
+        }
+
+        const update = await validateUserAndUpdate({
+            update: true,
+            user_id: existingUser?._id,
+            payload
+
         })
 
         return res.status(200).json({
@@ -363,7 +388,7 @@ export async function verifyForgotPasswordOTPController(req, res) {
             });
         }
 
-        const existingUser = await existingEmail(email)
+        const existingUser = await validateUserAndUpdate({ email })
 
         let currentTime = new Date()
 
@@ -417,7 +442,7 @@ export async function resetPasswordController(req, res) {
             });
         }
 
-        const existingUser = await existingEmail(email)
+        const existingUser = await validateUserAndUpdate({ email })
 
         if (!existingUser) {
             return res.status(404).json({
@@ -437,16 +462,25 @@ export async function resetPasswordController(req, res) {
 
         const encryptedPassword = await encryptPassword(password)
 
-        const updatePassword = await UserModel.findByIdAndUpdate(existingUser._id, {
+        const payload = {
             password: encryptedPassword
-        },
-            { new: true }
-        )
+        }
+
+        // const updatePassword = await UserModel.findByIdAndUpdate(existingUser._id, ,
+        //     { new: true }
+        // )
+
+        const updatePassword = await validateUserAndUpdate({
+            update:true,
+            user_id: existingUser?._id,
+            payload
+        })
 
         return res.status(200).json({
             message: "Password changed successfully",
             error: false,
             success: true,
+            data: updatePassword
         })
     }
     catch (error) {
@@ -457,3 +491,5 @@ export async function resetPasswordController(req, res) {
         })
     }
 }
+
+//Refresh token route remaining
