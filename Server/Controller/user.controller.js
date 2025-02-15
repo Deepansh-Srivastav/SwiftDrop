@@ -4,6 +4,7 @@ import sendEmail from "../Config/sendEmail.js"
 import generateAccessToken from "../Utils/generateAccessToken.js"
 import generateRefreshToken from "../Utils/generateRefreshToken.js"
 import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
+import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js"
 
 import {
     encryptPassword,
@@ -18,6 +19,7 @@ import {
     updateUserProfile,
 
 } from "../Services/userService.js"
+import generateOTP from "../Services/generateOTP.js"
 
 // User Registration Controller 
 export async function registerUserController(req, res) {
@@ -295,7 +297,54 @@ export async function updateUserDetailsController(req, res) {
 }
 
 //Forgot Password Controller
+export async function forgotPasswordController(req, res) {
+    try {
+        const { email } = req.body
 
-export async function forgotPasswordController(req,res) {
-    
+        const existingUser = await existingEmail(email)
+
+        if (!existingUser) {
+            return res.status(404).json({
+                message: "User not found.",
+                error: true,
+                success: false
+            });
+        }
+
+        const name = existingUser?.name
+
+        const otp = generateOTP()
+
+        const expireTime = new Date(Date.now() + 10 * 60 * 1000);
+
+        const sendOTPEmail = await sendEmail(
+            {
+                sendTo: email,
+                subject: "OTP to reset password from SwiftDrop",
+                html: forgotPasswordOTPTemplate({
+                    name,
+                    otp
+                })
+            })
+
+        const update = await UserModel.findByIdAndUpdate(existingUser._id, {
+            forgot_password_otp: otp,
+            forgot_password_expiry: new Date(expireTime).toISOString()
+        })
+
+        return res.status(200).json({
+            message: "OTP has been successfully sent to your email.",
+            error: false,
+            success: true
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+
+
 }

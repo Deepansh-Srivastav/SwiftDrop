@@ -7,6 +7,7 @@ import {
     logoutController,
     uploadAvatarController,
     updateUserDetailsController,
+    forgotPasswordController,
 
 } from "../Controller/user.controller.js";
 import auth from "../Middleware/authMiddleware.js";
@@ -19,5 +20,6 @@ userRouter.post("/login", loginController);
 userRouter.get('/logout', auth, logoutController);
 userRouter.put('/upload-avatar', auth, upload.single('avatar'), uploadAvatarController);
 userRouter.patch("/update-user", auth, updateUserDetailsController)
+userRouter.put("/forgot-password", forgotPasswordController)
 
 export default userRouter;
