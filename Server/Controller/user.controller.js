@@ -3,6 +3,7 @@ import bcryptjs from "bcryptjs"
 import sendEmail from "../Config/sendEmail.js"
 import generateAccessToken from "../Utils/generateAccessToken.js"
 import generateRefreshToken from "../Utils/generateRefreshToken.js"
+import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
 
 import {
     encryptPassword,
@@ -14,9 +15,11 @@ import {
     registerUser,
     existingEmail,
     validateUserIdAndUpdate,
+    updateUserProfile,
+
 } from "../Services/userService.js"
 
-
+// User Registration Controller 
 export async function registerUserController(req, res) {
 
     try {
@@ -85,6 +88,7 @@ export async function registerUserController(req, res) {
     }
 }
 
+// Email  Verification Controller 
 export async function userEmailVerificationController(req, res) {
 
     try {
@@ -212,8 +216,8 @@ export async function logoutController(req, res) {
         res.clearCookie("accessToken", cookieOptions)
         res.clearCookie("refreshToken", cookieOptions)
 
-        const removeRefreshToken = await UserModel.findByIdAndUpdate(userId,{
-            refresh_token:""
+        const removeRefreshToken = await UserModel.findByIdAndUpdate(userId, {
+            refresh_token: ""
         })
 
         return res.status(200).json({
@@ -230,4 +234,68 @@ export async function logoutController(req, res) {
             success: false,
         })
     }
+}
+
+// Profile Picture Controller
+export async function uploadAvatarController(request, response) {
+    try {
+        const userId = request.userId // auth middlware
+        const image = request.file  // multer middleware
+
+        const upload = await uploadImageClodinary(image)
+
+        const updateUser = await UserModel.findByIdAndUpdate(userId, {
+            avatar: upload.url
+        })
+
+        return response.json({
+            message: "upload profile",
+            success: true,
+            error: false,
+            data: {
+                _id: userId,
+                avatar: upload.url
+            }
+        })
+
+    } catch (error) {
+        return response.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+}
+
+//Update User Details Controller
+export async function updateUserDetailsController(req, res) {
+    try {
+        const verifiedUserId = req.userId
+
+        const { name, email, password, mobile } = req.body
+
+        const updateUser = await updateUserProfile(name, email, password, mobile, verifiedUserId)
+
+        return res.status(200).json({
+            message: "User Details Updates Successfully",
+            error: false,
+            success: true,
+            data: updateUser
+        })
+    }
+
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+
+}
+
+//Forgot Password Controller
+
+export async function forgotPasswordController(req,res) {
+    
 }
