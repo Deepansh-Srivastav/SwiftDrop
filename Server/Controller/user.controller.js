@@ -4,6 +4,7 @@ import sendEmail from "../Config/sendEmail.js"
 import generateAccessToken from "../Utils/generateAccessToken.js"
 import generateRefreshToken from "../Utils/generateRefreshToken.js"
 import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
+import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js"
 
 import {
     encryptPassword,
@@ -13,11 +14,9 @@ import {
 import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js"
 import {
     registerUser,
-    existingEmail,
-    validateUserIdAndUpdate,
-    updateUserProfile,
-
+    validateUserAndUpdate,
 } from "../Services/userService.js"
+import generateOTP from "../Services/generateOTP.js"
 
 // User Registration Controller 
 export async function registerUserController(req, res) {
@@ -33,7 +32,7 @@ export async function registerUserController(req, res) {
             })
         }
 
-        const existingUser = await existingEmail(email);
+        const existingUser = await validateUserAndUpdate({ email });
 
         if (existingUser) {
             return res.status(409).json({
@@ -50,8 +49,6 @@ export async function registerUserController(req, res) {
             email,
             password: encryptedPassword,
         }
-
-        let NEWLY_REGISTERED_USER_DATA = null
 
         const newUserData = await registerUser(payload)
 
@@ -94,7 +91,16 @@ export async function userEmailVerificationController(req, res) {
     try {
         const { code } = req.body
 
-        const isValidUser = await validateUserIdAndUpdate(code)
+        const payload = {
+            verify_email: true
+        }
+
+        const isValidUser = await validateUserAndUpdate({
+            update: true,
+            user_id: code,
+            payload: payload,
+            showNewDataItem: true,
+        })
 
         if (!isValidUser) {
             return res.status(400).json({
@@ -104,15 +110,11 @@ export async function userEmailVerificationController(req, res) {
             })
         }
 
-        const verifyUser = await UserModel.updateOne({ _id: code }, { verify_email: true })
-
         res.status(200).json({
             message: "User Successfully verified",
             success: true,
             error: false
         })
-
-
     }
     catch (error) {
         return res.status(500).json({
@@ -137,7 +139,7 @@ export async function loginController(req, res) {
             })
         }
 
-        const existingUser = await existingEmail(email)
+        const existingUser = await validateUserAndUpdate({ email })
 
         if (!existingUser) {
             return res.status(404).json({
@@ -157,8 +159,6 @@ export async function loginController(req, res) {
         }
 
         const isPasswordValid = await validatePassword(password, existingUser?.password)
-
-        console.log(isPasswordValid);
 
         if (!isPasswordValid) {
             return res.status(401).json({
@@ -208,6 +208,10 @@ export async function logoutController(req, res) {
 
         const userId = req.userId
 
+        const payload = {
+            refresh_token: ""
+        }
+
         const cookieOptions = {
             httpOnly: true,
             secure: true,
@@ -216,8 +220,10 @@ export async function logoutController(req, res) {
         res.clearCookie("accessToken", cookieOptions)
         res.clearCookie("refreshToken", cookieOptions)
 
-        const removeRefreshToken = await UserModel.findByIdAndUpdate(userId, {
-            refresh_token: ""
+        const removeRefreshToken = await validateUserAndUpdate({
+            update: true,
+            user_id: userId,
+            payload
         })
 
         return res.status(200).json({
@@ -274,7 +280,21 @@ export async function updateUserDetailsController(req, res) {
 
         const { name, email, password, mobile } = req.body
 
-        const updateUser = await updateUserProfile(name, email, password, mobile, verifiedUserId)
+        const encryptedPassword = await encryptPassword(password)
+
+        const payload = {
+            ...(name && { name: name }),
+            ...(email && { email: email }),
+            ...(mobile && { mobile: mobile }),
+            ...(password && { password: encryptedPassword })
+        }
+
+        const updateUser = await validateUserAndUpdate({
+            update: true,
+            user_id: verifiedUserId,
+            payload,
+            showNewDataItem: true
+        })
 
         return res.status(200).json({
             message: "User Details Updates Successfully",
@@ -295,7 +315,181 @@ export async function updateUserDetailsController(req, res) {
 }
 
 //Forgot Password Controller
+export async function forgotPasswordController(req, res) {
+    try {
+        const { email } = req.body
 
-export async function forgotPasswordController(req,res) {
-    
+        const existingUser = await validateUserAndUpdate({email})
+
+        if (!existingUser) {
+            return res.status(404).json({
+                message: "User not found.",
+                error: true,
+                success: false
+            });
+        }
+
+        const name = existingUser?.name
+
+        const otp = generateOTP()
+
+        const expireTime = new Date(Date.now() + 10 * 60 * 1000);
+
+        const sendOTPEmail = await sendEmail(
+            {
+                sendTo: email,
+                subject: "OTP to reset password from SwiftDrop",
+                html: forgotPasswordOTPTemplate({
+                    name,
+                    otp
+                })
+            })
+
+        const payload = {
+            forgot_password_otp: otp,
+            forgot_password_expiry: new Date(expireTime).toISOString()
+        }
+
+        const update = await validateUserAndUpdate({
+            update: true,
+            user_id: existingUser?._id,
+            payload
+
+        })
+
+        return res.status(200).json({
+            message: "OTP has been successfully sent to your email.",
+            error: false,
+            success: true
+        });
+
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+
+
 }
+
+// verify forgot password error
+export async function verifyForgotPasswordOTPController(req, res) {
+    try {
+        const { email, otp } = req.body
+
+        if (!otp || !email) {
+            return res.status(400).json({
+                message: "Email and OTP are required.",
+                error: true,
+                success: false
+            });
+        }
+
+        const existingUser = await validateUserAndUpdate({ email })
+
+        let currentTime = new Date()
+
+        let OTPExpiryTime = new Date(existingUser?.forgot_password_expiry);
+
+        let storedOTP = existingUser?.forgot_password_otp
+
+        if (currentTime > OTPExpiryTime) {
+            return res.status(410).json({
+                message: "OTP has expired. Please request a new OTP.",
+                error: true,
+                success: false
+            });
+        }
+
+        if (otp !== storedOTP) {
+            return res.status(400).json({
+                message: "Invalid OTP. Please check and try again.",
+                error: true,
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "OTP verified successfully.",
+            error: false,
+            success: true
+        });
+
+
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+}
+
+// reset password controller
+export async function resetPasswordController(req, res) {
+    try {
+        const { email, password, confirmPassword } = req.body
+
+        if (!email || !password || !confirmPassword) {
+            return res.status(400).json({
+                message: "All fields are required: email, password, and confirmPassword.",
+                error: true,
+                success: false
+            });
+        }
+
+        const existingUser = await validateUserAndUpdate({ email })
+
+        if (!existingUser) {
+            return res.status(404).json({
+                message: "User not found.",
+                error: true,
+                success: false
+            });
+        }
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({
+                message: "Passwords do not match. Please try again.",
+                error: true,
+                success: false
+            });
+        }
+
+        const encryptedPassword = await encryptPassword(password)
+
+        const payload = {
+            password: encryptedPassword
+        }
+
+        // const updatePassword = await UserModel.findByIdAndUpdate(existingUser._id, ,
+        //     { new: true }
+        // )
+
+        const updatePassword = await validateUserAndUpdate({
+            update:true,
+            user_id: existingUser?._id,
+            payload
+        })
+
+        return res.status(200).json({
+            message: "Password changed successfully",
+            error: false,
+            success: true,
+            data: updatePassword
+        })
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+}
+
+//Refresh token route remaining
