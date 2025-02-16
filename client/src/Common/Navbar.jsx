@@ -81,12 +81,12 @@ export default function Navbar() {
                 {/* Right Side - Buttons and Icons */}
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', minWidth: "200px" }}>
 
-                    <Link to="log-in">
+                    <Link to="/auth/log-in">
                         <button className='flexBoxCentered navbarOptions'><LoginIcon sx={{ mr: 0.8 }} fontSize='medium' /> Login</button>
 
                     </Link>
 
-                    <Link to="register-user">
+                    <Link to="/auth/register-user">
                         <button className='flexBoxCentered navbarOptions'><PersonAddIcon sx={{ mr: 0.5 }} fontSize='medium' /> Signup</button>
                     </Link>
 
