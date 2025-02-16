@@ -20,12 +20,12 @@ const userRouter = Router();
 userRouter.post("/register", registerUserController);
 userRouter.post("/verify-email", userEmailVerificationController);
 userRouter.post("/login", loginController);
-userRouter.get('/logout', auth, logoutController);
-userRouter.put('/upload-avatar', auth, upload.single('avatar'), uploadAvatarController);
 userRouter.patch("/update-user", auth, updateUserDetailsController)
+userRouter.put('/upload-avatar', auth, upload.single('avatar'), uploadAvatarController);
 userRouter.put("/forgot-password", forgotPasswordController)
 userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOTPController)
 userRouter.put("/reset-password", resetPasswordController)
+userRouter.get('/logout', auth, logoutController);
 
 //Refresh token route remaining
 
