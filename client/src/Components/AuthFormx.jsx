@@ -5,13 +5,58 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import swiftDropLogo from '../Assets/SwiftDropLogo3.png'; // Ensure this is the correct path
+import swiftDropLogo from '../Assets/SwiftDropLogo3.png';
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = ({ formType = "login" }) => {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const [loginFormInput, setLoginFormInput] = useState({
+    email: '',
+    password: '',
+    name: "Mister Xxz"
+  })
+
+  const handleLoginFormSubmit = () => {
+    console.log("Data is = ", loginFormInput.email, loginFormInput.password)
+    handleLogin()
+  }
+
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:5050/api/user/forgot-password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginFormInput),
+        credentials: "include",
+
+      });
+
+      const data = await response.json();
+      console.log("API Response:", data);
+
+      if (data.success) {
+        navigate("/home");  // Redirect to home if login is successful
+      } else {
+        alert(data.message);  // Show an alert if login fails
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
+  const handleLoginFormChange = (e) => {
+    setLoginFormInput({ ...loginFormInput, [e.target.name]: e.target.value });
   };
 
   return (
@@ -30,55 +75,71 @@ const AuthForm = ({ formType = "login" }) => {
 
         {/* Input Fields */}
         <CardContent>
-          <TextField
-            fullWidth
-            label="Email"
-            variant="outlined"
-            sx={{ mb: 2, "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <EmailIcon color="action" />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            fullWidth
-            label="Password"
-            type={showPassword ? "text" : "password"}
-            variant="outlined"
-            sx={{ mb: 2, "& .MuiOutlinedInput-root": { borderRadius: "8px" } }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <LockIcon color="action" />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={togglePasswordVisibility} edge="end">
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
 
-          {/* Login/Register Button */}
-          <Button
-            fullWidth
-            variant="contained"
-            sx={{
-              backgroundColor: "#388E3C", // Green primary color
-              color: "white",
-              borderRadius: "8px",
-              mb: 2,
-              "&:hover": { backgroundColor: "#2E7D32" }, // Darker on hover
-            }}
-          >
-            {formType === "login" ? "Login" : "Sign Up"}
-          </Button>
+          <form action="none" onSubmit={(e) => { e.preventDefault() }}>
+            {/* Email */}
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              type="email"
+              value={loginFormInput.email}
+              onChange={handleLoginFormChange}
+              sx={{ mb: 4 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+              required
+            />
+
+            {/* password */}
+            <TextField
+              fullWidth
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              variant="outlined"
+              sx={{ mb: 3 }}
+              name="password"
+              onChange={handleLoginFormChange}
+              value={loginFormInput.password}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockIcon color="action" />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={togglePasswordVisibility} edge="end">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+              required
+            />
+
+            {/* LoginButton */}
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{
+                backgroundColor: "#388E3C", // Green primary color
+                color: "white",
+                borderRadius: "8px",
+                mb: 2,
+                "&:hover": { backgroundColor: "#2E7D32" }, // Darker on hover
+              }}
+              type="submit"
+              onClick={handleLoginFormSubmit}
+            >
+              Login
+            </Button>
+          </form>
 
           {/* Divider */}
           <Divider sx={{ my: 2 }}>OR</Divider>
