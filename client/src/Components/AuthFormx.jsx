@@ -8,6 +8,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import swiftDropLogo from '../Assets/SwiftDropLogo3.png';
 import { useNavigate } from "react-router-dom";
 import CustomAlter from "./CustomAlter";
+import { getBaseUrl } from "../Networking/Configuration/ApiConfig";
 
 const AuthForm = ({ formType = "login" }) => {
   const navigate = useNavigate()
@@ -17,10 +18,12 @@ const AuthForm = ({ formType = "login" }) => {
     setShowPassword((prev) => !prev);
   };
 
+  console.log("URL Here is ",getBaseUrl());
+
   const [loginFormInput, setLoginFormInput] = useState({
     email: '',
     password: '',
-    name: "Mister Xxz"
+    name:"Deepansh"
   })
 
   const handleLoginFormSubmit = () => {
@@ -31,8 +34,8 @@ const AuthForm = ({ formType = "login" }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5050/api/user/forgot-password", {
-        method: "PUT",
+      const response = await fetch("http://localhost:5050/api/user/login", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -45,9 +48,9 @@ const AuthForm = ({ formType = "login" }) => {
       console.log("API Response:", data);
 
       if (data.success) {
-        navigate("/home");  // Redirect to home if login is successful
+        navigate("/home");
       } else {
-        alert(data.message);  // Show an alert if login fails
+        alert(data.message);  
       }
 
     } catch (error) {
@@ -63,7 +66,7 @@ const AuthForm = ({ formType = "login" }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
 
-      <Card sx={{width:"100%", maxWidth: 420, padding: 3, boxShadow: 0, borderRadius: 3, backgroundColor: 'transparent' }}>
+      <Card sx={{ width: "100%", maxWidth: 420, padding: 3, boxShadow: 0, borderRadius: 3, backgroundColor: 'transparent' }}>
         {/* Logo */}
         <div className='flexBoxCentered margin-bottom-20'>
           <img src={swiftDropLogo} alt="Company Logo" style={{ width: "100px" }} />
@@ -71,7 +74,7 @@ const AuthForm = ({ formType = "login" }) => {
 
         {/* Title */}
         <Typography variant="h5" align="center" fontWeight="bold" gutterBottom>
-          {formType === "login" ? "Welcome Back!" : "Create an Account"}
+          {formType === "login" ? "Welcome Back" : "Create an Account"}
         </Typography>
 
         {/* Input Fields */}
@@ -166,7 +169,7 @@ const AuthForm = ({ formType = "login" }) => {
             <span style={{ color: "#5F6368" }}>Continue with Google</span>
           </Button>
 
-          <CustomAlter openSnackBar ={true}/>
+          {/* <CustomAlter openSnackBar={true} /> */}
         </CardContent>
       </Card>
 
