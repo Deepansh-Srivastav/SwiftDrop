@@ -59,10 +59,11 @@
 }
 
 .authenticationImage {
-    width: 50%;
+    width: 100%;
+    max-width: 500px;
 }
 
-.backbutton{
+.backButton{
     border-radius: 50%;
     border: none;
     padding: 8px;

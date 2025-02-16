@@ -7,6 +7,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import swiftDropLogo from '../Assets/SwiftDropLogo3.png';
 import { useNavigate } from "react-router-dom";
+import CustomAlter from "./CustomAlter";
 
 const AuthForm = ({ formType = "login" }) => {
   const navigate = useNavigate()
@@ -62,7 +63,7 @@ const AuthForm = ({ formType = "login" }) => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
 
-      <Card sx={{ width: 420, padding: 3, boxShadow: 0, borderRadius: 3, backgroundColor: 'transparent' }}>
+      <Card sx={{width:"100%", maxWidth: 420, padding: 3, boxShadow: 0, borderRadius: 3, backgroundColor: 'transparent' }}>
         {/* Logo */}
         <div className='flexBoxCentered margin-bottom-20'>
           <img src={swiftDropLogo} alt="Company Logo" style={{ width: "100px" }} />
@@ -164,6 +165,8 @@ const AuthForm = ({ formType = "login" }) => {
             <GoogleIcon sx={{ color: "#EA4335" }} />
             <span style={{ color: "#5F6368" }}>Continue with Google</span>
           </Button>
+
+          <CustomAlter openSnackBar ={true}/>
         </CardContent>
       </Card>
 

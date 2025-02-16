@@ -3,6 +3,7 @@ import Navbar from "./Common/Navbar.jsx"
 import LogIn from "./Pages/LogIn.jsx";
 import "./Styles/Common.css"
 import "./Styles/Themes.css"
+import "./Styles/Responsive.css"
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 

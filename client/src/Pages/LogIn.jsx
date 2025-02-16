@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
 
 const LogIn = () => {
+
   return (
     <Grid container sx={{ height: "100vh" }}>
 
       <Grid
         item
         xs={12}
+        sm={6}
         md={7}
         // sx={{
         //   backgroundImage: "linear-gradient(135deg,#9575CD, #D1C4E9 )", // Smooth gradient transition
@@ -25,12 +27,10 @@ const LogIn = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
-        }}
+        }}>
 
-
-      >
         <Link to='/home'>
-          <button className="flexBoxCentered backbutton">
+          <button className="flexBoxCentered backButton">
             <KeyboardBackspaceSharpIcon />
           </button>
         </Link>
@@ -41,9 +41,14 @@ const LogIn = () => {
       </Grid>
 
 
-      <Grid item xs={12} md={5} sx={{ backgroundColor: "var(--color-one)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Grid item
+        xs={12}
+        sm={6}
+        md={5}
+        sx={{ backgroundColor: "var(--color-one)", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <AuthForm />
       </Grid>
+
     </Grid >
   )
 }
