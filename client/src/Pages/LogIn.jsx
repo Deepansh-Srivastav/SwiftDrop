@@ -46,7 +46,7 @@ const LogIn = () => {
         sm={6}
         md={5}
         sx={{ backgroundColor: "var(--color-one)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <AuthForm />
+        <AuthForm loginForm = {true}/>
       </Grid>
 
     </Grid >
