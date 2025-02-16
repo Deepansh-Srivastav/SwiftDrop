@@ -8,13 +8,27 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import swiftDropLogo from '../Assets/SwiftDropLogo3.png';
 import { useNavigate } from "react-router-dom";
 import CustomAlter from "./CustomAlter";
-import { getBaseUrl } from "../Networking/Configuration/ApiConfig";
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from "react-router-dom";
+import {
+  postApiRequestWrapper,
+  getApiRequestWrapper,
+
+} from "../Networking/Services/ApiCalls";
+import { APIConfig, getBaseUrl } from "../Networking/Configuration/ApiConfig";
+
+import { DotLoader } from "react-spinners";
+
 
 const AuthForm = ({ loginForm = false, registrationForm = false }) => {
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const navigate = useNavigate()
+
+  // const passwordError = true
+
+  const passwordError = false
 
   const [showLoginForm, setShowLoginForm] = useState(false);
 
@@ -28,13 +42,12 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
 
   }, [loginForm, registrationForm])
 
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
-  console.log("URL Here is ", getBaseUrl());
 
   const [loginFormData, setLoginFormData] = useState({
     email: '',
@@ -45,15 +58,17 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
     handleLogin()
   }
 
-  const handleRegistrationFormSubmit = () => {
-    handleRegistration()
-  }
-
   const [registrationFormData, setRegistrationFormData] = useState({
     name: "",
     email: "",
     password: "",
   })
+
+
+  const handleRegistrationFormSubmit = async () => {
+    await handleRegistration()
+    return
+  }
 
   const handleLogin = async () => {
     try {
@@ -81,26 +96,27 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
     }
   };
 
-  const handleRegistration = async () => {
+  const handleRegistration = async (payload) => {
     try {
-      const response = await fetch("http://localhost:5050/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(registrationFormData),
-        credentials: "include",
-      });
+      setIsLoading(true)
 
-      const data = await response.json();
-      console.log("API Response:", data);
+      const BASE_URL = getBaseUrl();
+      const REGISTRATION_URL = APIConfig.apiPath.register
+      const FINAL_URL = BASE_URL + REGISTRATION_URL
 
-      if (data.success) {
-        navigate("/home");
+      const response = await postApiRequestWrapper(FINAL_URL, registrationFormData)
+
+      if (response?.success) {
+        setIsLoading(false)
+        navigate('/home')
+        console.log(response.message);
       }
 
+      setIsLoading(false)
+      console.log(response.message);
+
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
     }
   };
 
@@ -126,11 +142,10 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
           {showLoginForm ? "Welcome Back" : "Create an Account"}
         </Typography>
 
-        {/* Input Fields */}
         {showLoginForm && (
           <CardContent>
 
-            <form action="none" onSubmit={(e) => { e.preventDefault() }}>
+            <form action="none" onSubmit={(e) => { e.preventDefault(); }}>
               {/* Email */}
               <TextField
                 fullWidth
@@ -150,13 +165,13 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
                 required
               />
 
-              {/* password */}
+              {/* Password */}
               <TextField
                 fullWidth
                 label="Password"
                 type={showPassword ? "text" : "password"}
                 variant="outlined"
-                sx={{ mb: 3 }}
+                sx={{ mb: passwordError ? 1 : 3 }}
                 name="password"
                 onChange={handleLoginFormChange}
                 value={loginFormData.password}
@@ -175,18 +190,26 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
                   ),
                 }}
                 required
+                error={passwordError}  // Adds red outline if password is incorrect
               />
 
-              {/* LoginButton */}
+              {/* Password Error Message */}
+              {passwordError && (
+                <Typography variant="body2" color="error" sx={{ mb: 2, fontSize: ['12px', '13px'] }} >
+                  Incorrect password. Please try again.
+                </Typography>
+              )}
+
+              {/* Login Button */}
               <Button
                 fullWidth
                 variant="contained"
                 sx={{
-                  backgroundColor: "#388E3C", // Green primary color
+                  backgroundColor: "#388E3C",
                   color: "white",
                   borderRadius: "8px",
                   mb: 2,
-                  "&:hover": { backgroundColor: "#2E7D32" }, // Darker on hover
+                  "&:hover": { backgroundColor: "#2E7D32" },
                 }}
                 type="submit"
                 onClick={handleLoginFormSubmit}
@@ -237,88 +260,6 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
 
         {showRegisterForm && (
           <CardContent>
-
-            {/* <form action="none" onSubmit={(e) => { e.preventDefault() }}>
-
-              <TextField
-                fullWidth
-                label="Name"
-                name="name"
-                type="name"
-                value={registrationFormData.name}
-                onChange={handleRegisterFormChange}
-                sx={{ mb: 4 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PersonIcon color="action" />
-                    </InputAdornment>
-                  ),
-                }}
-                required
-              />
-
-              <TextField
-                fullWidth
-                label="Email"
-                name="email"
-                type="email"
-                value={registrationFormData.email}
-                onChange={handleRegisterFormChange}
-                sx={{ mb: 4 }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EmailIcon color="action" />
-                    </InputAdornment>
-                  ),
-                }}
-                required
-              />
-
-              <TextField
-                fullWidth
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                variant="outlined"
-                sx={{ mb: 3 }}
-                name="password"
-                onChange={handleRegisterFormChange}
-                value={registrationFormData.password}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <LockIcon color="action" />
-                    </InputAdornment>
-                  ),
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={togglePasswordVisibility} edge="end">
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                required
-              />
-
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{
-                  backgroundColor: "#388E3C", 
-                  color: "white",
-                  borderRadius: "8px",
-                  mb: 2,
-                  "&:hover": { backgroundColor: "#2E7D32" },
-                }}
-                type="submit"
-                onClick={handleRegistrationFormSubmit}
-              >
-                Register
-              </Button>
-            </form> */}
-
             <form action="none" onSubmit={(e) => { e.preventDefault(); }}>
               {/* Name */}
               <TextField
@@ -399,7 +340,7 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
                 type="submit"
                 onClick={handleRegistrationFormSubmit}
               >
-                Register
+                {isLoading ? <DotLoader /> : "Register"}
               </Button>
 
               <Typography variant="body2" align="center">
