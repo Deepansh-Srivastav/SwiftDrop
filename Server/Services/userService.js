@@ -35,7 +35,6 @@ export async function validateUserAndUpdate({
             )
             return updateData;
         }
-
         return existingUser;
     }
 
@@ -44,7 +43,3 @@ export async function validateUserAndUpdate({
     }
 
 }
-
-
-
-

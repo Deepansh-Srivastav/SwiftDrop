@@ -1,0 +1,13 @@
+@media (max-width: 899px) {
+    .authenticationImage{
+        max-width: 300px;
+        margin: 3%;
+    }
+}
+
+@media (max-width: 699px) {
+    .authenticationImage{
+        max-width: 250px;
+        margin: 50px;
+    }
+}
