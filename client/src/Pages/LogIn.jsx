@@ -1,7 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
-import loginImage from "../Assets/test-image-login-1.png"
+// import loginImage from "../Assets/test-image-login-1.png"
 // import loginImage from "../Assets/login-image-2.png"
 // import loginImage from "../Assets/Sign-up-1.png"
+import { projectImages } from "../Assets/Assets";
 import AuthForm from "../Components/AuthFormx";
 import { Link } from "react-router-dom";
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
@@ -36,7 +37,7 @@ const LogIn = () => {
         </Link>
 
         {/* <div className="authenticationPage flexBoxCentered"> */}
-        <img src={loginImage} alt="loginImage" className="authenticationImage" />
+        <img src={projectImages.loginImage} alt="loginImage" className="authenticationImage" />
         {/* </div> */}
       </Grid>
 

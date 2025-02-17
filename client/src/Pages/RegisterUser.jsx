@@ -1,5 +1,6 @@
 import {Grid, } from "@mui/material";
-import loginImage from "../Assets/Sign-up-1.png"
+// import loginImage from "../Assets/Sign-up-1.png"
+import { projectImages } from "../Assets/Assets";
 import AuthForm from "../Components/AuthFormx";
 import { Link } from "react-router-dom";
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
@@ -34,7 +35,7 @@ const RegisterUser = () => {
                 </Link>
 
                 {/* <div className="authenticationPage flexBoxCentered"> */}
-                <img src={loginImage} alt="loginImage" className="authenticationImage" />
+                <img src={projectImages.registerImage} alt="loginImage" className="authenticationImage" />
                 {/* </div> */}
             </Grid>
 
