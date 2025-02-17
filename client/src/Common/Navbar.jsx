@@ -15,7 +15,9 @@ import Divider from '@mui/material/Divider';
 import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
-import swiftDropLogo from "../Assets/SwiftDropLogo3.png";
+// import swiftDropLogo from "../Assets/SwiftDropLogo3.png";
+import { projectImages } from '../Assets/Assets.js';
+
 import LoginIcon from '@mui/icons-material/Login';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Badge from '@mui/material/Badge';
@@ -64,7 +66,7 @@ export default function Navbar() {
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
                     <Link to="/">
-                        <img src={swiftDropLogo} alt="SwiftDrop Logo" style={{ width: '80px', cursor: 'pointer', margin: '5px' }} />
+                        <img src={projectImages.swiftDropLogo} alt="SwiftDrop Logo" style={{ width: '80px', cursor: 'pointer', margin: '5px' }} />
                     </Link>
 
                 </Box>

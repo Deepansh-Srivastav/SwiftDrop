@@ -5,7 +5,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import swiftDropLogo from '../Assets/SwiftDropLogo3.png';
+// import swiftDropLogo from '../Assets/SwiftDropLogo3.png';
+import { projectImages } from "../Assets/Assets";
 import { useNavigate } from "react-router-dom";
 import CustomAlter from "./CustomAlter";
 import PersonIcon from '@mui/icons-material/Person';
@@ -62,6 +63,7 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
     name: "",
     email: "",
     password: "",
+    confirmPassword: ""
   })
 
 
@@ -98,6 +100,11 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
 
   const handleRegistration = async (payload) => {
     try {
+
+      if (registrationFormData.password !== registrationFormData.confirmPassword) {
+        alert("Password didnt match")
+        return null
+      }
       setIsLoading(true)
 
       const BASE_URL = getBaseUrl();
@@ -134,7 +141,7 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
       <Card sx={{ width: "100%", maxWidth: 420, padding: 3, boxShadow: 0, borderRadius: 3, backgroundColor: 'transparent' }}>
         {/* Logo */}
         <div className='flexBoxCentered margin-bottom-20'>
-          <img src={swiftDropLogo} alt="Company Logo" style={{ width: "100px" }} />
+          <img src={projectImages.swiftDropLogo} alt="Company Logo" style={{ width: "100px" }} />
         </div>
 
         {/* Title */}
@@ -320,6 +327,26 @@ const AuthForm = ({ loginForm = false, registrationForm = false }) => {
                       <IconButton onClick={togglePasswordVisibility} edge="end">
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                required
+              />
+
+              {/* Password */}
+              <TextField
+                fullWidth
+                label="Confirm Password"
+                type={"password"}
+                variant="outlined"
+                sx={{ mb: 3 }}
+                name="confirmPassword"
+                onChange={handleRegisterFormChange}
+                value={registrationFormData.confirmPassword}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockIcon color="action" />
                     </InputAdornment>
                   ),
                 }}
