@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Navbar from "./Common/Navbar.jsx"
-import LogIn from "./Pages/LogIn.jsx";
+import LogIn from "./Auth_Pages/LogIn.jsx";
 import "./Styles/Common.css"
 import "./Styles/Themes.css"
 import "./Styles/Responsive.css"
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
-import RegisterUser from "./Pages/RegisterUser.jsx";
+import RegisterUser from "./Auth_Pages/RegisterUser.jsx";
 
 const App = () => {
 
@@ -20,8 +20,8 @@ const App = () => {
 
     if (currentPath == '/auth/log-in' || currentPath == '/auth/register-user') {
       setShowNavbar(false)
-    } 
-    else{
+    }
+    else {
       setShowNavbar(true)
     }
   }, [currentPath])
