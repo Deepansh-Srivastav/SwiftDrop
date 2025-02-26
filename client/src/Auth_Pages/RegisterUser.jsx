@@ -8,7 +8,8 @@ import {
     EmailIcon,
     LockIcon,
     Visibility,
-    VisibilityOff
+    VisibilityOff,
+    google
 } from '../Assets/Icons.js'
 
 import { useNavigate } from "react-router-dom";
@@ -86,7 +87,7 @@ const RegisterUser = () => {
                 sm={6}
                 md={7}
                 sx={{
-                    backgroundImage: "linear-gradient(100deg, #673AB7, #9575CD, #D1C4E9)",
+                    backgroundImage: "var(--gradient-primary)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center"
@@ -261,8 +262,8 @@ const RegisterUser = () => {
                                     "&:hover": { backgroundColor: "#F1F3F4" },
                                 }}
                             >
-                                <FcGoogle size={30} />
-                                <span style={{ color: "#5F6368" }}>Continue with Google</span>
+                                <img src={google} alt="google" width={'25px'} />
+                                <span style={{ color: "#5F6368", marginLeft: "10px" }}>Continue with Google</span>
                             </Button>
 
                         </CardContent>

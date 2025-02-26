@@ -21,6 +21,7 @@ const LogIn = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
 
+
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
@@ -30,8 +31,8 @@ const LogIn = () => {
     password: '',
   })
 
-  const handleLoginFormSubmit = () => {
-    handleLogin()
+  const handleLoginFormSubmit = async () => {
+    await handleLogin()
   }
 
   const handleLogin = async () => {
@@ -42,9 +43,9 @@ const LogIn = () => {
       const FINAL_URL = BASE_URL + REGISTRATION_URL
       const response = await postApiRequestWrapper(FINAL_URL, loginFormData)
 
-      if (response?.success === 1 && response?.error === 0) {
-        navigate('/home');
+      if (response?.success === true && response?.error === false) {
         setIsLoading(false)
+        navigate('/home');
       }
 
       setIsLoading(false)
@@ -70,14 +71,8 @@ const LogIn = () => {
         xs={12}
         sm={6}
         md={7}
-        // sx={{
-        //   backgroundImage: "linear-gradient(135deg,#9575CD, #D1C4E9 )", // Smooth gradient transition
-        //   display: "flex",
-        //   alignItems: "center",
-        //   justifyContent: "center"
-        // }}
         sx={{
-          backgroundImage: "linear-gradient(100deg, #673AB7, #9575CD, #D1C4E9)",
+          backgroundImage: "var(--gradient-primary)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
@@ -244,7 +239,6 @@ const LogIn = () => {
               </Button>
 
             </CardContent>
-
           </Card>
         </Box>
       </Grid>

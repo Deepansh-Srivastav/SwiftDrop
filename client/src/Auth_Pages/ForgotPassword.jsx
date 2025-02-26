@@ -35,11 +35,10 @@ const ForgotPassword = () => {
             if (response.success === true && response.error === false) {
                 console.log(response);
             }
-        } 
+        }
         catch (error) {
             console.log(error.message);
         }
-
     }
 
     async function handleFormSubmission() {
@@ -54,14 +53,8 @@ const ForgotPassword = () => {
                 xs={12}
                 sm={6}
                 md={7}
-                // sx={{
-                //   backgroundImage: "linear-gradient(135deg,#9575CD, #D1C4E9 )", // Smooth gradient transition
-                //   display: "flex",
-                //   alignItems: "center",
-                //   justifyContent: "center"
-                // }}
                 sx={{
-                    backgroundImage: "linear-gradient(100deg, #673AB7, #9575CD, #D1C4E9)",
+                    backgroundImage: "var(--gradient-primary)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center"
