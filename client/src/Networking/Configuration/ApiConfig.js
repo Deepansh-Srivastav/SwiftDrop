@@ -3,7 +3,8 @@ export function getBaseUrl() {
         window.location.hostname === "localhost" ?
             (import.meta.env.VITE_BACKEND_DEV_BASE_URL1)
             :
-            (import.meta.env.VITE_BACKEND_PROD_BASE_URL))
+            (import.meta.env.VITE_BACKEND_DEV_BASE_URL1))
+            // (import.meta.env.VITE_BACKEND_PROD_BASE_URL))
 }
 
 export const APIConfig = {
