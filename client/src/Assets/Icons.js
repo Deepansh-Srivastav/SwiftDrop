@@ -3,8 +3,9 @@ import LockIcon from "@mui/icons-material/Lock";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import google from "./Icons/google.png"
 
 
 
@@ -14,7 +15,7 @@ export {
     Visibility,
     VisibilityOff,
     KeyboardBackspaceSharpIcon,
-    FcGoogle,
+    google,
     VpnKeyIcon
 
 }

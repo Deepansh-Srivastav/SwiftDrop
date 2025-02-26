@@ -5,7 +5,7 @@ import {
   Visibility,
   VisibilityOff,
   KeyboardBackspaceSharpIcon,
-  FcGoogle
+  google
 } from '../Assets/Icons.js'
 import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
@@ -239,8 +239,8 @@ const LogIn = () => {
                   "&:hover": { backgroundColor: "#F1F3F4" },
                 }}
               >
-                <FcGoogle size={30} />
-                <span style={{ color: "#5F6368" }}>Continue with Google</span>
+                <img src={google} alt="Google" width={"25px"}/>
+                <span style={{ color: "#5F6368", marginLeft:"10px" }}>Continue with Google</span>
               </Button>
 
             </CardContent>
