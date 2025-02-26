@@ -7,6 +7,7 @@ import "./Styles/Responsive.css"
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import RegisterUser from "./Auth_Pages/RegisterUser.jsx";
+import ForgotPassword from "./Auth_Pages/ForgotPassword.jsx";
 
 const App = () => {
 
@@ -18,7 +19,7 @@ const App = () => {
 
   useEffect(() => {
 
-    if (currentPath == '/auth/log-in' || currentPath == '/auth/register-user') {
+    if (currentPath == '/auth/log-in' || currentPath == '/auth/register-user' || currentPath == '/auth/forgot-password') {
       setShowNavbar(false)
     }
     else {
@@ -30,9 +31,10 @@ const App = () => {
     <>
       {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/home" element={<h1>Home</h1>}>  </Route>
-        <Route path="/auth/log-in" element={<LogIn />}>  </Route>
-        <Route path="/auth/register-user" element={<RegisterUser />}>  </Route>
+        <Route path="/home" element={<h1>Home</h1>}></Route>
+        <Route path="/auth/log-in" element={<LogIn />}></Route>
+        <Route path="/auth/register-user" element={<RegisterUser />}></Route>
+        <Route path="/auth/forgot-password" element={<ForgotPassword />}></Route>
       </Routes>
     </>
   )

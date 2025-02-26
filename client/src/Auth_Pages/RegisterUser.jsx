@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
 import { useState } from "react";
 import { Box, Button, TextField, Typography, Card, CardContent, Divider, InputAdornment, IconButton } from "@mui/material";
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import {
+    EmailIcon,
+    LockIcon,
+    Visibility,
+    VisibilityOff
+} from '../Assets/Icons.js'
+
 import { useNavigate } from "react-router-dom";
 import PersonIcon from '@mui/icons-material/Person';
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
@@ -76,13 +79,8 @@ const RegisterUser = () => {
 
     const isAnyFieldEmpty = Object.values(registrationFormData).some(value => value.trim() === "");
 
-
-    console.log(isAnyFieldEmpty);
-    
-
     return (
         <Grid container sx={{ height: "100vh" }}>
-
             <Grid
                 item
                 xs={12}
@@ -119,7 +117,7 @@ const RegisterUser = () => {
                             <img src={projectImages.swiftDropLogo} alt="Company Logo" style={{ width: "90px" }} />
                         </div>
 
-                        <Typography variant="h6" align="center" fontWeight="bold" gutterBottom >
+                        <Typography variant="h6" align="center" fontWeight="bold" gutterBottom  >
                             Create an Account
                         </Typography>
 
@@ -212,12 +210,6 @@ const RegisterUser = () => {
                                     helperText={passwordError ? "Both password fields must be the same" : ""}
                                 />
 
-                                {/* {passwordError && (
-                                    <Typography variant="body2" color="error" sx={{ mb: 2, fontSize: ['12px', '13px'] }} >
-                                        Password didn't match.
-                                    </Typography>
-                                )} */}
-
                                 {/* Register Button */}
                                 <Button
                                     fullWidth
@@ -279,7 +271,6 @@ const RegisterUser = () => {
                     </Card>
                 </Box>
             </Grid>
-
         </Grid >
     )
 }

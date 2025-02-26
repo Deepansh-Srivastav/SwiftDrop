@@ -28,3 +28,14 @@ export async function getApiRequestWrapper(URL) {
         return error?.response.data
     }
 }
+
+export async function putApiRequestWrapper(URL) {
+
+    try {
+        const response = await axios.put(URL)
+        return response?.data
+    }
+    catch (error) {
+        return error?.response.data
+    }
+}

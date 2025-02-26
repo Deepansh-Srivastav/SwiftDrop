@@ -1,31 +1,25 @@
-import { Box, Grid, Typography } from "@mui/material";
-// import loginImage from "../Assets/test-image-login-1.png"
-// import loginImage from "../Assets/login-image-2.png"
-// import loginImage from "../Assets/Sign-up-1.png"
+import { Box, Grid, Typography, Button, TextField, Card, CardContent, Divider, InputAdornment, IconButton } from "@mui/material";
+import {
+  EmailIcon,
+  LockIcon,
+  Visibility,
+  VisibilityOff,
+  KeyboardBackspaceSharpIcon,
+  FcGoogle
+} from '../Assets/Icons.js'
 import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
-
-import { Button, TextField, Card, CardContent, Divider, InputAdornment, IconButton } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
-import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from "@mui/icons-material/Lock";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-import { FcGoogle } from "react-icons/fc";
-
-import { DotLoader } from "react-spinners";
+import { Link, useNavigate } from "react-router-dom";
+import { BarLoader } from "react-spinners";
+import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
+import { postApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
 
 const LogIn = () => {
 
   const navigate = useNavigate()
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [passwordError, setPasswordError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -42,33 +36,31 @@ const LogIn = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5050/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(loginFormData),
-        credentials: "include",
+      setIsLoading(true)
+      const BASE_URL = getBaseUrl();
+      const REGISTRATION_URL = APIConfig?.apiPath?.login
+      const FINAL_URL = BASE_URL + REGISTRATION_URL
+      const response = await postApiRequestWrapper(FINAL_URL, loginFormData)
 
-      });
-
-      const data = await response.json();
-      console.log("API Response:", data);
-
-      if (data.success) {
-        navigate("/home");
-      } else {
-        alert(data.message);
+      if (response?.success === 1 && response?.error === 0) {
+        navigate('/home');
+        setIsLoading(false)
       }
 
-    } catch (error) {
+      setIsLoading(false)
+
+    }
+    catch (error) {
       console.error("Error:", error);
+      setIsLoading(false)
     }
   };
 
   const handleFormChange = (e) => {
     setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
   };
+
+  const isAnyFieldEmpty = Object.values(loginFormData).some(value => value.trim() === "");
 
   return (
     <Grid container sx={{ height: "100vh" }}>
@@ -151,10 +143,7 @@ const LogIn = () => {
                   label="Password"
                   type={showPassword ? "text" : "password"}
                   variant="outlined"
-                  sx={{
-                    mb: passwordError ? 1 : 3,
-                    borderColor: passwordError ? 'red' : ""
-                  }}
+                  sx={{ mb: passwordError ? 1 : 3 }}
                   name="password"
                   onChange={handleFormChange}
                   value={loginFormData.password}
@@ -177,22 +166,45 @@ const LogIn = () => {
                 />
 
                 {/* Login Button */}
-                <Button
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#388E3C",
-                    color: "white",
-                    borderRadius: "8px",
-                    mb: 2,
-                    "&:hover": { backgroundColor: "#2E7D32" },
-                  }}
-                  type="submit"
-                  onClick={handleLoginFormSubmit}
-                >
-                  Login
-                </Button>
+
+                {isLoading ?
+                  (
+                    <Button
+                      sx={{
+                        mb: 2,
+                      }}
+                    >
+                      <BarLoader />
+                    </Button>
+                  )
+                  :
+                  (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#388E3C",
+                        color: "white",
+                        borderRadius: "8px",
+                        mb: 2,
+                        "&:hover": { backgroundColor: "#2E7D32" },
+                      }}
+                      type="submit"
+                      onClick={handleLoginFormSubmit}
+                      disabled={isAnyFieldEmpty}
+                    >
+                      Login
+                    </Button>
+                  )}
               </form>
+
+              <Typography className="pointer" variant="body2" align="center" sx={{ mb: 3 }}>
+
+                <Link to={'/auth/forgot-password'}>
+                  Forgot Password?
+                </Link>
+
+              </Typography>
 
               <Typography variant="body2" align="center">
                 Don't have an account?{" "}
