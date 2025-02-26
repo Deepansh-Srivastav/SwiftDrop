@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Navbar from "./Common/Navbar.jsx"
-import LogIn from "./Pages/LogIn.jsx";
+import LogIn from "./Auth_Pages/LogIn.jsx";
 import "./Styles/Common.css"
 import "./Styles/Themes.css"
 import "./Styles/Responsive.css"
 import { Routes, Route } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
-import RegisterUser from "./Pages/RegisterUser.jsx";
+import RegisterUser from "./Auth_Pages/RegisterUser.jsx";
+import ForgotPassword from "./Auth_Pages/ForgotPassword.jsx";
 
 const App = () => {
 
@@ -18,10 +19,10 @@ const App = () => {
 
   useEffect(() => {
 
-    if (currentPath == '/auth/log-in' || currentPath == '/auth/register-user') {
+    if (currentPath == '/auth/log-in' || currentPath == '/auth/register-user' || currentPath == '/auth/forgot-password') {
       setShowNavbar(false)
-    } 
-    else{
+    }
+    else {
       setShowNavbar(true)
     }
   }, [currentPath])
@@ -30,9 +31,10 @@ const App = () => {
     <>
       {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/home" element={<h1>Home</h1>}>  </Route>
-        <Route path="/auth/log-in" element={<LogIn />}>  </Route>
-        <Route path="/auth/register-user" element={<RegisterUser />}>  </Route>
+        <Route path="/home" element={<h1>Home</h1>}></Route>
+        <Route path="/auth/log-in" element={<LogIn />}></Route>
+        <Route path="/auth/register-user" element={<RegisterUser />}></Route>
+        <Route path="/auth/forgot-password" element={<ForgotPassword />}></Route>
       </Routes>
     </>
   )
