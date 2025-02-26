@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import PersonIcon from '@mui/icons-material/Person';
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig, getBaseUrl } from "../Networking/Configuration/ApiConfig";
-import { FcGoogle } from "react-icons/fc";
 import { DotLoader } from "react-spinners";
 
 const RegisterUser = () => {
