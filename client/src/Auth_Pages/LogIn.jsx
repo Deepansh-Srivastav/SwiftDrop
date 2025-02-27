@@ -13,6 +13,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { postApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
+import {
+  showSuccessToast,
+  showErrorToast,
+  showWarningToast
+}
+  from "../Components/CostomAlert.jsx";
 
 const LogIn = () => {
 
@@ -20,7 +26,6 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
-
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -46,7 +51,11 @@ const LogIn = () => {
       if (response?.success === true && response?.error === false) {
         setIsLoading(false)
         navigate('/home');
+        showSuccessToast(`Welcome back, [Username]`)
+        return
       }
+      showErrorToast(response?.message)
+      // showWarningToast()
 
       setIsLoading(false)
 
@@ -60,6 +69,7 @@ const LogIn = () => {
   const handleFormChange = (e) => {
     setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
   };
+
 
   const isAnyFieldEmpty = Object.values(loginFormData).some(value => value.trim() === "");
 

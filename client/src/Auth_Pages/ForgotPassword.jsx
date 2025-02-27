@@ -7,42 +7,102 @@ import {
 import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BarLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { putApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
+import {
+    showSuccessToast,
+    showErrorToast,
+} from "../Components/CostomAlert.jsx";
+import { useSelector, useDispatch } from 'react-redux';
+import { setVerificationState } from "../Redux/Features/OtpVerificationSlice.js";
 
 
 const ForgotPassword = () => {
 
-    const [email, setEmail] = useState("")
-    const [otp, setOtp] = useState("")
+    const navigate = useNavigate()
+
+    const [emailInputValue, setEmail] = useState("")
+    const [otpInputValue, setOtp] = useState("")
     const [isOtpSent, setIsOtpSent] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const isOtpVerified = useSelector((state) => {
+        return state.isOtpVerified.value
+    })
+
+    const dispatch = useDispatch()
+
+
 
     function handleFormInput(event) {
         const { name, value } = event.target
-        if (name === "email") setEmail(value);
-        if (name === "otp") setOtp(value);
+        if (name === "emailInputValue") setEmail(value);
+        if (name === "otpInputValue") setOtp(value);
     }
 
     async function sendOtp() {
         try {
+            setIsLoading(true)
             const BASE_URL = getBaseUrl();
             const RESET_PASSWORD = APIConfig.apiPath.forgotPassword
             const FINAL_URL = BASE_URL + RESET_PASSWORD
 
-            const response = await putApiRequestWrapper(FINAL_URL)
+            const payload = {
+                email: emailInputValue
+            }
+
+            const response = await putApiRequestWrapper(FINAL_URL, payload)
 
             if (response.success === true && response.error === false) {
-                console.log(response);
+                showSuccessToast(response?.message)
+                setIsLoading(false)
+                setIsOtpSent(true)
+                return
             }
+
+            setIsLoading(false)
         }
         catch (error) {
             console.log(error.message);
         }
     }
 
+    async function verifyOtp() {
+        setIsLoading(true)
+        const BASE_URL = getBaseUrl();
+        const RESET_PASSWORD = APIConfig.apiPath.verifyOtp
+        const FINAL_URL = BASE_URL + RESET_PASSWORD
+
+        const payload = {
+            email: emailInputValue,
+            otp: otpInputValue
+        }
+
+        const response = await putApiRequestWrapper(FINAL_URL, payload)
+
+        if (response?.success === true && response?.error === false) {
+            showSuccessToast(response?.message)
+
+            setIsLoading(false)
+
+            dispatch(setVerificationState(true))
+
+            navigate("/auth/reset-password")
+
+            return
+        }
+        setIsLoading(false)
+
+        showErrorToast(response?.message)
+    }
+
     async function handleFormSubmission() {
         await sendOtp()
+    }
+
+    async function handleOtpVerification() {
+        await verifyOtp()
     }
 
     return (
@@ -91,17 +151,16 @@ const ForgotPassword = () => {
                             Recover Your Account
                         </Typography>
 
-                        <CardContent sx={{ padding: "0 25px" }}>
-
-                            <form action="none" onSubmit={(e) => { e.preventDefault(); }}>
+                        <CardContent sx={{ padding: "0 25px", }}>
+                            <form action="none" onSubmit={(e) => { e.preventDefault(); }} className="authForms">
 
                                 {/* Email */}
                                 <TextField
                                     fullWidth
                                     label="Email"
-                                    name="email"
-                                    type="email"
-                                    value={email}
+                                    name="emailInputValue"
+                                    type="emailInputValue"
+                                    value={emailInputValue}
                                     onChange={handleFormInput}
                                     sx={{ mb: 3 }}
                                     InputProps={{
@@ -122,9 +181,9 @@ const ForgotPassword = () => {
                                         type={'text'}
                                         variant="outlined"
                                         sx={{ mb: 3 }}
-                                        name="otp"
+                                        name="otpInputValue"
                                         onChange={handleFormInput}
-                                        // value={otp}
+                                        // value={otpInputValue}
                                         InputProps={{
                                             startAdornment: (
                                                 <InputAdornment position="start">
@@ -134,27 +193,58 @@ const ForgotPassword = () => {
 
                                         }}
                                         required
-                                    // error={passwordError}
                                     />
                                 )}
 
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: "#388E3C",
-                                        color: "white",
-                                        borderRadius: "8px",
-                                        mb: 2,
-                                        "&:hover": { backgroundColor: "#2E7D32" },
-                                    }}
-                                    type="submit"
-                                    onClick={handleFormSubmission}
-                                // disabled={}
-                                >
-                                    Get OTP
-                                </Button>
+                                {isLoading &&
+                                    (
+                                        <div className="loader">
+                                            <ClipLoader
+                                                size={50}
+                                                speedMultiplier={0.7}
+                                                color="var(--purple-theme)"
+                                            />
+                                        </div>
+                                    )}
 
+                                {isOtpSent ?
+                                    (
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{
+                                                backgroundColor: "#388E3C",
+                                                color: "white",
+                                                borderRadius: "8px",
+                                                mb: 2,
+                                                "&:hover": { backgroundColor: "#2E7D32" },
+                                            }}
+                                            type="submit"
+                                            onClick={handleOtpVerification}
+                                        >
+                                            Verify OTP
+                                        </Button>
+                                    )
+                                    :
+                                    (
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{
+                                                backgroundColor: "#388E3C",
+                                                color: "white",
+                                                borderRadius: "8px",
+                                                mb: 2,
+                                                "&:hover": { backgroundColor: "#2E7D32" },
+                                            }}
+                                            type="submit"
+                                            onClick={handleFormSubmission}
+                                        // disabled={ }
+                                        >
+                                            Get OTP
+                                        </Button>
+                                    )
+                                }
                             </form>
                         </CardContent>
 
