@@ -172,7 +172,6 @@ const LogIn = () => {
                 />
 
                 {/* Login Button */}
-
                 {isLoading ?
                   (
                     <Button
@@ -191,11 +190,11 @@ const LogIn = () => {
                       fullWidth
                       variant="contained"
                       sx={{
-                        backgroundColor: "#388E3C",
+                        backgroundColor: "var(--button-color)",
                         color: "white",
                         borderRadius: "8px",
                         mb: 2,
-                        "&:hover": { backgroundColor: "#2E7D32" },
+                        "&:hover": { backgroundColor: "var(--button-hover-color)" },
                       }}
                       type="submit"
                       onClick={handleLoginFormSubmit}

@@ -200,16 +200,20 @@ const ForgotPassword = () => {
                                     />
                                 )}
 
-                                {isLoading &&
-                                    (
-                                        <div className="loader">
-                                            <ClipLoader
-                                                size={50}
-                                                speedMultiplier={0.7}
-                                                color="var(--purple-theme)"
-                                            />
-                                        </div>
-                                    )}
+                                {
+                                    isLoading && (
+                                        <Button
+                                            sx={{
+                                                mb: 2,
+                                                width: "100%"
+
+                                            }}
+                                            disabled={true}
+                                        >
+                                            <ClipLoader color="var(--button-color)" size={50} />
+                                        </Button>
+                                    )
+                                }
 
                                 {isOtpSent ?
                                     (
