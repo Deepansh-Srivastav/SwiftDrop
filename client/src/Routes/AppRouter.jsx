@@ -16,6 +16,10 @@ const AppRouter = () => {
 
     const currentRoute = location.pathname
 
+    const publicRoutes = {
+        home: '/'
+    }
+
     useEffect(() => {
         const authRoutes = [
             "/auth/log-in",
@@ -23,7 +27,7 @@ const AppRouter = () => {
             "/auth/forgot-password",
             "/auth/reset-password",
         ]
-        setShowNavbar(!authRoutes.includes(currentRoute))
+        setShowNavbar(Object.values(publicRoutes).includes(currentRoute));
     }, [currentRoute])
 
     const isOtpVerified = useSelector((state) => {
@@ -34,11 +38,14 @@ const AppRouter = () => {
         <>
             {showNavbar && <Navbar />}
             <Routes>
-                <Route path="/home" element={<h1>Home</h1>}></Route>
+                <Route path="/" element={<h1>Home</h1>}></Route>
                 <Route path="/auth/log-in" element={<LogIn />}></Route>
                 <Route path="/auth/register-user" element={<RegisterUser />}></Route>
                 <Route path="/auth/forgot-password" element={<ForgotPassword />}></Route>
-                <Route path="/auth/reset-password" element={isOtpVerified ? <ResetPassword /> : <Navigate to="/auth/log-in" />}></Route>
+                {/* <Route path="/auth/reset-password" element={isOtpVerified ? <ResetPassword /> : <Navigate to="*" />}></Route> */}
+
+                <Route path="/auth/reset-password" element={<ResetPassword />}></Route>
+
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
         </>

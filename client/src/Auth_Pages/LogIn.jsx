@@ -10,7 +10,7 @@ import {
 import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BarLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { postApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
 import {
@@ -50,10 +50,11 @@ const LogIn = () => {
 
       if (response?.success === true && response?.error === false) {
         setIsLoading(false)
-        navigate('/home');
+        navigate('/');
         showSuccessToast(`Welcome back, [Username]`)
         return
       }
+      setPasswordError(true)
       showErrorToast(response?.message)
       // showWarningToast()
 
@@ -88,7 +89,7 @@ const LogIn = () => {
           justifyContent: "center"
         }}>
 
-        <Link to='/home'>
+        <Link to='/'>
           <button className="flexBoxCentered backButton">
             <KeyboardBackspaceSharpIcon />
           </button>
@@ -148,7 +149,7 @@ const LogIn = () => {
                   label="Password"
                   type={showPassword ? "text" : "password"}
                   variant="outlined"
-                  sx={{ mb: passwordError ? 1 : 3 }}
+                  sx={{ mb: passwordError ? 3 : 3 }}
                   name="password"
                   onChange={handleFormChange}
                   value={loginFormData.password}
@@ -177,9 +178,11 @@ const LogIn = () => {
                     <Button
                       sx={{
                         mb: 2,
+                        width: "100%"
                       }}
+                      disabled={true}
                     >
-                      <BarLoader />
+                      <ClipLoader color="var(--button-color)" />
                     </Button>
                   )
                   :
@@ -203,13 +206,15 @@ const LogIn = () => {
                   )}
               </form>
 
-              <Typography className="pointer" variant="body2" align="center" sx={{ mb: 3 }}>
+              {passwordError && (
+                <Typography className="pointer" variant="body2" align="center" sx={{ mb: 3 }}>
 
-                <Link to={'/auth/forgot-password'}>
-                  Forgot Password?
-                </Link>
+                  <Link to={'/auth/forgot-password'}>
+                    Forgot Password?
+                  </Link>
 
-              </Typography>
+                </Typography>
+              )}
 
               <Typography variant="body2" align="center">
                 Don't have an account?{" "}

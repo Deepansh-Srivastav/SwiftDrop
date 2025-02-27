@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, Button, TextField, Card, CardContent, Divider, InputAdornment, IconButton } from "@mui/material";
+import { Box, Grid, Typography, Button, TextField, Card, CardContent, InputAdornment } from "@mui/material";
 import {
     EmailIcon,
     VpnKeyIcon,
@@ -14,8 +14,8 @@ import {
     showSuccessToast,
     showErrorToast,
 } from "../Components/CostomAlert.jsx";
-import { useSelector, useDispatch } from 'react-redux';
-import { setVerificationState } from "../Redux/Features/OtpVerificationSlice.js";
+import { useDispatch } from 'react-redux';
+import { setOtpVerificationState } from "../Redux/Features/OtpVerificationSlice.js";
 
 
 const ForgotPassword = () => {
@@ -27,13 +27,7 @@ const ForgotPassword = () => {
     const [isOtpSent, setIsOtpSent] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
-    const isOtpVerified = useSelector((state) => {
-        return state.isOtpVerified.value
-    })
-
     const dispatch = useDispatch()
-
-
 
     function handleFormInput(event) {
         const { name, value } = event.target
@@ -55,9 +49,15 @@ const ForgotPassword = () => {
             const response = await putApiRequestWrapper(FINAL_URL, payload)
 
             if (response.success === true && response.error === false) {
+
                 showSuccessToast(response?.message)
+
                 setIsLoading(false)
+
                 setIsOtpSent(true)
+
+                console.log(response?.data);
+
                 return
             }
 
@@ -84,14 +84,17 @@ const ForgotPassword = () => {
         if (response?.success === true && response?.error === false) {
             showSuccessToast(response?.message)
 
+            localStorage.setItem("userEmail", payload?.email)
+
             setIsLoading(false)
 
-            dispatch(setVerificationState(true))
+            dispatch(setOtpVerificationState(true))
 
             navigate("/auth/reset-password")
 
             return
         }
+
         setIsLoading(false)
 
         showErrorToast(response?.message)
@@ -126,9 +129,10 @@ const ForgotPassword = () => {
                     </button>
                 </Link>
 
-                {/* <div className="authenticationPage flexBoxCentered"> */}
-                <img src={projectImages.forgotPasswordImage} alt="loginImage" className="authenticationImage" />
-                {/* </div> */}
+                <img src={projectImages.forgotPasswordImage}
+                    alt="loginImage"
+                    className="authenticationImage"
+                    style={{ maxWidth: '450px' }} />
             </Grid>
 
             <Grid item
