@@ -215,11 +215,11 @@ const RegisterUser = () => {
                                     fullWidth
                                     variant="contained"
                                     sx={{
-                                        backgroundColor: "#388E3C",
+                                        backgroundColor: "var(--button-theme-blue)",
                                         color: "white",
                                         borderRadius: "8px",
                                         mb: 2,
-                                        "&:hover": { backgroundColor: "#2E7D32" },
+                                        "&:hover": { backgroundColor: "var(--button-hover-theme-blue)" },
                                     }}
                                     type="submit"
                                     onClick={handleRegistrationFormSubmit}
@@ -233,7 +233,7 @@ const RegisterUser = () => {
                                     <Link
                                         to="/auth/log-in"
                                         sx={{
-                                            color: "#388E3C",
+                                            color: "var(--button-theme-blue)",
                                             fontWeight: "bold",
                                             textDecoration: "none",
                                         }}

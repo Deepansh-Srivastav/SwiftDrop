@@ -3,9 +3,9 @@ import {
     KeyboardBackspaceSharpIcon,
 } from '../Assets/Icons.js'
 import { projectImages } from "../Assets/Assets";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BarLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { putApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
 import {
@@ -32,6 +32,7 @@ const ResetPassword = () => {
     const [newPassword, setNewPassword] = useState("")
     const [confirmNewPassword, setConfirmNewPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false)
 
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
@@ -45,11 +46,11 @@ const ResetPassword = () => {
 
     async function handleResetPassword() {
         try {
+            setIsLoading(true)
 
             const BASE_URL = getBaseUrl();
             const RESET_PASSWORD_ENDPOINT = APIConfig.apiPath.resetPassword
             const FINAL_URL = BASE_URL + RESET_PASSWORD_ENDPOINT
-
             const payload = {
                 email: userEmail,
                 password: newPassword,
@@ -61,21 +62,18 @@ const ResetPassword = () => {
             if (response?.success === true && response?.error === false) {
 
                 localStorage.removeItem('userEmail')
-                localStorage.setItem("resetComplete", 'true')
-
                 navigate("/auth/log-in")
-
                 showSuccessToast(response?.message)
 
                 setTimeout(() => {
                     dispatch(setOtpVerificationState(false))
                 }, 2000)
 
+                setIsLoading(false)
                 return;
             }
-
             showErrorToast(response?.message)
-
+            setIsLoading(false)
             return
         }
         catch (e) {
@@ -84,17 +82,27 @@ const ResetPassword = () => {
     }
 
     async function handlePasswordReset() {
-
         if (newPassword === confirmNewPassword) {
-
             await handleResetPassword()
-
             return;
         }
-
         setNewPassword("")
         setConfirmNewPassword("")
         showWarningToast("Passwords do not match. Please try again.");
+    }
+
+    useEffect(() => {
+
+        const handleUnload = () => {
+            localStorage.removeItem('userEmail');
+        };
+        window.addEventListener('beforeunload', handleUnload);
+
+        return () => window.removeEventListener('beforeunload', handleUnload);
+    }, [])
+
+    if (!userEmail) {
+        navigate('/')
     }
 
     // const isAnyFieldEmpty = Object.values(loginFormData).some(value => value.trim() === "");
@@ -196,33 +204,44 @@ const ResetPassword = () => {
                                     required
                                 />
 
-                                <Button
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{
-                                        backgroundColor: "#388E3C",
-                                        color: "white",
-                                        borderRadius: "8px",
-                                        mb: 3,
-                                        "&:hover": { backgroundColor: "#2E7D32" },
-                                    }}
-                                    type="submit"
-                                    onClick={handlePasswordReset}
-                                // disabled={isAnyFieldEmpty}
-                                >
-                                    Reset Password
-                                </Button>
+                                {isLoading ?
+                                    (
+                                        <Button
+                                            sx={{
+                                                mb: 2,
+                                                width: "100%"
+
+                                            }}
+                                            disabled={true}
+                                        >
+                                            <ClipLoader color="var(--button-color)" size={25} />
+                                        </Button>
+                                    )
+                                    :
+                                    (
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{
+                                                backgroundColor: "var(--button-theme-blue)",
+                                                color: "white",
+                                                borderRadius: "8px",
+                                                mb: 3,
+                                                "&:hover": { backgroundColor: "var(--button-hover-theme-blue)" },
+                                            }}
+                                            type="submit"
+                                            onClick={handlePasswordReset}
+                                        >
+                                            Reset Password
+                                        </Button>
+                                    )
+                                }
                             </form>
 
-
-
-
                         </CardContent>
-
                     </Card>
                 </Box>
             </Grid>
-
         </Grid >
     )
 }

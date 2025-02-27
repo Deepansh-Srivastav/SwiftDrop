@@ -34,6 +34,10 @@ const AppRouter = () => {
         return state.isOtpVerified.value
     })
 
+    if (currentRoute == "/") {
+        localStorage.removeItem('userEmail')
+    }
+
     return (
         <>
             {showNavbar && <Navbar />}

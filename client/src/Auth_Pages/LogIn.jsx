@@ -105,7 +105,6 @@ const LogIn = () => {
         sm={6}
         md={5}
         sx={{ backgroundColor: "var(--color-one)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {/* <AuthForm loginForm = {true}/> */}
 
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
 
@@ -194,7 +193,7 @@ const LogIn = () => {
                         color: "white",
                         borderRadius: "8px",
                         mb: 2,
-                        "&:hover": { backgroundColor: "var(--button-hover-color)" },
+                        "&:hover": { backgroundColor: "var(--button-hover-theme-blue)" },
                       }}
                       type="submit"
                       onClick={handleLoginFormSubmit}
@@ -220,7 +219,7 @@ const LogIn = () => {
                 <Link
                   to="/auth/register-user"
                   sx={{
-                    color: "#388E3C",
+                    color: "var(--button-theme-blue)",
                     fontWeight: "bold",
                     textDecoration: "none",
                   }}
@@ -256,7 +255,6 @@ const LogIn = () => {
           </Card>
         </Box>
       </Grid>
-
     </Grid >
   )
 }
