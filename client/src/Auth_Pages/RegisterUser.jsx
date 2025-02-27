@@ -58,7 +58,7 @@ const RegisterUser = () => {
 
             if (response?.success) {
                 setIsLoading(false)
-                navigate('/home')
+                navigate('/')
                 setPasswordError(false)
                 console.log(response.message);
             }
@@ -93,7 +93,7 @@ const RegisterUser = () => {
                     justifyContent: "center"
                 }}>
 
-                <Link to='/home'>
+                <Link to='/'>
                     <button className="flexBoxCentered backButton">
                         <KeyboardBackspaceSharpIcon />
                     </button>

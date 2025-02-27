@@ -319,7 +319,7 @@ export async function forgotPasswordController(req, res) {
     try {
         const { email } = req.body
 
-        const existingUser = await validateUserAndUpdate({email})
+        const existingUser = await validateUserAndUpdate({ email })
 
         if (!existingUser) {
             return res.status(404).json({
@@ -360,7 +360,8 @@ export async function forgotPasswordController(req, res) {
         return res.status(200).json({
             message: "OTP has been successfully sent to your email.",
             error: false,
-            success: true
+            success: true,
+            data: otp
         });
 
     }
@@ -471,7 +472,7 @@ export async function resetPasswordController(req, res) {
         // )
 
         const updatePassword = await validateUserAndUpdate({
-            update:true,
+            update: true,
             user_id: existingUser?._id,
             payload
         })

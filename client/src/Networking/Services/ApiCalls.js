@@ -29,10 +29,15 @@ export async function getApiRequestWrapper(URL) {
     }
 }
 
-export async function putApiRequestWrapper(URL) {
+export async function putApiRequestWrapper(URL, payload) {
+    console.log('payload is ',payload);
 
     try {
-        const response = await axios.put(URL)
+        const response = await axios.put(URL, payload, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
         return response?.data
     }
     catch (error) {
