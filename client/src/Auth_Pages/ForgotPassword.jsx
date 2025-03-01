@@ -38,26 +38,20 @@ const ForgotPassword = () => {
     async function sendOtp() {
         try {
             setIsLoading(true)
-            const BASE_URL = getBaseUrl();
-            const RESET_PASSWORD = APIConfig.apiPath.forgotPassword
-            const FINAL_URL = BASE_URL + RESET_PASSWORD
 
+            const FORGOT_PASSWORD_ENDPOINT = APIConfig.apiPath.forgotPassword
             const payload = {
                 email: emailInputValue
             }
 
-            const response = await putApiRequestWrapper(FINAL_URL, payload)
+            const response = await putApiRequestWrapper(FORGOT_PASSWORD_ENDPOINT, payload)
 
             if (response.success === true && response.error === false) {
 
                 showSuccessToast(response?.message)
-
                 setIsLoading(false)
-
                 setIsOtpSent(true)
-
                 console.log(response?.data);
-
                 return
             }
 
@@ -70,16 +64,14 @@ const ForgotPassword = () => {
 
     async function verifyOtp() {
         setIsLoading(true)
-        const BASE_URL = getBaseUrl();
-        const RESET_PASSWORD = APIConfig.apiPath.verifyOtp
-        const FINAL_URL = BASE_URL + RESET_PASSWORD
 
+        const VERIFY_OTP_ENDPOINT = APIConfig.apiPath.verifyOtp
         const payload = {
             email: emailInputValue,
             otp: otpInputValue
         }
 
-        const response = await putApiRequestWrapper(FINAL_URL, payload)
+        const response = await putApiRequestWrapper(VERIFY_OTP_ENDPOINT, payload)
 
         if (response?.success === true && response?.error === false) {
             showSuccessToast(response?.message)
