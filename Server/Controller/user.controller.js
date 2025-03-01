@@ -182,6 +182,14 @@ export async function loginController(req, res) {
 
         res.cookie('refreshToken', refreshToken, cookieOptions)
 
+        const updateUserLastLoginDetail = validateUserAndUpdate({
+            update: true,
+            user_id: existingUser?._id,
+            payload: {
+                last_login_date: new Date()
+            }
+        })
+
         return res.status(200).json({
             message: "User login successful",
             error: false,
@@ -240,6 +248,40 @@ export async function logoutController(req, res) {
             success: false,
         })
     }
+}
+
+// Get Login user details
+export async function getLoginUserDetails(req, res) {
+
+    try {
+        const userId = req.userId
+
+        const userDetails = await UserModel.findById(userId).select("_id name email avatar mobile verify_email address_details shopping_cart orderHistory last_login_date")
+
+        if (!userDetails) {
+            return res.status(404).send({
+                message: "User not found",
+                error: true,
+                success: false
+            })
+        }
+
+        return res.status(200).send({
+            message: "User found successfully",
+            success: true,
+            error: false,
+            data: userDetails
+        })
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: error.message || "Error Occurred",
+            error: true,
+            success: false,
+        })
+    }
+
+
 }
 
 // Profile Picture Controller
@@ -412,6 +454,15 @@ export async function verifyForgotPasswordOTPController(req, res) {
                 success: false
             });
         }
+
+        const resetStoredOtp = await validateUserAndUpdate({
+            update: true,
+            user_id: existingUser?._id,
+            payload: {
+                forgot_password_otp: "",
+                forgot_password_expiry:""
+            }
+        })
 
         return res.status(200).json({
             message: "OTP verified successfully.",

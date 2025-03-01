@@ -12,28 +12,29 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { postApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
+import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import {
   showSuccessToast,
   showErrorToast,
-  showWarningToast
 } from "../Components/CostomAlert.jsx";
+import { useDispatch} from 'react-redux'
+import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js"
 
 const LogIn = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
   })
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleLoginFormSubmit = async () => {
     await handleLogin()
@@ -50,9 +51,16 @@ const LogIn = () => {
         localStorage.setItem('accessToken', response?.data?.accessToken)
         localStorage.setItem('refreshToken', response?.data?.refreshToken)
 
+        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails
+        
+        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT)
+
+        dispatch(setUserDetails(userDetails?.data))
+
         setIsLoading(false)
         navigate('/');
-        showSuccessToast(`Welcome back, [Username]`)
+
+        showSuccessToast(`Welcome back, ${userDetails?.data?.name}`)
         return
       }
       setPasswordError(true)

@@ -24,6 +24,8 @@ import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -58,9 +60,20 @@ export default function Navbar() {
     const handleMenu = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
+    const userData = useSelector((state) => {
+        return state.userDetails
+    })
+
+    console.log("UserData is = ", userData);
+    
+
+    const isUserLoggedIn = userData && Object.keys(userData).length > 0;
+
+
     return (
         <AppBar position="static" sx={{
-            backgroundColor: 'var(--color-one)', color: 'black', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', padding: '5px 20px' }}>
+            backgroundColor: 'var(--color-one)', color: 'black', boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', padding: '5px 20px'
+        }}>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
                 {/* Left Side - Logo */}
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -80,55 +93,63 @@ export default function Navbar() {
                     <StyledInputBase placeholder="Search…" inputProps={{ 'aria-label': 'search' }} />
                 </Search>
 
-                {/* Right Side - Buttons and Icons */}
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', minWidth: "200px" }}>
+                {
+                    (isUserLoggedIn ? (
+                        <>
+                            <div onClick={handleMenu} >
+                                <p>Welcome {userData?.name}</p>
+                                <Avatar alt="User Avatar" sx={{ width: 40, height: 40 }} />
+                            </div>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                                PaperProps={{
+                                    sx: { width: 300, borderRadius: 2, boxShadow: 3, }
+                                }}
+                            >
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><Person4Icon sx={{ mr: 1 }} fontSize='medium' /> Profile</MenuItem>
+                                <Divider />
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}>My account</MenuItem>
 
-                    <Link to="/auth/log-in">
-                        <button className='flexBoxCentered navbarOptions'><LoginIcon sx={{ mr: 0.8 }} fontSize='medium' /> Login</button>
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><ShoppingBagIcon sx={{ mr: 1 }} /> Orders</MenuItem>
 
-                    </Link>
+                                <Divider />
 
-                    <Link to="/auth/register-user">
-                        <button className='flexBoxCentered navbarOptions'><PersonAddIcon sx={{ mr: 0.5 }} fontSize='medium' /> Signup</button>
-                    </Link>
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><LogoutIcon sx={{ mr: 1 }} />Logout</MenuItem>
 
-                    <button className='flexBoxCentered cartButton'>
-                        <Badge badgeContent={1} color="primary">
-                            < ShoppingCartIcon />
-                        </Badge>
-                        <span> Cart</span>
-                    </button>
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}>Login</MenuItem>
 
-                    {/* <div onClick={handleMenu} >
-                        <Avatar alt="User Avatar" sx={{ width: 40, height: 40 }} />
-                    </div> */}
-                </Box>
-
-                {/* Profile Dropdown Menu */}
-                <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                    PaperProps={{
-                        sx: { width: 300, borderRadius: 2, boxShadow: 3, }
-                    }}
-                >
-                    <MenuItem onClick={handleClose} sx={{ py: 2 }}><Person4Icon sx={{ mr: 1 }} fontSize='medium' /> Profile</MenuItem>
-                    <Divider />
-                    <MenuItem onClick={handleClose} sx={{ py: 2 }}>My account</MenuItem>
-
-                    <MenuItem onClick={handleClose} sx={{ py: 2 }}><ShoppingBagIcon sx={{ mr: 1 }} /> Orders</MenuItem>
-
-                    <Divider />
-
-                    <MenuItem onClick={handleClose} sx={{ py: 2 }}><LogoutIcon sx={{ mr: 1 }} />Logout</MenuItem>
-
-                    <MenuItem onClick={handleClose} sx={{ py: 2 }}>Login</MenuItem>
-
-                    <MenuItem onClick={handleClose} sx={{ py: 2 }}>Signup</MenuItem>
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}>Signup</MenuItem>
 
 
-                </Menu>
+                            </Menu>
+                        </>
+                    )
+                        :
+                        (
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', minWidth: "200px" }}>
+
+                                <Link to="/auth/log-in">
+                                    <button className='flexBoxCentered navbarOptions'><LoginIcon sx={{ mr: 0.8 }} fontSize='medium' /> Login</button>
+
+                                </Link>
+
+                                <Link to="/auth/register-user">
+                                    <button className='flexBoxCentered navbarOptions'><PersonAddIcon sx={{ mr: 0.5 }} fontSize='medium' /> Signup</button>
+                                </Link>
+
+                                <button className='flexBoxCentered cartButton'>
+                                    <Badge badgeContent={1} color="primary">
+                                        < ShoppingCartIcon />
+                                    </Badge>
+                                    <span> Cart</span>
+                                </button>
+                            </Box>
+                        )
+                    )
+                }
+
             </Toolbar>
         </AppBar>
     );

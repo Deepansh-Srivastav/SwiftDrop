@@ -9,8 +9,8 @@ import {
     updateUserDetailsController,
     forgotPasswordController,
     verifyForgotPasswordOTPController,
-    resetPasswordController
-
+    resetPasswordController,
+    getLoginUserDetails
 
 } from "../Controller/user.controller.js";
 import auth from "../Middleware/authMiddleware.js";
@@ -26,6 +26,7 @@ userRouter.put("/forgot-password", forgotPasswordController)
 userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOTPController)
 userRouter.put("/reset-password", resetPasswordController)
 userRouter.get('/logout', auth, logoutController);
+userRouter.get("/user-details", auth, getLoginUserDetails)
 
 //Refresh token route remaining
 
