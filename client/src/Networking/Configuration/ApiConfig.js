@@ -4,11 +4,11 @@ export function getBaseUrl() {
             (import.meta.env.VITE_BACKEND_DEV_BASE_URL1)
             :
             (import.meta.env.VITE_BACKEND_PROD_BASE_URL))
-            // (import.meta.env.VITE_BACKEND_PROD_BASE_URL))
+    // (import.meta.env.VITE_BACKEND_PROD_BASE_URL))
 }
 
 export const APIConfig = {
-    apiPath:{
+    apiPath: {
         register: '/api/user/register',
         login: '/api/user/login',
         verifyEmail: '/api/user/verify-email',
@@ -18,5 +18,6 @@ export const APIConfig = {
         forgotPassword: '/api/user/forgot-password',
         verifyOtp: '/api/user/verify-forgot-password-otp',
         resetPassword: '/api/user/reset-password',
+        getUserDetails: '/api/user/user-details'
     }
 } 

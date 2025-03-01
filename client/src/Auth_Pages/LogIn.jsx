@@ -11,30 +11,30 @@ import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { postApiRequestWrapper, } from "../Networking/Services/ApiCalls.js";
+import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
+import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import {
   showSuccessToast,
   showErrorToast,
-  showWarningToast
-}
-  from "../Components/CostomAlert.jsx";
+} from "../Components/CostomAlert.jsx";
+import { useDispatch} from 'react-redux'
+import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js"
 
 const LogIn = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
   })
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleLoginFormSubmit = async () => {
     await handleLogin()
@@ -43,15 +43,24 @@ const LogIn = () => {
   const handleLogin = async () => {
     try {
       setIsLoading(true)
-      const BASE_URL = getBaseUrl();
-      const REGISTRATION_URL = APIConfig?.apiPath?.login
-      const FINAL_URL = BASE_URL + REGISTRATION_URL
-      const response = await postApiRequestWrapper(FINAL_URL, loginFormData)
+      const LOGIN_URL = APIConfig?.apiPath?.login
+      const response = await postApiRequestWrapper(LOGIN_URL, loginFormData)
 
       if (response?.success === true && response?.error === false) {
+
+        localStorage.setItem('accessToken', response?.data?.accessToken)
+        localStorage.setItem('refreshToken', response?.data?.refreshToken)
+
+        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails
+        
+        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT)
+
+        dispatch(setUserDetails(userDetails?.data))
+
         setIsLoading(false)
         navigate('/');
-        showSuccessToast(`Welcome back, [Username]`)
+
+        showSuccessToast(`Welcome back, ${userDetails?.data?.name}`)
         return
       }
       setPasswordError(true)
@@ -70,7 +79,6 @@ const LogIn = () => {
   const handleFormChange = (e) => {
     setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
   };
-
 
   const isAnyFieldEmpty = Object.values(loginFormData).some(value => value.trim() === "");
 
