@@ -16,9 +16,16 @@ const app = express()
 //     origin: process.env.FRONTEND_URL
 // }))
 
+const frontEndDevUrl = process.env.FRONTEND_DEV_URL;
+
+const frondEndProdUrl = process.env.FRONTEND_PROD_URL;
+
+console.log(frondEndProdUrl, frontEndDevUrl);
+
+
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:5173","https://swift-drop.vercel.app" ]
+    origin: [frondEndProdUrl, frontEndDevUrl]
 }))
 
 app.use(express.json())
@@ -32,7 +39,7 @@ const PORT = process.env.PORT_2 || process.env.PORT_1
 
 app.use('/api/user', userRouter)
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send("This is the home page")
 })
 
