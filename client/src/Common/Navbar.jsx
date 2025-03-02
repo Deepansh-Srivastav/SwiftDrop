@@ -65,7 +65,7 @@ export default function Navbar() {
     })
 
     console.log("UserData is = ", userData);
-    
+
 
     const isUserLoggedIn = userData && Object.keys(userData).length > 0;
 
@@ -108,47 +108,51 @@ export default function Navbar() {
                                     sx: { width: 300, borderRadius: 2, boxShadow: 3, }
                                 }}
                             >
-                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><Person4Icon sx={{ mr: 1 }} fontSize='medium' /> Profile</MenuItem>
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><Person4Icon sx={{ mr: 1 }} fontSize='medium' /> My account</MenuItem>
                                 <Divider />
-                                <MenuItem onClick={handleClose} sx={{ py: 2 }}>My account</MenuItem>
 
                                 <MenuItem onClick={handleClose} sx={{ py: 2 }}><ShoppingBagIcon sx={{ mr: 1 }} /> Orders</MenuItem>
+
+                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><ShoppingBagIcon sx={{ mr: 1 }} /> Addresses</MenuItem>
 
                                 <Divider />
 
                                 <MenuItem onClick={handleClose} sx={{ py: 2 }}><LogoutIcon sx={{ mr: 1 }} />Logout</MenuItem>
-
-                                <MenuItem onClick={handleClose} sx={{ py: 2 }}>Login</MenuItem>
-
-                                <MenuItem onClick={handleClose} sx={{ py: 2 }}>Signup</MenuItem>
-
 
                             </Menu>
                         </>
                     )
                         :
                         (
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', minWidth: "200px" }}>
+                            <>
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', minWidth: "200px" }}>
 
-                                <Link to="/auth/log-in">
-                                    <button className='flexBoxCentered navbarOptions'><LoginIcon sx={{ mr: 0.8 }} fontSize='medium' /> Login</button>
+                                    <Link to="/auth/log-in">
+                                        <button className='flexBoxCentered navbarOptions'>
+                                            {/* <LoginIcon sx={{ mr: 0.8 }} fontSize='medium' /> */}
 
-                                </Link>
+                                            Login</button>
 
-                                <Link to="/auth/register-user">
-                                    <button className='flexBoxCentered navbarOptions'><PersonAddIcon sx={{ mr: 0.5 }} fontSize='medium' /> Signup</button>
-                                </Link>
+                                    </Link>
 
-                                <button className='flexBoxCentered cartButton'>
-                                    <Badge badgeContent={1} color="primary">
-                                        < ShoppingCartIcon />
-                                    </Badge>
-                                    <span> Cart</span>
-                                </button>
-                            </Box>
+                                    <Link to="/auth/register-user">
+                                        <button className='flexBoxCentered navbarOptions'>
+                                            {/* <PersonAddIcon sx={{ mr: 0.5 }} fontSize='medium' /> */}
+                                            Signup</button>
+                                    </Link>
+
+                                </Box>
+                            </>
                         )
                     )
                 }
+
+                <button className='flexBoxCentered cartButton'>
+                    <Badge badgeContent={1} color="primary">
+                        < ShoppingCartIcon />
+                    </Badge>
+                    <span> Cart</span>
+                </button>
 
             </Toolbar>
         </AppBar>
