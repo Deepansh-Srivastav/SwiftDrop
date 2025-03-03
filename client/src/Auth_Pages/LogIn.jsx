@@ -17,7 +17,7 @@ import {
   showSuccessToast,
   showErrorToast,
 } from "../Components/CostomAlert.jsx";
-import { useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js"
 
 const LogIn = () => {
@@ -52,8 +52,10 @@ const LogIn = () => {
         localStorage.setItem('refreshToken', response?.data?.refreshToken)
 
         const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails
-        
+
         const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT)
+
+        localStorage.setItem('userData', JSON.stringify(userDetails?.data))
 
         dispatch(setUserDetails(userDetails?.data))
 
