@@ -17,10 +17,14 @@ import PersonIcon from '@mui/icons-material/Person';
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig, getBaseUrl } from "../Networking/Configuration/ApiConfig";
 import { DotLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
+import { showSuccessToast } from "../Components/CostomAlert.jsx";
 
 const RegisterUser = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
@@ -57,10 +61,12 @@ const RegisterUser = () => {
             const response = await postApiRequestWrapper(FINAL_URL, registrationFormData)
 
             if (response?.success) {
-                setIsLoading(false)
-                navigate('/')
-                setPasswordError(false)
+                setIsLoading(false);
+                navigate('/');
+                setPasswordError(false);
                 console.log(response.message);
+                showSuccessToast(`Welcome back, ${response?.data?.name}`);
+                dispatch(setUserDetails(response?.data));
             }
 
             setIsLoading(false)

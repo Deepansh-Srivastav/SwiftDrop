@@ -28,8 +28,7 @@ userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOTPController)
 userRouter.put("/reset-password", resetPasswordController)
 userRouter.get('/logout', auth, logoutController);
 userRouter.get("/user-details", auth, getLoginUserDetails)
-
-userRouter.get("/google-oauth", googleOAuthController)
+userRouter.post("/google-oauth", googleOAuthController)
 
 //Refresh token route remaining
 

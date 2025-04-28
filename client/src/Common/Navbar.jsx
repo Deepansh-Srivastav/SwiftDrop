@@ -116,8 +116,20 @@ export default function Navbar() {
                     (isUserLoggedIn ? (
                         <>
                             <div onClick={handleMenu} >
-                                <p>Welcome {userData?.name}</p>
-                                <Avatar alt="User Avatar" sx={{ width: 40, height: 40 }} />
+                                <p>{userData?.name}</p>
+                                <Avatar
+                                    src={userData?.avatar || undefined}
+                                    alt="User Avatar"
+                                    sx={{ width: 40, height: 40 }}
+                                >
+                                    {
+                                        !userData?.avatar && userData?.name
+                                            ?
+                                            (userData.name.charAt(0).toUpperCase())
+                                            :
+                                            (null)
+                                    }
+                                </Avatar>
                             </div>
                             <Menu
                                 anchorEl={anchorEl}

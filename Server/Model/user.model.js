@@ -13,7 +13,19 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, "Provide a Password"]
+        required: function () {
+            return this.authProvider === "local";
+        },
+        default: null
+    },
+    googleId: {
+        type: String,
+        default: null
+    },
+    authProvider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local"
     },
     avatar: {
         type: String,
@@ -75,6 +87,6 @@ const userSchema = new mongoose.Schema({
     timestamp: true
 })
 
-const UserModel = mongoose.model("User",userSchema)
+const UserModel = mongoose.model("User", userSchema)
 
 export default UserModel

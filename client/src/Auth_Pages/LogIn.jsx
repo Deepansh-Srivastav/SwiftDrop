@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
+import { postApiRequestWrapper, getApiRequestWrapper, googleOAuthApi } from "../Networking/Services/ApiCalls.js";
 import {
   showSuccessToast,
   showErrorToast,
@@ -20,6 +20,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
 import { useGoogleLogin } from "@react-oauth/google"
+import OAuthComponent from "../Redux/Features/OAuthComponent.jsx";
 
 const LogIn = () => {
 
@@ -35,7 +36,32 @@ const LogIn = () => {
 
   const googleResponse = async (result) => {
     try {
-      console.log(result);
+      console.log(result.code);
+
+      try {
+
+        if (!result?.code) {
+          return;
+        };
+
+        const response = await googleOAuthApi(result?.code);
+
+        if (response?.success === true && response?.error === false) {
+          navigate('/');
+          setIsLoading(false);
+          dispatch(setUserDetails(response?.data));
+
+          showSuccessToast(`Welcome back, ${response?.data?.name}`)
+        }
+        else {
+          console.log("Error in frontend else block");
+        }
+
+      } catch (error) {
+        setIsLoading(false);
+        console.log("Error in hitting google api from frontend ", error);
+      }
+
     }
     catch (e) {
       console.log("Error while getting the code from google - ", e);
@@ -53,36 +79,35 @@ const LogIn = () => {
   };
 
   const handleLoginFormSubmit = async () => {
-    await handleLogin(loginFormData)
-  }
+    await handleLogin(loginFormData);
+  };
 
   const handleLogin = async (payload) => {
     try {
-      setIsLoading(true)
-      const LOGIN_URL = APIConfig?.apiPath?.login
-      const response = await postApiRequestWrapper(LOGIN_URL, payload)
+      setIsLoading(true);
+      const LOGIN_URL = APIConfig?.apiPath?.login;
+      const response = await postApiRequestWrapper(LOGIN_URL, payload);
 
       if (response?.success === true && response?.error === false) {
 
-        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails
+        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails;
 
-        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT)
+        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT);
 
-        localStorage.setItem('userData', JSON.stringify(userDetails?.data))
+        localStorage.setItem('userData', JSON.stringify(userDetails?.data));
 
-        dispatch(setUserDetails(userDetails?.data))
+        dispatch(setUserDetails(userDetails?.data));
 
-        setIsLoading(false)
+        setIsLoading(false);
         navigate('/');
 
-        showSuccessToast(`Welcome back, ${userDetails?.data?.name}`)
+        showSuccessToast(`Welcome back, ${userDetails?.data?.name}`);
         return
       }
-      setPasswordError(true)
-      showErrorToast(response?.message)
-      // showWarningToast()
+      setPasswordError(true);
+      showErrorToast(response?.message);
 
-      setIsLoading(false)
+      setIsLoading(false);
 
     }
     catch (error) {
@@ -254,26 +279,7 @@ const LogIn = () => {
               {/* Divider */}
               <Divider sx={{ my: 2 }}>OR</Divider>
 
-              <Button
-                fullWidth
-                variant="outlined"
-                sx={{
-                  borderRadius: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 1,
-                  border: "1px solid #DADCE0",
-                  color: "#5F6368",
-                  fontWeight: "bold",
-                  backgroundColor: "white",
-                  "&:hover": { backgroundColor: "#F1F3F4" },
-                }}
-                onClick={googleLogin}
-              >
-                <img src={google} alt="Google" width={"25px"} />
-                <span style={{ color: "#5F6368", marginLeft: "10px" }}>Continue with Google</span>
-              </Button>
+              <OAuthComponent setIsLoading={setIsLoading} />
 
             </CardContent>
           </Card>

@@ -1,5 +1,5 @@
-import axios from 'axios';
 import Axios from '../Configuration/AxiosConfig';
+import { APIConfig } from '../Configuration/ApiConfig';
 
 export async function postApiRequestWrapper(URL, payload) {
 
@@ -32,4 +32,18 @@ export async function putApiRequestWrapper(URL, payload) {
     catch (error) {
         return error?.response.data
     }
+}
+
+export async function googleOAuthApi(code) {
+    const URL = `${APIConfig?.apiPath?.oAuth}?code=${code}`;
+
+    try {
+        const response = await Axios.post(URL);
+
+        return response?.data
+    }
+    catch (error) {
+        return error.response.data
+    }
+
 }

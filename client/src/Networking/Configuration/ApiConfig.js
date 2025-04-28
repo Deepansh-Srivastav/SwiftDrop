@@ -10,6 +10,7 @@ export const APIConfig = {
     apiPath: {
         register: '/api/user/register',
         login: '/api/user/login',
+        oAuth: '/api/user/google-oauth',
         verifyEmail: '/api/user/verify-email',
         logout: '/api/user/logout',
         uploadAvatar: '/api/user/upload-avatar',
