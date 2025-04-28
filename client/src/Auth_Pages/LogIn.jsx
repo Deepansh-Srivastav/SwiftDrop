@@ -5,21 +5,19 @@ import {
   Visibility,
   VisibilityOff,
   KeyboardBackspaceSharpIcon,
-  google
 } from '../Assets/Icons.js'
 import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { postApiRequestWrapper, getApiRequestWrapper, googleOAuthApi } from "../Networking/Services/ApiCalls.js";
+import { postApiRequestWrapper, getApiRequestWrapper} from "../Networking/Services/ApiCalls.js";
 import {
   showSuccessToast,
   showErrorToast,
 } from "../Components/CostomAlert.jsx";
 import { useDispatch } from 'react-redux'
 import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
-import { useGoogleLogin } from "@react-oauth/google"
 import OAuthComponent from "../Redux/Features/OAuthComponent.jsx";
 
 const LogIn = () => {
@@ -32,46 +30,6 @@ const LogIn = () => {
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
-  })
-
-  const googleResponse = async (result) => {
-    try {
-      console.log(result.code);
-
-      try {
-
-        if (!result?.code) {
-          return;
-        };
-
-        const response = await googleOAuthApi(result?.code);
-
-        if (response?.success === true && response?.error === false) {
-          navigate('/');
-          setIsLoading(false);
-          dispatch(setUserDetails(response?.data));
-
-          showSuccessToast(`Welcome back, ${response?.data?.name}`)
-        }
-        else {
-          console.log("Error in frontend else block");
-        }
-
-      } catch (error) {
-        setIsLoading(false);
-        console.log("Error in hitting google api from frontend ", error);
-      }
-
-    }
-    catch (e) {
-      console.log("Error while getting the code from google - ", e);
-    }
-  };
-
-  const googleLogin = useGoogleLogin({
-    onSuccess: googleResponse,
-    onError: googleResponse,
-    flow: "auth-code"
   })
 
   const togglePasswordVisibility = () => {

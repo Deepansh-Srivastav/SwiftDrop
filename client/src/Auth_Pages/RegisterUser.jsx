@@ -9,7 +9,6 @@ import {
     LockIcon,
     Visibility,
     VisibilityOff,
-    google
 } from '../Assets/Icons.js'
 
 import { useNavigate } from "react-router-dom";
@@ -20,6 +19,8 @@ import { DotLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
 import { showSuccessToast } from "../Components/CostomAlert.jsx";
+import OAuthComponent from "../Redux/Features/OAuthComponent.jsx";
+
 
 const RegisterUser = () => {
 
@@ -252,25 +253,7 @@ const RegisterUser = () => {
 
                             <Divider sx={{ my: 2 }}>OR</Divider>
 
-                            <Button
-                                fullWidth
-                                variant="outlined"
-                                sx={{
-                                    borderRadius: "8px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    gap: 1,
-                                    border: "1px solid #DADCE0",
-                                    color: "#5F6368",
-                                    fontWeight: "bold",
-                                    backgroundColor: "white",
-                                    "&:hover": { backgroundColor: "#F1F3F4" },
-                                }}
-                            >
-                                <img src={google} alt="google" width={'25px'} />
-                                <span style={{ color: "#5F6368", marginLeft: "10px" }}>Continue with Google</span>
-                            </Button>
+                            <OAuthComponent setIsLoading={setIsLoading} />
 
                         </CardContent>
 
