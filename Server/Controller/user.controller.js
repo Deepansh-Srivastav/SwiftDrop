@@ -5,17 +5,9 @@ import generateAccessToken from "../Utils/generateAccessToken.js"
 import generateRefreshToken from "../Utils/generateRefreshToken.js"
 import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
 import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js"
-
-import {
-    encryptPassword,
-    validatePassword
-} from "../Utils/encrypt.js"
-
+import { encryptPassword, validatePassword } from "../Utils/encrypt.js"
 import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js"
-import {
-    registerUser,
-    validateUserAndUpdate,
-} from "../Services/userService.js"
+import {registerUser,validateUserAndUpdate} from "../Services/userService.js"
 import generateOTP from "../Services/generateOTP.js"
 
 // User Registration Controller 
@@ -460,7 +452,7 @@ export async function verifyForgotPasswordOTPController(req, res) {
             user_id: existingUser?._id,
             payload: {
                 forgot_password_otp: "",
-                forgot_password_expiry:""
+                forgot_password_expiry: ""
             }
         })
 

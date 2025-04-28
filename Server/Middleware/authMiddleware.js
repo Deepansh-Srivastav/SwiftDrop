@@ -37,6 +37,6 @@ const auth = async (req, res, next) => {
             success: false,
         })
     }
-}
+};
 
-export default auth
+export default auth;

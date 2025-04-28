@@ -37,19 +37,16 @@ const LogIn = () => {
   };
 
   const handleLoginFormSubmit = async () => {
-    await handleLogin()
+    await handleLogin(loginFormData)
   }
 
-  const handleLogin = async () => {
+  const handleLogin = async (payload) => {
     try {
       setIsLoading(true)
       const LOGIN_URL = APIConfig?.apiPath?.login
-      const response = await postApiRequestWrapper(LOGIN_URL, loginFormData)
+      const response = await postApiRequestWrapper(LOGIN_URL, payload)
 
       if (response?.success === true && response?.error === false) {
-
-        localStorage.setItem('accessToken', response?.data?.accessToken)
-        localStorage.setItem('refreshToken', response?.data?.refreshToken)
 
         const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails
 
