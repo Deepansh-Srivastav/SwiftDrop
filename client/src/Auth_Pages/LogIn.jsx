@@ -5,20 +5,20 @@ import {
   Visibility,
   VisibilityOff,
   KeyboardBackspaceSharpIcon,
-  google
 } from '../Assets/Icons.js'
 import { projectImages } from "../Assets/Assets";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
+import { postApiRequestWrapper, getApiRequestWrapper} from "../Networking/Services/ApiCalls.js";
 import {
   showSuccessToast,
   showErrorToast,
 } from "../Components/CostomAlert.jsx";
 import { useDispatch } from 'react-redux'
-import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js"
+import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
+import OAuthComponent from "../Redux/Features/OAuthComponent.jsx";
 
 const LogIn = () => {
 
@@ -37,39 +37,35 @@ const LogIn = () => {
   };
 
   const handleLoginFormSubmit = async () => {
-    await handleLogin()
-  }
+    await handleLogin(loginFormData);
+  };
 
-  const handleLogin = async () => {
+  const handleLogin = async (payload) => {
     try {
-      setIsLoading(true)
-      const LOGIN_URL = APIConfig?.apiPath?.login
-      const response = await postApiRequestWrapper(LOGIN_URL, loginFormData)
+      setIsLoading(true);
+      const LOGIN_URL = APIConfig?.apiPath?.login;
+      const response = await postApiRequestWrapper(LOGIN_URL, payload);
 
       if (response?.success === true && response?.error === false) {
 
-        localStorage.setItem('accessToken', response?.data?.accessToken)
-        localStorage.setItem('refreshToken', response?.data?.refreshToken)
+        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails;
 
-        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails
+        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT);
 
-        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT)
+        localStorage.setItem('userData', JSON.stringify(userDetails?.data));
 
-        localStorage.setItem('userData', JSON.stringify(userDetails?.data))
+        dispatch(setUserDetails(userDetails?.data));
 
-        dispatch(setUserDetails(userDetails?.data))
-
-        setIsLoading(false)
+        setIsLoading(false);
         navigate('/');
 
-        showSuccessToast(`Welcome back, ${userDetails?.data?.name}`)
+        showSuccessToast(`Welcome back, ${userDetails?.data?.name}`);
         return
       }
-      setPasswordError(true)
-      showErrorToast(response?.message)
-      // showWarningToast()
+      setPasswordError(true);
+      showErrorToast(response?.message);
 
-      setIsLoading(false)
+      setIsLoading(false);
 
     }
     catch (error) {
@@ -241,25 +237,7 @@ const LogIn = () => {
               {/* Divider */}
               <Divider sx={{ my: 2 }}>OR</Divider>
 
-              <Button
-                fullWidth
-                variant="outlined"
-                sx={{
-                  borderRadius: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 1,
-                  border: "1px solid #DADCE0",
-                  color: "#5F6368",
-                  fontWeight: "bold",
-                  backgroundColor: "white",
-                  "&:hover": { backgroundColor: "#F1F3F4" },
-                }}
-              >
-                <img src={google} alt="Google" width={"25px"} />
-                <span style={{ color: "#5F6368", marginLeft: "10px" }}>Continue with Google</span>
-              </Button>
+              <OAuthComponent setIsLoading={setIsLoading} />
 
             </CardContent>
           </Card>

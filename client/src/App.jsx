@@ -15,7 +15,11 @@ const App = () => {
     const userData = localStorage.getItem('userData')
 
     if (userData) {
-      dispatch(setUserDetails(JSON.parse(userData)))
+      try {
+        dispatch(setUserDetails(JSON.parse(userData)))
+      } catch (e) {
+        console.log(e);
+      }
     }
   }, [dispatch])
 

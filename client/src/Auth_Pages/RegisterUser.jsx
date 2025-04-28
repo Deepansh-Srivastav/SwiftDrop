@@ -9,7 +9,6 @@ import {
     LockIcon,
     Visibility,
     VisibilityOff,
-    google
 } from '../Assets/Icons.js'
 
 import { useNavigate } from "react-router-dom";
@@ -17,10 +16,16 @@ import PersonIcon from '@mui/icons-material/Person';
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig, getBaseUrl } from "../Networking/Configuration/ApiConfig";
 import { DotLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
+import { showSuccessToast } from "../Components/CostomAlert.jsx";
+import OAuthComponent from "../Redux/Features/OAuthComponent.jsx";
+
 
 const RegisterUser = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
@@ -57,10 +62,12 @@ const RegisterUser = () => {
             const response = await postApiRequestWrapper(FINAL_URL, registrationFormData)
 
             if (response?.success) {
-                setIsLoading(false)
-                navigate('/')
-                setPasswordError(false)
+                setIsLoading(false);
+                navigate('/');
+                setPasswordError(false);
                 console.log(response.message);
+                showSuccessToast(`Welcome back, ${response?.data?.name}`);
+                dispatch(setUserDetails(response?.data));
             }
 
             setIsLoading(false)
@@ -246,25 +253,7 @@ const RegisterUser = () => {
 
                             <Divider sx={{ my: 2 }}>OR</Divider>
 
-                            <Button
-                                fullWidth
-                                variant="outlined"
-                                sx={{
-                                    borderRadius: "8px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    gap: 1,
-                                    border: "1px solid #DADCE0",
-                                    color: "#5F6368",
-                                    fontWeight: "bold",
-                                    backgroundColor: "white",
-                                    "&:hover": { backgroundColor: "#F1F3F4" },
-                                }}
-                            >
-                                <img src={google} alt="google" width={'25px'} />
-                                <span style={{ color: "#5F6368", marginLeft: "10px" }}>Continue with Google</span>
-                            </Button>
+                            <OAuthComponent setIsLoading={setIsLoading} />
 
                         </CardContent>
 
