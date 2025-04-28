@@ -11,7 +11,6 @@ import { registerUser, validateUserAndUpdate } from "../Services/userService.js"
 import generateOTP from "../Services/generateOTP.js"
 import { OAUTH } from "../Utils/googleOAuthConfig.js"
 import axios from "axios"
-import { MdErrorOutline } from "react-icons/md"
 
 // User Registration Controller 
 export async function registerUserController(req, res) {
