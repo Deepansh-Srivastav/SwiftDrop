@@ -23,9 +23,6 @@ export async function validateUserAndUpdate({
         const query = user_id ? { _id: user_id } : { email: email };
 
         const existingUser = await UserModel.findOne(query);
-        
-        // console.log("Query is - ",query);
-        // console.log("existingUser - ", existingUser);
 
         if (update && existingUser) {
             const updateData = await UserModel.findOneAndUpdate(

@@ -5,18 +5,12 @@ import generateAccessToken from "../Utils/generateAccessToken.js"
 import generateRefreshToken from "../Utils/generateRefreshToken.js"
 import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
 import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js"
-
-import {
-    encryptPassword,
-    validatePassword
-} from "../Utils/encrypt.js"
-
+import { encryptPassword, validatePassword } from "../Utils/encrypt.js"
 import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js"
-import {
-    registerUser,
-    validateUserAndUpdate,
-} from "../Services/userService.js"
+import { registerUser, validateUserAndUpdate } from "../Services/userService.js"
 import generateOTP from "../Services/generateOTP.js"
+import { OAUTH } from "../Utils/googleOAuthConfig.js"
+import axios from "axios"
 
 // User Registration Controller 
 export async function registerUserController(req, res) {
@@ -51,9 +45,13 @@ export async function registerUserController(req, res) {
         }
 
         const newUserData = await registerUser(payload)
-
-        console.log(process.env.FRONTEND_URL);
-
+        if (!newUserData) {
+            return res.status(500).json({
+                success: false,
+                error: true,
+                message: "Failed to register user."
+            });
+        };
 
         const verifyEmailUrl = `${process.env.FRONTEND_URL}/verify-email?code=${newUserData?._id}`
 
@@ -66,6 +64,18 @@ export async function registerUserController(req, res) {
                     url: verifyEmailUrl
                 })
             })
+
+        const accessToken = await generateAccessToken(newUserData?._id);
+        const refreshToken = await generateRefreshToken(newUserData?._id);
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None"
+        };
+
+        res.cookie('accessToken', accessToken, cookieOptions);
+        res.cookie('refreshToken', refreshToken, cookieOptions);
 
         return res.status(200).json({
             message: "User Registered Successfully",
@@ -194,10 +204,6 @@ export async function loginController(req, res) {
             message: "User login successful",
             error: false,
             success: true,
-            data: {
-                accessToken,
-                refreshToken
-            }
         })
 
     }
@@ -207,6 +213,99 @@ export async function loginController(req, res) {
             error: true,
             success: false,
         })
+    }
+}
+
+export async function googleOAuthController(req, res) {
+    try {
+        const { code } = req?.query;
+
+        if (!code) {
+            return res.status(400).json({
+                message: "Authorization code is required.",
+                error: true,
+                success: false
+            });
+        };
+
+        const googleResponse = await OAUTH.getToken(code);
+        OAUTH.setCredentials(googleResponse.tokens);
+
+        const userData = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}`);
+
+        const { id, email, name, picture } = userData?.data;
+
+        const existingUser = await validateUserAndUpdate({ email });
+
+        if (!existingUser) {
+
+            if (!name || !id || !email) {
+                return res.status(400).json({
+                    success: false,
+                    error: true,
+                    message: "Missing required user information from Google."
+                });
+            };
+
+            const payload = {
+                name,
+                email,
+                avatar: picture,
+                googleId: id,
+                authProvider: "google"
+            };
+
+            const userData = await registerUser(payload);
+
+            if (!userData) {
+                return res.status(500).json({
+                    success: false,
+                    error: true,
+                    message: "Failed to register user with Google."
+                });
+            };
+
+            const accessToken = await generateAccessToken(userData?._id);
+            const refreshToken = await generateRefreshToken(userData?._id);
+
+            const cookieOptions = {
+                httpOnly: true,
+                secure: true,
+                sameSite: "None"
+            };
+
+            res.cookie('accessToken', accessToken, cookieOptions);
+            res.cookie('refreshToken', refreshToken, cookieOptions);
+
+            return res.status(200).json({
+                message: "User Registered Successfully with Google",
+                error: false,
+                success: true,
+                data: userData
+            });
+        };
+
+        const accessToken = await generateAccessToken(existingUser?._id);
+        const refreshToken = await generateRefreshToken(existingUser?._id);
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None"
+        };
+
+        res.cookie('accessToken', accessToken, cookieOptions);
+        res.cookie('refreshToken', refreshToken, cookieOptions);
+
+        return res.status(200).json({
+            message: "Login Successfully with Google",
+            error: false,
+            success: true,
+            data: existingUser
+        });
+    }
+    catch (error) {
+        console.log("Error in the backend ", error);
     }
 }
 
@@ -460,7 +559,7 @@ export async function verifyForgotPasswordOTPController(req, res) {
             user_id: existingUser?._id,
             payload: {
                 forgot_password_otp: "",
-                forgot_password_expiry:""
+                forgot_password_expiry: ""
             }
         })
 

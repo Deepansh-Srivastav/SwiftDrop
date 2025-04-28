@@ -4,27 +4,25 @@ import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import InputBase from '@mui/material/InputBase';
 import { alpha, styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
-// import swiftDropLogo from "../Assets/SwiftDropLogo3.png";
 import { projectImages } from '../Assets/Assets.js';
 
-import LoginIcon from '@mui/icons-material/Login';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Badge from '@mui/material/Badge';
-import MailIcon from '@mui/icons-material/Mail';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { APIConfig } from '../Networking/Configuration/ApiConfig.js';
+import { getApiRequestWrapper } from '../Networking/Services/ApiCalls.js';
+import { showSuccessToast } from '../Components/CostomAlert.jsx';
+import { clearUserDetails } from '../Redux/Features/UserDetailsSlice.js';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -55,7 +53,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+
+
+
 export default function Navbar() {
+
+    const dispatch = useDispatch();
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const handleMenu = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
@@ -66,6 +70,21 @@ export default function Navbar() {
 
     console.log("UserData is = ", userData);
 
+    async function handleLogout() {
+
+        handleClose()
+
+        const LOGOUT_ENDPOINT = APIConfig.apiPath.logout
+        const response = await getApiRequestWrapper(LOGOUT_ENDPOINT)
+
+        if (response?.success === true && response?.error === false) {
+            localStorage.clear()
+
+            dispatch(clearUserDetails())
+
+            showSuccessToast(response?.message)
+        }
+    }
 
     const isUserLoggedIn = userData && Object.keys(userData).length > 0;
 
@@ -97,8 +116,20 @@ export default function Navbar() {
                     (isUserLoggedIn ? (
                         <>
                             <div onClick={handleMenu} >
-                                <p>Welcome {userData?.name}</p>
-                                <Avatar alt="User Avatar" sx={{ width: 40, height: 40 }} />
+                                <p>{userData?.name}</p>
+                                <Avatar
+                                    src={userData?.avatar || undefined}
+                                    alt="User Avatar"
+                                    sx={{ width: 40, height: 40 }}
+                                >
+                                    {
+                                        !userData?.avatar && userData?.name
+                                            ?
+                                            (userData.name.charAt(0).toUpperCase())
+                                            :
+                                            (null)
+                                    }
+                                </Avatar>
                             </div>
                             <Menu
                                 anchorEl={anchorEl}
@@ -117,7 +148,7 @@ export default function Navbar() {
 
                                 <Divider />
 
-                                <MenuItem onClick={handleClose} sx={{ py: 2 }}><LogoutIcon sx={{ mr: 1 }} />Logout</MenuItem>
+                                <MenuItem onClick={handleLogout} sx={{ py: 2 }}><LogoutIcon sx={{ mr: 1 }} />Logout</MenuItem>
 
                             </Menu>
                         </>

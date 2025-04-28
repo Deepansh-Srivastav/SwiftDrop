@@ -8,12 +8,14 @@ const userDetailsSlice = createSlice({
     reducers: {
         setUserDetails: (state, action) => {
             const data = action?.payload
-
             return { ...state, ...data };
+        },
+        clearUserDetails: (state) => {
+            return state = {}
         }
 
     }
 })
 
-export const { setUserDetails } = userDetailsSlice.actions
+export const { setUserDetails, clearUserDetails } = userDetailsSlice.actions
 export default userDetailsSlice.reducer
