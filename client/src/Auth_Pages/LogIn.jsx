@@ -18,7 +18,8 @@ import {
   showErrorToast,
 } from "../Components/CostomAlert.jsx";
 import { useDispatch } from 'react-redux'
-import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js"
+import { setUserDetails } from "../Redux/Features/UserDetailsSlice.js";
+import { useGoogleLogin } from "@react-oauth/google"
 
 const LogIn = () => {
 
@@ -30,6 +31,21 @@ const LogIn = () => {
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
+  })
+
+  const googleResponse = async (result) => {
+    try {
+      console.log(result);
+    }
+    catch (e) {
+      console.log("Error while getting the code from google - ", e);
+    }
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: googleResponse,
+    onError: googleResponse,
+    flow: "auth-code"
   })
 
   const togglePasswordVisibility = () => {
@@ -253,6 +269,7 @@ const LogIn = () => {
                   backgroundColor: "white",
                   "&:hover": { backgroundColor: "#F1F3F4" },
                 }}
+                onClick={googleLogin}
               >
                 <img src={google} alt="Google" width={"25px"} />
                 <span style={{ color: "#5F6368", marginLeft: "10px" }}>Continue with Google</span>

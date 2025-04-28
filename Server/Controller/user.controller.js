@@ -7,7 +7,7 @@ import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
 import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js"
 import { encryptPassword, validatePassword } from "../Utils/encrypt.js"
 import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js"
-import {registerUser,validateUserAndUpdate} from "../Services/userService.js"
+import { registerUser, validateUserAndUpdate } from "../Services/userService.js"
 import generateOTP from "../Services/generateOTP.js"
 
 // User Registration Controller 
@@ -199,6 +199,18 @@ export async function loginController(req, res) {
             error: true,
             success: false,
         })
+    }
+}
+
+export async function googleOAuthController(req, res) {
+    try {
+        res.status(200).send({
+            message:"THIS IS THE OAUTH ROUTE"
+        })
+
+    } catch (error) {
+        console.log("Error", error);
+
     }
 }
 

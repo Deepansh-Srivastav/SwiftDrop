@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import connectDB from './Config/connectDB.js'
 import userRouter from './Routes/users.route.js'
+import dotenv from 'dotenv'
 
 dotenv.config()
 
@@ -50,4 +50,4 @@ async function startServer() {
         })
 }
 
-startServer()
+startServer();
