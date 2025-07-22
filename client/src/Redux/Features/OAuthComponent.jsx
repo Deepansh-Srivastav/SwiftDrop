@@ -28,6 +28,7 @@ const OAuthComponent = ({ setIsLoading }) => {
           navigate('/');
           setIsLoading(false);
           dispatch(setUserDetails(response?.data));
+          localStorage.setItem('userData', JSON.stringify(response?.data))
 
           showSuccessToast(`Welcome back, ${response?.data?.name}`)
         }

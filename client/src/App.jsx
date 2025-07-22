@@ -11,7 +11,9 @@ const App = () => {
 
   const dispatch = useDispatch()
 
+
   useEffect(() => {
+
     const userData = localStorage.getItem('userData')
 
     if (userData) {
@@ -21,6 +23,8 @@ const App = () => {
         console.log(e);
       }
     }
+
+
   }, [dispatch])
 
   return (

@@ -23,7 +23,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { projectImages } from '../Assets/Assets.js';
 import { searchPlaceholders } from '../Assets/Utils.js';
 import TypingAnimation from './TypingAnimation.jsx';
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Badge from '@mui/material/Badge';
 import { Link } from 'react-router-dom';
@@ -416,7 +416,7 @@ export default function Navbar() {
                             <Box
                                 sx={{
                                     width: "100%",
-                                        cursor: "text"
+                                    cursor: "text"
                                 }}
                                 onClick={() => {
                                     navigate("/search-product")
@@ -477,15 +477,9 @@ export default function Navbar() {
                                     <UserName>
                                         {userData?.name}
                                     </UserName>
-                                    <StyledAvatar
-                                        src={userData?.avatar || undefined}
-                                        alt="User Avatar"
-                                    >
-                                        {!userData?.avatar && userData?.name
-                                            ? userData.name.charAt(0).toUpperCase()
-                                            : null
-                                        }
-                                    </StyledAvatar>
+                                    <Avatar src={userData?.avatar} alt={name}>
+                                        {userData?.name?.charAt(0).toUpperCase() || '?'}
+                                    </Avatar>
                                 </UserSection>
 
                                 <StyledMenu
