@@ -245,6 +245,6 @@ const LogIn = () => {
       </Grid>
     </Grid >
   )
-}
+};
 
-export default LogIn
+export default LogIn;

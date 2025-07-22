@@ -21,6 +21,9 @@ import Fade from '@mui/material/Fade';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { projectImages } from '../Assets/Assets.js';
+import { searchPlaceholders } from '../Assets/Utils.js';
+import TypingAnimation from './TypingAnimation.jsx';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 import Badge from '@mui/material/Badge';
 import { Link } from 'react-router-dom';
@@ -343,11 +346,15 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 export default function Navbar() {
     const dispatch = useDispatch();
     const theme = useTheme();
+    const navigate = useNavigate()
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [showMobileSearch, setShowMobileSearch] = React.useState(false);
     const handleMenu = (event) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+
+    const location = useLocation();
+    const isSearchPage = location.pathname === "/search-product";
 
     const userData = useSelector((state) => {
         return state.userDetails
@@ -375,7 +382,7 @@ export default function Navbar() {
             <StyledAppBar position="static">
                 <Toolbar sx={{
                     justifyContent: 'space-between',
-                    padding: { xs: '8px 12px', sm: '6px 38px 6px 60px', md: '6px 38px 6px 60px' },
+                    padding: { xs: '8px 42px', sm: '6px 38px 6px 60px', md: '6px 38px 6px 60px' },
                     minHeight: { xs: '56px', sm: '64px', md: '72px' },
                     position: 'relative'
                 }}>
@@ -399,10 +406,50 @@ export default function Navbar() {
                         <SearchIconWrapper>
                             <SearchIcon fontSize="medium" />
                         </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search for products..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
+                        {isSearchPage ? (
+                            <StyledInputBase
+                                placeholder="Search for products..."
+                                inputProps={{ 'aria-label': 'search' }}
+                                autoFocus
+                            />
+                        ) : (
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                        cursor: "text"
+                                }}
+                                onClick={() => {
+                                    navigate("/search-product")
+                                }}
+                            >
+                                <StyledInputBase
+                                    disabled
+                                    placeholder=""
+                                    inputProps={{ 'aria-label': 'search', style: { color: "#888" } }}
+                                    sx={{ background: "transparent", pointerEvents: "none" }}
+                                />
+                                <Box
+                                    sx={{
+                                        position: "absolute",
+                                        left: 54,
+                                        top: "50%",
+                                        transform: "translateY(-50%)",
+                                        pointerEvents: "none",
+                                        color: "#888",
+                                        fontWeight: 400,
+                                        fontSize: "0.95rem",
+                                        width: "calc(100% - 48px)",
+                                        overflow: "hidden",
+                                        whiteSpace: "nowrap",
+                                        textOverflow: "ellipsis",
+                                    }}
+                                >
+                                    <TypingAnimation
+                                        messages={searchPlaceholders}
+                                    />
+                                </Box>
+                            </Box>
+                        )}
                     </Search>
 
                     {/* Right Side - User Actions */}
@@ -539,7 +586,6 @@ export default function Navbar() {
                             >
                                 <ShoppingCartIcon fontSize={window.innerWidth < 600 ? 'small' : 'medium'} />
                             </Badge>
-                            <span>Cart</span>
                         </CartButton>
                     </Box>
                 </Toolbar>
