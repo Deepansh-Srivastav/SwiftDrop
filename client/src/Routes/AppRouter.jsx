@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import Navbar from "../Common/Navbar"
 import PageNotFound from "../Pages/PageNotFound";
 import Home from "../Pages/Home";
-import AccountPage from "../Pages/AccountPage";
+import AccountPage from "../Pages/Account/AccountPage";
 
 
 const AppRouter = () => {
@@ -22,7 +22,7 @@ const AppRouter = () => {
     const publicRoutes = {
         home: '/',
         searchPage: "/search-product",
-        accountPage: "/my-account"
+
     }
 
     useEffect(() => {
@@ -43,7 +43,14 @@ const AppRouter = () => {
             <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/search-product" element={<h1>This is the search page</h1>}></Route>
-                <Route path="/my-account" element={<AccountPage />}></Route>
+
+                <Route path="/my-account" element={<AccountPage />}>
+                    <Route path="profile" element={<h1>thi si the profile page</h1>} />
+                    <Route path="orders" element={<h1>thi si the orders page</h1>} />
+                    <Route path="address" element={<h1>thi si the address page</h1>} />
+                </Route>
+
+
                 <Route path="/auth/log-in" element={<LogIn />}></Route>
                 <Route path="/auth/register-user" element={<RegisterUser />}></Route>
                 <Route path="/auth/forgot-password" element={<ForgotPassword />}></Route>

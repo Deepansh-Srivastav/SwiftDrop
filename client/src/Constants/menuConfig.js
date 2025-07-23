@@ -1,22 +1,30 @@
+import {
+    Person4Icon,
+    ImportContactsIcon,
+    ShoppingBasketIcon,
+    DeleteIcon
+
+} from "../Assets/Icons";
+
 export const accountSideMenu = [
     {
         label: "My Profile",
-        // icon: <PersonIcon />,
-        path: "/account/profile",
+        icon: Person4Icon,
+        path: "profile",
     },
     {
         label: "Orders",
-        // icon: <ShoppingBagIcon />,
-        path: "/account/orders",
+        icon: ShoppingBasketIcon,
+        path: "orders",
     },
     {
         label: "Address",
-        // icon: <HomeIcon />,
-        path: "/account/address",
+        icon: ImportContactsIcon,
+        path: "address",
     },
     {
-        label: "Logout",
-        // icon: <LogoutIcon />,
-        action: "logout"
-    }
+        label: "Delete",
+        icon: DeleteIcon,
+        path: "address",
+    },
 ];
