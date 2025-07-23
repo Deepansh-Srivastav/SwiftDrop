@@ -4,8 +4,9 @@ import { useState } from "react";
 import { projectImages } from "../Assets/Assets.js"
 import { LogoutIcon } from "../Assets/Icons";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const SideNav = ({ accountSideMenu }) => {
+export default function SideNav({ accountSideMenu }) {
 
     const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
@@ -48,9 +49,11 @@ const SideNav = ({ accountSideMenu }) => {
     );
 };
 
-export default SideNav;
 
 function UserBadge({ avatar, userName, userEmail, isSideNavOpen }) {
+
+    const userDetails = useSelector((state) => state.userDetails);
+
     return (
         <Box sx={{
             display: "flex",
@@ -64,11 +67,10 @@ function UserBadge({ avatar, userName, userEmail, isSideNavOpen }) {
                 justifyContent: "center",
                 alignItems: "center"
             }}>
-                <Avatar src={"https://images.unsplash.com/photo-1682687982502-1529b3b33f85?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} alt={name} sx={{ width: "45px", height: "45px" }}>
-                    {userName?.charAt(0).toUpperCase() || '?'}
+                <Avatar src={userDetails?.avatar} alt={name} sx={{ width: "45px", height: "45px" }}>
+                    {userDetails?.name?.charAt(0).toUpperCase() || '?'}
                 </Avatar>
             </Box>
-
 
             <Box sx={{
                 display: "flex",
@@ -84,15 +86,14 @@ function UserBadge({ avatar, userName, userEmail, isSideNavOpen }) {
                 <Typography sx={{
                     fontSize: "16px",
                 }}>
-                    {userName || " Deepansh Srivastav"}
+                    {userDetails?.name || " Deepansh Srivastav"}
                 </Typography>
                 <Typography sx={{
                     fontSize: "12px",
                 }}>
-                    {userEmail || "deepansh.engineering03@gmail.com"}
+                    {userDetails?.email || "deepansh.engineering03@gmail.com"}
                 </Typography>
             </Box>
-
 
         </Box >
     );

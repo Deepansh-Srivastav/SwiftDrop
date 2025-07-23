@@ -3,7 +3,6 @@ import {
     ImportContactsIcon,
     ShoppingBasketIcon,
     DeleteIcon
-
 } from "../Assets/Icons";
 
 export const accountSideMenu = [
@@ -25,6 +24,6 @@ export const accountSideMenu = [
     {
         label: "Delete",
         icon: DeleteIcon,
-        path: "address",
+        path: "delete",
     },
 ];
