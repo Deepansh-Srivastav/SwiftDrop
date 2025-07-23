@@ -192,26 +192,6 @@ const UserName = styled('span')(({ theme }) => ({
     },
 }));
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-    width: 42,
-    height: 42,
-    border: '2px solid rgba(255, 255, 255, 0.3)',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-    transition: 'all 0.2s ease',
-    '&:hover': {
-        transform: 'scale(1.05)',
-        border: '2px solid rgba(255, 255, 255, 0.5)',
-    },
-    [theme.breakpoints.down('md')]: {
-        width: 38,
-        height: 38,
-    },
-    [theme.breakpoints.down('sm')]: {
-        width: 34,
-        height: 34,
-    },
-}));
-
 const AuthButton = styled('button')(({ theme, variant }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -506,24 +486,22 @@ export default function Navbar() {
                                         />
                                     </Box>
 
-                                    <StyledMenuItem onClick={handleClose}>
+                                    <StyledMenuItem onClick={()=>{
+                                        navigate("/my-account");
+                                        handleClose();
+                                    }}>
                                         <Person4Icon sx={{ mr: 2 }} fontSize='medium' />
                                         My Profile
                                     </StyledMenuItem>
 
                                     <StyledMenuItem onClick={handleClose}>
                                         <ShoppingBagIcon sx={{ mr: 2 }} />
-                                        Order History
-                                    </StyledMenuItem>
-
-                                    <StyledMenuItem onClick={handleClose}>
-                                        <FavoriteIcon sx={{ mr: 2 }} />
-                                        Wishlist
+                                        Orders
                                     </StyledMenuItem>
 
                                     <StyledMenuItem onClick={handleClose}>
                                         <HomeIcon sx={{ mr: 2 }} />
-                                        Addresses
+                                        Address
                                     </StyledMenuItem>
 
                                     <Divider sx={{ my: 1 }} />
@@ -585,7 +563,9 @@ export default function Navbar() {
                 </Toolbar>
 
                 {/* Mobile Search Bar */}
-                <MobileSearch show={showMobileSearch}>
+                <MobileSearch show={showMobileSearch} onClick={() => {
+                    navigate("/search-product");
+                }}>
                     <SearchIcon sx={{ mr: 2, color: 'grey.600' }} />
                     <input
                         className="search-input"
@@ -596,4 +576,4 @@ export default function Navbar() {
             </StyledAppBar>
         </>
     );
-}
+};
