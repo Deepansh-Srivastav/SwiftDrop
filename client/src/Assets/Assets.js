@@ -15,4 +15,4 @@ export const projectImages = {
     forgotPasswordImage,
     pageNotFoundImage,
     resetPasswordImage,
-}
+};

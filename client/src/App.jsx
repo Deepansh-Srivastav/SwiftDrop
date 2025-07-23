@@ -11,7 +11,9 @@ const App = () => {
 
   const dispatch = useDispatch()
 
+
   useEffect(() => {
+
     const userData = localStorage.getItem('userData')
 
     if (userData) {
@@ -21,6 +23,8 @@ const App = () => {
         console.log(e);
       }
     }
+
+
   }, [dispatch])
 
   return (
@@ -32,3 +36,7 @@ const App = () => {
 }
 
 export default App
+
+
+
+// video 2 50:00

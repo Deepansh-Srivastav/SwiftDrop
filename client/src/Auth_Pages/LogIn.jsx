@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { postApiRequestWrapper, getApiRequestWrapper} from "../Networking/Services/ApiCalls.js";
+import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import {
   showSuccessToast,
   showErrorToast,
@@ -245,6 +245,6 @@ const LogIn = () => {
       </Grid>
     </Grid >
   )
-}
+};
 
-export default LogIn
+export default LogIn;
