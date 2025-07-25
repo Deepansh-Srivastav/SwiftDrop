@@ -14,6 +14,12 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import DensitySmallIcon from '@mui/icons-material/DensitySmall';
+import CategoryIcon from '@mui/icons-material/Category';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import Inventory2Icon from '@mui/icons-material/Inventory2';
+
+
 export {
     EmailIcon,
     LockIcon,
@@ -29,5 +35,12 @@ export {
     ImportContactsIcon,
     ShoppingBasketIcon,
     DeleteIcon,
-    LogoutIcon
+    LogoutIcon,
+
+    DensitySmallIcon,
+    CategoryIcon,
+    LibraryAddIcon,
+    Inventory2Icon,
+
+
 };

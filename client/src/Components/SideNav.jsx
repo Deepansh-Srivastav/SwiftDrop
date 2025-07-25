@@ -155,7 +155,12 @@ function BrandLogoBadge({ isSideNavOpen }) {
     )
 };
 
-function MenuOptions({ accountSideMenu, isSideNavOpen }) {
+function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
+
+    const userDetails = useSelector((state) => state.userDetails);
+
+    console.log("This is the user details from side nav", userDetails);
+    
 
     const navigate = useNavigate();
 
@@ -167,23 +172,36 @@ function MenuOptions({ accountSideMenu, isSideNavOpen }) {
         <List sx={{ margin: "20px 0" }}>
             {accountSideMenu?.map((menuItem, index) => {
                 const Icon = menuItem.icon;
+                const userRole = userDetails?.role;
+
+                // Show all items if Admin, else only show items matching User's role
+                if (userRole !== "Admin" && menuItem.role !== userRole) return null;
+
                 return (
-                    <>
-                        <ListItemButton onClick={() => handleClick(menuItem?.path)}>
-                            <ListItemIcon sx={{ display: 'flex', justifyContent: isSideNavOpen ? "start" : "center", alignItems: "center" }}>
-                                <Icon />
-                            </ListItemIcon>
-                            <ListItemText primary={menuItem?.label} sx={{
+                    <ListItemButton key={index} onClick={() => handleClick(menuItem?.path)}>
+                        <ListItemIcon
+                            sx={{
+                                display: 'flex',
+                                justifyContent: isSideNavOpen ? "start" : "center",
+                                alignItems: "center"
+                            }}
+                        >
+                            <Icon />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary={menuItem.label}
+                            sx={{
                                 transition: "all 0.4s ease",
                                 maxWidth: isSideNavOpen ? "300px" : "0px",
                                 opacity: isSideNavOpen ? 1 : 0,
                                 whiteSpace: "nowrap",
                                 marginLeft: isSideNavOpen ? "12px" : "0px",
-                            }} />
-                        </ListItemButton>
-                    </>
-                )
+                            }}
+                        />
+                    </ListItemButton>
+                );
             })}
+
 
 
             <Divider sx={{ my: 4, borderColor: "var(--border-color)", borderBottomWidth: '1px' }} />
