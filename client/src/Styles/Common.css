@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.margin-bottom-10{
+.margin-bottom-10 {
     margin-bottom: 10px;
 }
 
@@ -63,7 +63,7 @@
     max-width: 500px;
 }
 
-.backButton{
+.backButton {
     border-radius: 50%;
     border: none;
     padding: 8px;
@@ -75,13 +75,60 @@
     cursor: pointer;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-.loader{
+.loader {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 20px 0;
+}
+
+.avatarWrapper {
+    position: absolute;
+    left: 50%;
+    bottom: -50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatarContainer {
+    width: 130px;
+    height: 130px;
+    background-color: rgb(252, 255, 251);
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatarContainer img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.imageUploadButton {
+    background-color: #121a17;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background-color 0.3s ease;
+}
+
+
+.imageUploadButton:hover {
+    background-color: #1a2420;
 }

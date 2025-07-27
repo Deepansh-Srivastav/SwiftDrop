@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import LogIn from "../Auth_Pages/LogIn";
 import RegisterUser from "../Auth_Pages/RegisterUser";
@@ -9,7 +9,9 @@ import Navbar from "../Common/Navbar"
 import PageNotFound from "../Pages/PageNotFound";
 import Home from "../Pages/Home";
 import AccountPage from "../Pages/Account/AccountPage";
-
+import MyProfile from "../Pages/Account/MyProfile";
+import Category from "../Pages/Account/Category";
+import SubCategory from "../Pages/Account/SubCategory";
 
 const AppRouter = () => {
 
@@ -45,9 +47,19 @@ const AppRouter = () => {
                 <Route path="/search-product" element={<h1>This is the search page</h1>}></Route>
 
                 <Route path="/my-account" element={<AccountPage />}>
-                    <Route path="profile" element={<h1>thi si the profile page</h1>} />
-                    <Route path="orders" element={<h1>thi si the orders page</h1>} />
+                    <Route path="profile" element={<MyProfile />} />
+
+                    <Route path="category" element={<h1><Category /></h1>} />
+
+                    <Route path="sub-category" element={<SubCategory />} />
+
+                    <Route path="upload-product" element={<h1>thi si the upload-product page</h1>} />
+
+                    <Route path="all-products" element={<h1>thi si the all-products page</h1>} />
+
+                    <Route path="orders" element={<h1>thi si the Orders page</h1>} />
                     <Route path="address" element={<h1>thi si the address page</h1>} />
+                    <Route path="delete" element={<h1>thi si the delete page</h1>} />
                 </Route>
 
 

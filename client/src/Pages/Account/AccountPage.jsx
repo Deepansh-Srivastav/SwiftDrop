@@ -1,19 +1,16 @@
-import { Box, Button, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box } from "@mui/material";
 import SideNav from "../../Components/SideNav";
 import { accountSideMenu } from "../../Constants/menuConfig";
 import { Outlet } from "react-router-dom";
 
-
 const AccountPage = () => {
 
   return (
-    <Box display="flex" minHeight="100vh" sx={{}}>
+    <Box display="flex" height="100vh !important">
 
       <SideNav accountSideMenu={accountSideMenu} />
 
-      {/* Content */}
-      <Box flex={1} p={3}>
+      <Box flex={1}>
         <Outlet />
       </Box>
     </Box>

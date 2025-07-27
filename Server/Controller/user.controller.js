@@ -355,7 +355,7 @@ export async function getLoginUserDetails(req, res) {
     try {
         const userId = req.userId
 
-        const userDetails = await UserModel.findById(userId).select("_id name email avatar mobile verify_email address_details shopping_cart orderHistory last_login_date")
+        const userDetails = await UserModel.findById(userId).select("_id name email avatar mobile verify_email address_details shopping_cart orderHistory last_login_date role")
 
         if (!userDetails) {
             return res.status(404).send({

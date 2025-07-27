@@ -487,19 +487,25 @@ export default function Navbar() {
                                     </Box>
 
                                     <StyledMenuItem onClick={()=>{
-                                        navigate("/my-account");
+                                        navigate("/my-account/profile");
                                         handleClose();
                                     }}>
                                         <Person4Icon sx={{ mr: 2 }} fontSize='medium' />
                                         My Profile
                                     </StyledMenuItem>
 
-                                    <StyledMenuItem onClick={handleClose}>
+                                    <StyledMenuItem onClick={() => {
+                                        navigate("/my-account/orders");
+                                        handleClose();
+                                    }}>
                                         <ShoppingBagIcon sx={{ mr: 2 }} />
                                         Orders
                                     </StyledMenuItem>
 
-                                    <StyledMenuItem onClick={handleClose}>
+                                    <StyledMenuItem onClick={() => {
+                                        navigate("/my-account/address");
+                                        handleClose();
+                                    }}>
                                         <HomeIcon sx={{ mr: 2 }} />
                                         Address
                                     </StyledMenuItem>
