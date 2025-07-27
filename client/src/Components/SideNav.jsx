@@ -15,22 +15,32 @@ export default function SideNav({ accountSideMenu }) {
     }
 
     return (
-        <Box component="main" height="100vh" position={"relative"} sx={{
+        <Box component="main" position={"relative"} sx={{
+            height:"auto",
             minWidth: isSideNavOpen ? "300px" : '50px',
             transition: "all 0.3s ease",
             borderRight: "1px solid var(--border-color)",
-            padding: "36px 5px 0px 5px",
+            padding: "36px 5px 20px 5px",
             boxShadow: "4px 0 12px rgba(0, 0, 0, 0.0700)",
         }}>
 
             <Box
                 sx={{
-                    height: "100%", display: "flex", width: "100% !important",
-                    justifyContent: "start",
-                    alignItems: "start",
+                    height: "100% !important",
+                    width: "100% !important",
+                    display: "flex",
                     flexDirection: "column",
+                    justifyContent:"flex-end",
+                    alignItems: "start",
+
                 }}>
-                <Container disableGutters>
+
+                <Container disableGutters sx={{
+                    height: "100% !important",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "start",
+                }}>
 
                     <BrandLogoBadge isSideNavOpen={isSideNavOpen} />
 
@@ -40,15 +50,13 @@ export default function SideNav({ accountSideMenu }) {
 
                     <MenuOptions accountSideMenu={accountSideMenu} isSideNavOpen={isSideNavOpen} />
 
-                    <UserBadge isSideNavOpen={isSideNavOpen} />
-
                 </Container>
+                <UserBadge isSideNavOpen={isSideNavOpen} />
             </Box>
 
         </Box>
     );
 };
-
 
 function UserBadge({ avatar, userName, userEmail, isSideNavOpen }) {
 
@@ -57,10 +65,9 @@ function UserBadge({ avatar, userName, userEmail, isSideNavOpen }) {
     return (
         <Box sx={{
             display: "flex",
-            position: "absolute",
-            bottom: "30px",
-            left: "50%",
-            transform: "translateX(-50%)",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
         }}>
             <Box sx={{
                 display: 'flex',
@@ -160,7 +167,7 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
     const userDetails = useSelector((state) => state.userDetails);
 
     console.log("This is the user details from side nav", userDetails);
-    
+
 
     const navigate = useNavigate();
 

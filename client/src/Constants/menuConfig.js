@@ -14,25 +14,28 @@ export const accountSideMenu = [
         label: "My Profile",
         icon: Person4Icon,
         path: "profile",
-        role:"User"
+        role: "User"
     },
+
     {
         label: "Category",
         icon: CategoryIcon,
         path: "category",
-        role:"Admin"
+        role: "Admin"
     },
     {
         label: "Sub Category",
         icon: DensitySmallIcon,
         path: "sub-category",
         role: "Admin"
-    }, {
+    },
+    {
         label: "Upload Product",
         icon: LibraryAddIcon,
         path: "upload-product",
         role: "Admin"
-    }, {
+    },
+    {
         label: "All Products",
         icon: Inventory2Icon,
         path: "all-products",
@@ -52,6 +55,9 @@ export const accountSideMenu = [
         path: "address",
         role: "User"
     },
+
+
+
 
 
     {

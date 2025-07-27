@@ -19,6 +19,9 @@ import CategoryIcon from '@mui/icons-material/Category';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 
+import CancelIcon from '@mui/icons-material/Cancel';
+import CloseIcon from "@mui/icons-material/Close";
+
 
 export {
     EmailIcon,
@@ -42,5 +45,7 @@ export {
     LibraryAddIcon,
     Inventory2Icon,
 
+    CancelIcon,
+    CloseIcon
 
 };

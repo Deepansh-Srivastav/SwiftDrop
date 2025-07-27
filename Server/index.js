@@ -1,15 +1,18 @@
-import express from 'express'
-import cors from 'cors'
-import cookieParser from 'cookie-parser'
-import morgan from 'morgan'
-import helmet from 'helmet'
-import connectDB from './Config/connectDB.js'
-import userRouter from './Routes/users.route.js'
-import dotenv from 'dotenv'
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import connectDB from './Config/connectDB.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
+import userRouter from './Routes/users.route.js';
+import categoryRouter from './Routes/category.route.js';
+import uploadImageRouter from './Routes/uploadImage.route.js';
 
-const app = express()
+dotenv.config();
+
+const app = express();
 
 const frontEndDevUrl = process.env.FRONTEND_DEV_URL;
 
@@ -32,10 +35,12 @@ app.use(helmet({
 
 const PORT = process.env.PORT_2 || process.env.PORT_1
 
-app.use('/api/user', userRouter)
+app.use('/api/user', userRouter);
+app.use("/api/category",categoryRouter);
+app.use("/api/file", uploadImageRouter);
 
 app.get('/', (req, res) => {
-    res.send("This is the home page")
+    res.send("This is the home page");
 })
 
 async function startServer() {

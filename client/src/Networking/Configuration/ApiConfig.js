@@ -18,6 +18,9 @@ export const APIConfig = {
         forgotPassword: '/api/user/forgot-password',
         verifyOtp: '/api/user/verify-forgot-password-otp',
         resetPassword: '/api/user/reset-password',
-        getUserDetails: '/api/user/user-details'
+        getUserDetails: '/api/user/user-details',
+
+        addCategory:"/api/category/add-category",
+        uploadImage:"/api/file/upload-image"
     }
 };

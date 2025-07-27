@@ -10,6 +10,8 @@ import PageNotFound from "../Pages/PageNotFound";
 import Home from "../Pages/Home";
 import AccountPage from "../Pages/Account/AccountPage";
 import MyProfile from "../Pages/Account/MyProfile";
+import Category from "../Pages/Account/Category";
+import SubCategory from "../Pages/Account/SubCategory";
 
 const AppRouter = () => {
 
@@ -46,7 +48,16 @@ const AppRouter = () => {
 
                 <Route path="/my-account" element={<AccountPage />}>
                     <Route path="profile" element={<MyProfile />} />
-                    <Route path="orders" element={<h1>thi si the orders page</h1>} />
+
+                    <Route path="category" element={<h1><Category /></h1>} />
+
+                    <Route path="sub-category" element={<SubCategory />} />
+
+                    <Route path="upload-product" element={<h1>thi si the upload-product page</h1>} />
+
+                    <Route path="all-products" element={<h1>thi si the all-products page</h1>} />
+
+                    <Route path="orders" element={<h1>thi si the Orders page</h1>} />
                     <Route path="address" element={<h1>thi si the address page</h1>} />
                     <Route path="delete" element={<h1>thi si the delete page</h1>} />
                 </Route>
