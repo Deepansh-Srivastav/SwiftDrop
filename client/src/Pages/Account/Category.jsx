@@ -1,7 +1,7 @@
 import { Box, Container, Typography } from "@mui/material"
 import { useState } from "react"
 import PageBanner from "../../Common/PageBanner"
-import AddCategoryModal from "../../Components/AddCategoryMOdal"
+import AddCategoryModal from "../../Components/AddCategoryModal.jsx"
 
 const Category = () => {
 
