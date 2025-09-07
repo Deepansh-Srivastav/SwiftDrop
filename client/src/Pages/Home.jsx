@@ -1,6 +1,8 @@
+import ProductsDisplaySection from "../Common/ProductsDisplaySection";
 import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
 import { motion } from "framer-motion";
+import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
 
 const Home = () => {
 
@@ -37,17 +39,26 @@ const Home = () => {
 
             </div>
 
-            <div className="gallery-section">
+            <div className="gallery-section" >
 
-                <div className="gallery-container">
-                    
+                <motion.div
+                    className="gallery-container"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}>
+
                     <h3 className="largest-heading margin-bottom-20">
                         EXPLORE <br /> OUR RANGE
                     </h3>
 
                     <GalleryComponent />
-                </div>
+                </motion.div>
             </div>
+
+            <ProductsDisplaySection products={bakeryProducts} heading={"Bakery & Biscuits"} image={"https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
+
+            <ProductsDisplaySection products={meatProducts} heading={"Fresh Meat & Seafood"} image={"https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
 
         </section>
     )
