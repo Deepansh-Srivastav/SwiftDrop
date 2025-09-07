@@ -1,4 +1,5 @@
 import "../Styles/Home.css"
+import { motion } from "framer-motion";
 
 const Home = () => {
 
@@ -8,7 +9,12 @@ const Home = () => {
 
             <div className="parallax1">
 
-                <div className="text-container">
+                <motion.div
+                    className="text-container"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 1 }}
+                >
                     <p className="text-size-1">
                         Everything you need, delivered instantly.
                     </p>
@@ -18,11 +24,15 @@ const Home = () => {
                         <span>SNACKS</span>
                         <span>ESSENTIALS</span>
                     </div>
-                </div>
+                </motion.div>
 
-                <div className="landing-paragraph">
+                <motion.div className="landing-paragraph"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 1 }}
+                >
                     <p className="text-size-2"><span className="highlighter">SwiftDrop</span> makes everyday shopping effortless. From fresh groceries and essentials to snacks and drinks, everything arrives at your door in minutes. Fast, simple, and reliable — so you spend less time waiting and more time enjoying.</p>
-                </div>
+                </motion.div>
 
             </div>
 
@@ -40,10 +50,9 @@ export function HomeNavbar() {
 
     return (
         <>
-            <nav className="home-nav">
+            {/* <nav className="home-nav">
 
                 <div className="swiftdrop-logo">
-                    {/* <img src={projectImages?.swiftDropLogo} alt="" /> */}
                     <h1><span className="highlighter">SW</span>iftDrop</h1>
                 </div>
 
@@ -53,7 +62,38 @@ export function HomeNavbar() {
                         <span className="button-text back">Menu</span>
                     </button>
                 </div>
-            </nav>
+            </nav> */}
+
+            <motion.nav
+                className="home-nav"
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeIn" }}
+            >
+                <div className="swiftdrop-logo">
+                    <h1><span className="highlighter">SW</span>IFTDROP</h1>
+                </div>
+
+                <div>
+                    <motion.button
+                        className="nav-button"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <span className="button-text front">Menu</span>
+                        <span className="button-text back">Menu</span>
+                    </motion.button>
+                </div>
+            </motion.nav>
+
         </>
     );
 }
+
+
+{/* <motion.div
+    className="landing-paragraph"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1, delay: 1 }}
+> */}
