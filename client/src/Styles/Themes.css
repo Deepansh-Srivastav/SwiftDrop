@@ -4,6 +4,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     font-family: "sans-serif", "Lato";
     font-weight: 600;
@@ -12,6 +16,7 @@
     margin: 0;
     box-sizing: border-box;
     transition: all 0.5s;
+    scroll: smooth;
 }
 
 body {
@@ -39,7 +44,8 @@ body {
 
     --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
-    --landing-image: url("../Assets/Background/landing.png");
+    --landing-image: url("../Assets/Background/landingBackground2.jpg");
+    /* --landing-image: url("../Assets/Background/landing.png"); */
     /* --landing-image: url("../Assets/Background/landingBackground.jpg"); */
 
 }
