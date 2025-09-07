@@ -16,7 +16,6 @@ html {
     margin: 0;
     box-sizing: border-box;
     transition: all 0.5s;
-    scroll: smooth;
 }
 
 body {
@@ -44,7 +43,8 @@ body {
 
     --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
-    --landing-image: url("../Assets/Background/landingBackground2.jpg");
+    --landing-image: url("../Assets/Background/landing_background.jpg");
+    --landing-image2: url("../Assets/Background/mobile_landing_image.png");
     /* --landing-image: url("../Assets/Background/landing.png"); */
     /* --landing-image: url("../Assets/Background/landingBackground.jpg"); */
 
