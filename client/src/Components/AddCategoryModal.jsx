@@ -11,6 +11,10 @@ import {
   CancelIcon,
   CloseIcon
 } from "../Assets/Icons.js"
+import { uploadImage } from "../Utils/uploadImage.js";
+import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
+import { postApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
+import { showSuccessToast, showErrorToast } from "./CostomAlert.jsx";
 
 const AddCategoryModal = ({ closeModal }) => {
   const [data, setData] = useState({
@@ -18,12 +22,28 @@ const AddCategoryModal = ({ closeModal }) => {
     image: "",
   });
 
+  const [isImageUploaded, setIsImageUploaded] = useState(null)
+
+  function resetAll() {
+    setIsImageUploaded(null);
+
+    setData({
+      name: "",
+      image: ""
+    });
+
+    closeModal();
+
+    return;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
 
-  const handleImageUpload = (e) => {
+  async function handleImageUpload(e) {
+
     const file = e.target.files[0];
     if (!file) return;
 
@@ -35,13 +55,38 @@ const AddCategoryModal = ({ closeModal }) => {
       }));
     };
     reader.readAsDataURL(file);
-  };
+
+    const uploadedImageData = await uploadImage(file)
+
+    setIsImageUploaded(uploadedImageData);
+
+    console.log("The value is -- ", uploadedImageData);
+
+  }
 
   const handleRemoveImage = () => {
-    setData((prev) => ({
-      ...prev,
-      image: "",
-    }));
+    setIsImageUploaded(null)
+  };
+
+  async function handleCategorySubmit() {
+    setData((prev) => {
+      return {
+        ...prev,
+        image: isImageUploaded?.secure_url
+      };
+    });
+
+    const URL = APIConfig?.apiPath?.addCategory;
+
+    const response = await postApiRequestWrapper(URL, data);
+
+    if (response?.success === true && response?.error === false) {
+      showSuccessToast(response?.message);
+      resetAll();
+      return;
+    };
+
+    showErrorToast(response?.message);
   };
 
   return (
@@ -88,7 +133,7 @@ const AddCategoryModal = ({ closeModal }) => {
             onChange={handleImageUpload}
           />
 
-          {data.image && (
+          {isImageUploaded && (
             <Box
               sx={{
                 position: "relative",
@@ -101,7 +146,7 @@ const AddCategoryModal = ({ closeModal }) => {
               }}
             >
               <img
-                src={data.image}
+                src={isImageUploaded?.url}
                 alt="Preview"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
@@ -135,6 +180,7 @@ const AddCategoryModal = ({ closeModal }) => {
             textTransform: "none",
             backgroundColor: "var(--purple-theme)",
           }}
+          onClick={handleCategorySubmit}
         >
           Submit
         </Button>

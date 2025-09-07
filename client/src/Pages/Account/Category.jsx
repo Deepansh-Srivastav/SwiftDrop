@@ -2,7 +2,6 @@ import { Box, Container, Typography } from "@mui/material"
 import { useState } from "react"
 import PageBanner from "../../Common/PageBanner"
 import AddCategoryModal from "../../Components/AddCategoryMOdal"
-import { uploadImage } from "../../Utils/uploadImage.js"
 
 const Category = () => {
 
@@ -10,7 +9,7 @@ const Category = () => {
 
     function handleModalClose() {
         return setIsModalOpen(!isModalOpen);
-    };
+    }; 
 
     return (
         <Box sx={{
