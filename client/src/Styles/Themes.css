@@ -51,6 +51,7 @@ body {
 
 
 .highlighter {
+    font-family: "Nunito Sans", sans-serif;
     color: var(--purple-theme);
 }
 
@@ -63,6 +64,14 @@ body {
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
+
+.largest-heading {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 100px;
+    font-weight: 600;
+    line-height: 95px;
+}
+
 
 .text-size-1 {
     font-family: "Nunito Sans", sans-serif;
