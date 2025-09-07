@@ -3,6 +3,15 @@ import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
 import { motion } from "framer-motion";
 import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
+import Person4Icon from '@mui/icons-material/Person4';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import LogoutIcon from '@mui/icons-material/Logout';
+import HomeIcon from '@mui/icons-material/Home';
 
 const Home = () => {
 
@@ -68,22 +77,28 @@ export default Home
 
 export function HomeNavbar() {
 
+    const [showDropdown, setShowDropdown] = useState(false);
+    const navigate = useNavigate();
+
+    const userData = useSelector((state) => {
+        return state.userDetails
+    });
+
+    const isUserLoggedIn = userData && Object.keys(userData).length > 0;
+
+
+    function dropdownHandler() {
+        setShowDropdown((prev) => {
+            return !prev;
+        });
+    }
+
+    function handleClose() {
+        setShowDropdown(false);
+    }
+
     return (
         <>
-            {/* <nav className="home-nav">
-
-                <div className="swiftdrop-logo">
-                    <h1><span className="highlighter">SW</span>iftDrop</h1>
-                </div>
-
-                <div>
-                    <button className="nav-button">
-                        <span className="button-text front">Menu</span>
-                        <span className="button-text back">Menu</span>
-                    </button>
-                </div>
-            </nav> */}
-
             <motion.nav
                 className="home-nav"
                 initial={{ y: -100, opacity: 0 }}
@@ -94,26 +109,85 @@ export function HomeNavbar() {
                     <h1><span className="highlighter">SW</span>IFTDROP</h1>
                 </div>
 
-                <div>
-                    <motion.button
-                        className="nav-button"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <span className="button-text front">Menu</span>
-                        <span className="button-text back">Menu</span>
-                    </motion.button>
-                </div>
-            </motion.nav>
+                {isUserLoggedIn
+                    ?
+                    <>
+                        <div className="userAvatar" onClick={() => {
+                            dropdownHandler()
+                        }}>
+                            <Avatar src={userData?.avatar} alt={name} sx={{
+                                width: "40px",
+                                height: "420x",
+                                marginRight: "15px"
+                            }}>
+                                {userData?.name?.charAt(0).toUpperCase() || '?'}
+                            </Avatar>
+
+                            <p>{userData?.name}</p>
+
+                        </div>
+                    </>
+                    :
+                    <div>
+                        <motion.button
+                            className="nav-button"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={dropdownHandler}
+                        >
+                            <span className="button-text front">Menu</span>
+                            <span className="button-text back">Menu</span>
+                        </motion.button>
+
+                        {showDropdown && (
+                            <>
+                                <div className="dropDown">
+
+                                    {isUserLoggedIn ?
+                                        <>
+                                            <span>
+                                                <Person4Icon sx={{ mr: 2 }} fontSize='medium'
+                                                    onClick={() => {
+                                                        navigate("/my-account/orders");
+                                                        handleClose();
+                                                    }}
+                                                />
+                                                My Profile
+                                            </span>
+
+                                            <span>
+                                                <ShoppingBagIcon sx={{ mr: 2 }} />
+                                                Orders
+                                            </span>
+
+
+                                            <span onClick={() => {
+                                                navigate("/my-account/address");
+                                                handleClose()
+                                            }} >
+                                                <HomeIcon sx={{ mr: 2 }} />
+                                                Address
+                                            </span>
+
+
+
+                                        </>
+                                        :
+                                        <>
+                                            <span onClick={() => navigate("/auth/log-in")}> Login </span>
+                                            <span onClick={() => navigate("/auth/register-user")}> Signup </span>
+                                        </>
+                                    }
+
+                                </div>
+                            </>
+                        )}
+                    </div>}
+
+
+            </motion.nav >
 
         </>
     );
 }
 
-
-{/* <motion.div
-    className="landing-paragraph"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1, delay: 1 }}
-> */}

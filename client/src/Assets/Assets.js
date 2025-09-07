@@ -7,6 +7,11 @@ import forgotPasswordImage from "./Images/Enter OTP-bro.png"
 // import forgotPasswordImage from "./Images/forgot-password.png"
 import pageNotFoundImage from "./Images/page-not-found.png"
 import resetPasswordImage from './Images/reset-password-image.png'
+import babyCareImage from "./CategoryImages/baby_care.png";
+import bakeryCategoryImage from "./CategoryImages/bakery_category.png";
+import chickenMeatImage from "./CategoryImages/chicken_meat_fish.png";
+import drinksImage from "./CategoryImages/drinks.png";
+import healthyFoodImage from "./CategoryImages/healthy_food.png";
 
 export const projectImages = {
     loginImage,
@@ -15,4 +20,10 @@ export const projectImages = {
     forgotPasswordImage,
     pageNotFoundImage,
     resetPasswordImage,
+
+    babyCareImage,
+    bakeryCategoryImage,
+    chickenMeatImage,
+    drinksImage,
+    healthyFoodImage,
 };
