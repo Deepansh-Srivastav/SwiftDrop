@@ -8,11 +8,6 @@
     top: 0;
 }
 
-
-
-
-
-
 .nav-button {
     padding: 18px 40px;
     border-radius: 50px;
@@ -68,6 +63,45 @@
     transform: translate(-50%, -50%) rotateX(0deg);
 }
 
+.dropDown {
+    background-color: white;
+    position: absolute;
+    bottom: -125px;
+    right: 20px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    border-radius: 20px;
+
+}
+
+.dropDown span {
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 15px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+
+.dropDown span:hover {
+    background-color: var(--purple-theme);
+    color: white;
+    transition: background-color 0.6s;
+}
+
+.userAvatar {
+    background-color: white;
+    width: auto;
+    padding: 0px 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    cursor: pointer;
+}
 
 
 
@@ -76,7 +110,7 @@
 .parallax1 {
     height: 100vh;
     background-image: var(--landing-image);
-    
+
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -108,7 +142,7 @@
 
 }
 
-.gallery-section{
+.gallery-section {
     height: auto;
     background: rgb(220, 220, 220);
     display: flex;
@@ -122,7 +156,7 @@
 
 }
 
-.gallery-container{
+.gallery-container {
     /* background-color: red; */
     width: 90%;
     display: flex;
@@ -159,18 +193,18 @@
 
 
 @media (max-width: 700px) {
-    .parallax1{
-    background-attachment: scroll;
-    background-size: cover;
-    background-position: center;
-    background-image: var(--landing-image2);
+    .parallax1 {
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center;
+        background-image: var(--landing-image2);
     }
 
-    .parallax1::before{
-    background-attachment: scroll;
-    background-size: cover;
-    background-position: center;
-    background-image: var(--landing-image2);
+    .parallax1::before {
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center;
+        background-image: var(--landing-image2);
     }
 }
 
