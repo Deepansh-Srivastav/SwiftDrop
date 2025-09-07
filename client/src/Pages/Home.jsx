@@ -37,16 +37,19 @@ const Home = () => {
 
             </div>
 
-            <div className="gallery-section">
+            <div className="gallery-section" >
 
-                <div className="gallery-container">
-                    
+                <motion.div className="gallery-container" initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}>
+
                     <h3 className="largest-heading margin-bottom-20">
                         EXPLORE <br /> OUR RANGE
                     </h3>
 
                     <GalleryComponent />
-                </div>
+                </motion.div>
             </div>
 
         </section>
