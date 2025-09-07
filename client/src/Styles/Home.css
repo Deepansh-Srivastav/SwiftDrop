@@ -1,0 +1,156 @@
+.home-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    padding: 20px 20px 0 20px;
+    position: absolute;
+    top: 0;
+}
+
+
+
+
+
+
+.nav-button {
+    padding: 18px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: 600;
+    color: white;
+    background-color: black;
+    border: 1px solid white;
+
+    /* Important for the 3D effect */
+    position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.5s;
+    /* Optional: for a smoother transition of the whole button */
+    overflow: hidden;
+    /* This is crucial to hide the text that is not currently visible */
+}
+
+/* Style for the text elements inside the button */
+.button-text {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    transition: transform 0.6s ease;
+    /* Transition for the flipping effect */
+    backface-visibility: hidden;
+    /* This hides the back of the element when it's flipped */
+}
+
+/* Initial state of the "front" text */
+.button-text.front {
+    transform: translate(-50%, -50%) rotateX(0deg);
+}
+
+/* Initial state of the "back" text, which is already flipped 180 degrees and out of view */
+.button-text.back {
+    transform: translate(-50%, -50%) rotateX(180deg);
+}
+
+/* Hover state for the button container */
+.nav-button:hover .button-text.front {
+    transform: translate(-50%, -50%) rotateX(-180deg);
+}
+
+/* Hover state for the "back" text, which flips into view */
+.nav-button:hover .button-text.back {
+    transform: translate(-50%, -50%) rotateX(0deg);
+}
+
+
+
+
+
+
+.parallax1 {
+    height: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: var(--landing-image);
+    position: relative;
+    z-index: -1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.parallax1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--landing-image);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(0.6) blur(4px);
+    z-index: -1;
+
+}
+
+.products-section {
+    height: auto;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 50px 0;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 1;
+
+}
+
+.sub-text {
+    margin-top: 80px;
+    color: var(--color-one);
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.landing-paragraph {
+    color: var(--color-one);
+    width: 30%;
+    min-width: 400px;
+    position: fixed;
+    bottom: 20px;
+    left: 30px;
+    text-align: left;
+
+}
+
+
+@media (max-width: 600px) {
+    .landing-paragraph {
+        min-width: 250px;
+        left: 10px;
+
+    }
+}

@@ -41,7 +41,7 @@ const AppRouter = () => {
 
     return (
         <>
-            {showNavbar && <Navbar />}
+            {/* {showNavbar && <Navbar />} */}
             <Routes>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/search-product" element={<h1>This is the search page</h1>}></Route>

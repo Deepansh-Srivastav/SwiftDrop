@@ -1,17 +1,26 @@
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
+import Axios from "../Networking/Configuration/AxiosConfig";
 
 export async function uploadImage(image) {
     try {
         const URL = APIConfig?.apiPath?.uploadImage;
-        const PAYLOAD = {
-            image
-        }
+        const formData = new FormData();
+        formData.append("image", image);
 
-        const response = await postApiRequestWrapper(URL, PAYLOAD)
 
-        if (response?.success === true && response?.error === false && response?.data) {
-            return response?.data;
+        const response = await Axios.post(URL, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            withCredentials: true
+        });
+
+        console.log("RESPONSE from backend is  - ", response);
+
+
+        if (response?.data?.success === true && response?.data?.error === false && response?.data?.data) {
+            return response?.data?.data;
         };
 
         return null;
