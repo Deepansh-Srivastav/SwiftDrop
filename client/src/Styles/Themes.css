@@ -51,6 +51,7 @@ body {
 
 
 .highlighter {
+    font-family: "Nunito Sans", sans-serif;
     color: var(--purple-theme);
 }
 
@@ -63,6 +64,14 @@ body {
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
+
+.largest-heading {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 90px;
+    font-weight: 600;
+    line-height: 85px;
+}
+
 
 .text-size-1 {
     font-family: "Nunito Sans", sans-serif;
@@ -103,6 +112,11 @@ body {
         font-size: 38px;
     }
 
+    .largest-heading {
+        font-size: 80px;
+        line-height: 75px;
+    }
+
     .text-size-1 {
         font-size: 28px;
     }
@@ -118,6 +132,15 @@ body {
     }
 }
 
+@media (max-width: 750px) {
+
+    .largest-heading {
+        font-size: 60px;
+        line-height: 55px;
+    }
+
+}
+
 /* Mobile screens */
 @media (max-width: 600px) {
     .swiftdrop-logo h1 {
@@ -126,6 +149,11 @@ body {
 
     .swiftdrop-logo span {
         font-size: 30px;
+    }
+
+    .largest-heading {
+        font-size: 40px;
+        line-height: 40px;
     }
 
     .text-size-1 {
@@ -151,6 +179,11 @@ body {
 
     .swiftdrop-logo span {
         font-size: 24px;
+    }
+
+    .largest-heading {
+        font-size: 30px;
+        line-height: 30px;
     }
 
     .text-size-1 {

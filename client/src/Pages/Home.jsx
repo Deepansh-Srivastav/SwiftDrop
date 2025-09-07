@@ -1,3 +1,4 @@
+import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
 import { motion } from "framer-motion";
 
@@ -36,8 +37,16 @@ const Home = () => {
 
             </div>
 
-            <div className="products-section">
+            <div className="gallery-section">
 
+                <div className="gallery-container">
+                    
+                    <h3 className="largest-heading margin-bottom-20">
+                        EXPLORE <br /> OUR RANGE
+                    </h3>
+
+                    <GalleryComponent />
+                </div>
             </div>
 
         </section>
