@@ -3,7 +3,7 @@ import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
 import { motion } from "framer-motion";
 import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Avatar from '@mui/material/Avatar';
@@ -15,6 +15,21 @@ import HomeIcon from '@mui/icons-material/Home';
 import Footer from "../Common/Footer.jsx";
 
 const Home = () => {
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const slowScroll = scrollY * -0.1; // scroll speed reduced to 10%
+            const parallax = document.querySelector(".parallax1");
+            if (parallax) {
+                parallax.style.backgroundPosition = `center ${slowScroll}px`;
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
 
     return (
         <section>
@@ -70,7 +85,7 @@ const Home = () => {
 
             <ProductsDisplaySection products={meatProducts} heading={"Fresh Meat & Seafood"} image={"https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
 
-            <Footer/>
+            <Footer />
 
         </section>
     )
@@ -148,7 +163,7 @@ export function HomeNavbar() {
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ duration: 0.5, ease: "easeIn" }}>
 
-                                        <div className="arrow"></div>
+                                    <div className="arrow"></div>
 
                                     {isUserLoggedIn ?
                                         <>

@@ -3,14 +3,22 @@ import "./Styles/Themes.css"
 import "./Styles/Responsive.css"
 import { ToastContainer } from "react-toastify";
 import AppRouter from "./Routes/AppRouter.jsx"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux'
 import { setUserDetails } from "./Redux/Features/UserDetailsSlice.js";
+import LoadingPage from "./Common/LoadingPage.jsx";
 
 const App = () => {
 
-  const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(true)
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 4000)
+  }, [])
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
 
@@ -30,7 +38,10 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-right" autoClose={2000} />
-      <AppRouter />
+
+      {isLoading && <LoadingPage />}
+
+      {!isLoading && <AppRouter />}
     </>
   )
 }
