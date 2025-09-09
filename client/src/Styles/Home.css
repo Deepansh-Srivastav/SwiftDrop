@@ -251,3 +251,15 @@
         height: 15vh;
     }
 }
+
+
+.arrow{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    transform: rotateZ(45deg);
+    position: absolute;
+    top: -4%;
+    right: 20px;
+
+}
