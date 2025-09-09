@@ -37,6 +37,10 @@ const Home = () => {
 
             <div className="parallax1">
 
+            </div>
+
+            <div className="landing-text-section">
+
                 <motion.div
                     className="text-container"
                     initial={{ opacity: 0 }}
@@ -61,8 +65,9 @@ const Home = () => {
                 >
                     <p className="text-size-2"><span className="highlighter">SwiftDrop</span> makes everyday shopping effortless. From fresh groceries and essentials to snacks and drinks, everything arrives at your door in minutes. Fast, simple, and reliable — so you spend less time waiting and more time enjoying.</p>
                 </motion.div>
-
             </div>
+
+
 
             <div className="gallery-section" >
 
