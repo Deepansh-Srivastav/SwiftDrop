@@ -4,6 +4,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
@@ -36,6 +38,7 @@ body {
     --button-hover-color: #035776;
     --color-one: #F7F7F7;
     --purple-theme: #979df7;
+    --black-theme: #1C1C1C;
 
     /* --gradient-primary: linear-gradient(100deg, #673AB7, #9575CD, #D1C4E9); */
 
@@ -43,6 +46,7 @@ body {
 
     --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
+    /* --landing-image: url("../Assets/Background/landing_background_mirror.png"); */
     --landing-image: url("../Assets/Background/landing_background.jpg");
     --landing-image2: url("../Assets/Background/mobile_landing_image.png");
     --product-image: url("https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
@@ -225,4 +229,46 @@ body {
     .text-size-3 {
         font-size: 9px;
     }
+}
+
+.custom-button {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 0px;
+    cursor: pointer;
+    overflow: hidden;
+    height: auto;
+    height: 100%;
+    max-height: 40px;
+}
+
+.custom-button span {
+    display: block;
+    transition: transform 0.15s ease-in-out;
+    font-family: "Lato", sans-serif;
+    
+}
+
+.custom-button-upper-text {
+    transform: translateY(50%);
+}
+
+.custom-button-lower-text {
+    transform: translateY(90%);
+}
+
+.custom-button:hover .custom-button-upper-text,
+.nav-button:hover .custom-button .custom-button-upper-text {
+    transform: translateY(-110%);
+}
+
+.custom-button:hover .custom-button-lower-text,
+.nav-button:hover .custom-button .custom-button-lower-text {
+    transform: translateY(-50%);
 }

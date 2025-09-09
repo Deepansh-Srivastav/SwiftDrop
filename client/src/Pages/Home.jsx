@@ -13,6 +13,7 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
 import Footer from "../Common/Footer.jsx";
+import CustomButtons from "../Components/CustomButtons.jsx";
 
 const Home = () => {
 
@@ -152,15 +153,12 @@ export function HomeNavbar() {
                     </>
                     :
                     <div>
-                        <motion.button
-                            className="nav-button"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            onClick={dropdownHandler}
-                        >
-                            <span className="button-text front">Menu</span>
-                            <span className="button-text back">Menu</span>
-                        </motion.button>
+
+
+                        <div className="nav-button">
+                            <CustomButtons buttonText={"Menu"} color={"var(--color-one)"} fontWeight="800"/>
+                        </div>
+
 
                         {showDropdown && (
                             <>
