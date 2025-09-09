@@ -107,19 +107,18 @@
 .parallax1 {
     height: 100vh;
     background-image: var(--landing-image);
-
     background-attachment: fixed;
-    background-position: center;
+    background-position: center 0;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
     z-index: -1;
-
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 0;
     margin: 0;
+    filter: brightness(0.8);
 }
 
 .parallax1::before {
@@ -129,15 +128,13 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: var(--landing-image);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    filter: brightness(0.8) blur(2px);
-    z-index: -1;
-
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 0;
 }
+
+
 
 .gallery-section {
     height: auto;
@@ -226,17 +223,23 @@
 
 @media (max-width: 700px) {
     .parallax1 {
-        background-attachment: scroll;
+        background-attachment: fixed;
         background-size: cover;
-        background-position: center;
+        background-position: center 0;
         background-image: var(--landing-image2);
     }
 
     .parallax1::before {
-        background-attachment: scroll;
-        background-size: cover;
-        background-position: center;
-        background-image: var(--landing-image2);
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 0;
     }
 }
 
@@ -253,7 +256,7 @@
 }
 
 
-.arrow{
+.arrow {
     width: 10px;
     height: 10px;
     background-color: white;
