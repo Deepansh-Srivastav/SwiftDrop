@@ -106,7 +106,7 @@ function UserBadge({ avatar, userName, userEmail, isSideNavOpen }) {
     );
 };
 
-function BrandLogoBadge({ isSideNavOpen }) {
+export function BrandLogoBadge({ isSideNavOpen }) {
     const navigate = useNavigate();
 
     return (

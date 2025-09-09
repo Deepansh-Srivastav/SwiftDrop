@@ -1,4 +1,4 @@
-
+import "../Styles/Home.css"
 
 const ProductsDisplaySection = ({ heading, products, image }) => {
     return (
@@ -32,40 +32,18 @@ export default ProductsDisplaySection
 
 const Parallax = ({ heading, image }) => {
     const parallaxStyle = {
-        height: "30vh",
         backgroundImage: `url(${image})`,
-        backgroundAttachment: "fixed",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "relative",
-        zIndex: 1,
     };
 
     const overlayStyle = {
         content: '""',
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
         backgroundImage: `url(${image})`,
-        backgroundAttachment: "fixed",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        filter: "brightness(0.6)",
-        zIndex: -1,
     };
 
     return (
-        <div style={parallaxStyle}>
-            <div style={overlayStyle}></div>
+        <div style={parallaxStyle} className="parallax2">
+            <div style={overlayStyle} className="parallax-overlay"></div>
             <p className="text-size-1">{heading}</p>
         </div>
     );
 };
-

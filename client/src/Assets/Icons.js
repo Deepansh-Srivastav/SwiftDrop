@@ -22,6 +22,8 @@ import Inventory2Icon from '@mui/icons-material/Inventory2';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CloseIcon from "@mui/icons-material/Close";
 
+import XIcon from '@mui/icons-material/X';
+
 
 export {
     EmailIcon,
@@ -46,6 +48,8 @@ export {
     Inventory2Icon,
 
     CancelIcon,
-    CloseIcon
+    CloseIcon,
+
+    XIcon
 
 };

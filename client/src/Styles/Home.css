@@ -104,9 +104,6 @@
 }
 
 
-
-
-
 .parallax1 {
     height: 100vh;
     background-image: var(--landing-image);
@@ -192,6 +189,41 @@
 }
 
 
+.parallax2 {
+    height: 30vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.parallax-overlay {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(0.6);
+    z-index: -1;
+}
+
+@media (max-width: 900px) {
+    .parallax2 {
+        height: 20vh;
+    }
+}
+
+
 @media (max-width: 700px) {
     .parallax1 {
         background-attachment: scroll;
@@ -214,4 +246,20 @@
         left: 10px;
 
     }
+
+    .parallax2 {
+        height: 15vh;
+    }
+}
+
+
+.arrow{
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    transform: rotateZ(45deg);
+    position: absolute;
+    top: -4%;
+    right: 20px;
+
 }

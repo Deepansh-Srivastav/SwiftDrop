@@ -12,6 +12,7 @@ import Person4Icon from '@mui/icons-material/Person4';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HomeIcon from '@mui/icons-material/Home';
+import Footer from "../Common/Footer.jsx";
 
 const Home = () => {
 
@@ -69,11 +70,13 @@ const Home = () => {
 
             <ProductsDisplaySection products={meatProducts} heading={"Fresh Meat & Seafood"} image={"https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
 
+            <Footer/>
+
         </section>
     )
 }
 
-export default Home
+export default Home;
 
 export function HomeNavbar() {
 
@@ -141,7 +144,11 @@ export function HomeNavbar() {
 
                         {showDropdown && (
                             <>
-                                <div className="dropDown">
+                                <motion.div className="dropDown" initial={{ y: 10, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.5, ease: "easeIn" }}>
+
+                                        <div className="arrow"></div>
 
                                     {isUserLoggedIn ?
                                         <>
@@ -179,12 +186,10 @@ export function HomeNavbar() {
                                         </>
                                     }
 
-                                </div>
+                                </motion.div>
                             </>
                         )}
                     </div>}
-
-
             </motion.nav >
 
         </>
