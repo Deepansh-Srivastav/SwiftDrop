@@ -1,6 +1,6 @@
 .footer-section {
     width: 100%;
-    padding: 50px 20px 50px 20px;
+    padding: 20px 20px 20px 20px;
     background-color: var(--white-theme);
     display: flex;
     flex-direction: column;
@@ -54,8 +54,7 @@
 
 .list-text-container {
     width: 50%;
-    display: flex;
-    justify-content: center;
+    padding-left: 80px;
 }
 
 .list-text-container2 {

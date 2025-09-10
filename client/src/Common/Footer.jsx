@@ -4,6 +4,7 @@ import { XIcon } from "../Assets/Icons";
 import { footerList } from "../Constants/footerConfig.js";
 import CustomButtons from "../Components/CustomButtons.jsx";
 import { useNavigate } from "react-router-dom"
+import { Divider } from "@mui/material";
 
 
 const Footer = () => {
@@ -82,9 +83,15 @@ const Footer = () => {
 
                 </div>
 
-
-
             </div>
+
+            <div className="copyright">
+                <p className="text-size-4">
+                    © {new Date().getFullYear()} SwiftDrop. All rights reserved. | Terms & Privacy
+                </p>
+            </div>
+
+
         </section>
     )
 }
