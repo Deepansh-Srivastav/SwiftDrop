@@ -6,6 +6,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 html {
     scroll-behavior: smooth;
 }
@@ -31,6 +33,7 @@ body {
     --border-color: #e4dddd;
     --button-color: #3A7F99;
     --text-green: #5dc067;
+    --white-theme: #ffffff;
 
     --button-theme-blue: #3A7F99;
     --button-hover-theme-blue: #035776;
@@ -39,6 +42,7 @@ body {
     --color-one: #F7F7F7;
     --purple-theme: #979df7;
     --black-theme: #1C1C1C;
+    --black-border-theme: rgba(101, 97, 97, 0.195);
 
     /* --gradient-primary: linear-gradient(100deg, #673AB7, #9575CD, #D1C4E9); */
 
@@ -54,16 +58,23 @@ body {
 }
 
 
-
 .highlighter {
     font-family: "Nunito Sans", sans-serif;
     color: var(--purple-theme);
+}
+
+.alphabet {
+    font-family: "Bebas Neue", sans-serif;
 }
 
 .flexBoxCentered {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.margin-top-50 {
+    margin-top: 50px;
 }
 
 .margin-bottom-20 {
@@ -75,6 +86,13 @@ body {
     font-size: 90px;
     font-weight: 600;
     line-height: 85px;
+}
+
+.smallest-heading {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
 }
 
 
@@ -95,6 +113,13 @@ body {
     font-family: "Nunito Sans", sans-serif;
     font-size: 18px;
     font-weight: 700;
+}
+
+.text-size-4 {
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 650;
+    margin-bottom: 8px;
 }
 
 .swiftdrop-logo h1 {
@@ -133,6 +158,10 @@ body {
     }
 
     .text-size-3 {
+        font-size: 14px;
+    }
+
+    .text-size-4 {
         font-size: 14px;
     }
 }
@@ -174,6 +203,11 @@ body {
     .text-size-3 {
         font-size: 12px;
     }
+
+    .text-size-4 {
+        font-size: 12px;
+    }
+
 }
 
 /* Mobile screens */
@@ -204,6 +238,10 @@ body {
     .text-size-3 {
         font-size: 10px;
     }
+
+    .text-size-4 {
+        font-size: 10px;
+    }
 }
 
 /* Mobile screens */
@@ -221,14 +259,13 @@ body {
     }
 
     .text-size-2 {
-        font-family: "Nunito Sans", sans-serif;
         font-size: 11px;
-        font-weight: 600;
     }
 
     .text-size-3 {
         font-size: 9px;
     }
+
 }
 
 .custom-button {
@@ -250,9 +287,10 @@ body {
 
 .custom-button span {
     display: block;
-    transition: transform 0.15s ease-in-out;
-    font-family: "Lato", sans-serif;
-    
+    transition: transform 0.2s ease-in-out;
+    font-family: "Bebas Neue", sans-serif;
+    letter-spacing: 0.8px;
+
 }
 
 .custom-button-upper-text {

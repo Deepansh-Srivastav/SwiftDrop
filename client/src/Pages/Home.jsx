@@ -110,7 +110,6 @@ export function HomeNavbar() {
 
     const isUserLoggedIn = userData && Object.keys(userData).length > 0;
 
-
     function dropdownHandler() {
         setShowDropdown((prev) => {
             return !prev;
@@ -153,7 +152,6 @@ export function HomeNavbar() {
                     </>
                     :
                     <div>
-
 
                         <div className="nav-button">
                             <CustomButtons buttonText={"Menu"} color={"var(--color-one)"} fontWeight="800"/>

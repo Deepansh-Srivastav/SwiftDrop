@@ -1,5 +1,5 @@
 
-const CustomButtons = ({ buttonText, size = "14px", color = "var(--color-one)", fontWeight = "500" }) => {
+const CustomButtons = ({ buttonText, size = "14px", color = "var(--white-theme)", fontWeight = 100 }) => {
     return (
         <button className='custom-button' style={{
             color: `${color}`,
