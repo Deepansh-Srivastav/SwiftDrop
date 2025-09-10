@@ -132,6 +132,7 @@ body {
     font-size: 48px;
 }
 
+
 /* Tablet screens */
 @media (max-width: 1024px) {
     .swiftdrop-logo h1 {
@@ -164,6 +165,7 @@ body {
     .text-size-4 {
         font-size: 14px;
     }
+
 }
 
 @media (max-width: 750px) {
@@ -171,6 +173,10 @@ body {
     .largest-heading {
         font-size: 60px;
         line-height: 55px;
+    }
+
+    .smallest-heading {
+        font-size: 15px;
     }
 
 }
@@ -188,6 +194,10 @@ body {
     .largest-heading {
         font-size: 40px;
         line-height: 40px;
+    }
+
+    .smallest-heading {
+        font-size: 14px;
     }
 
     .text-size-1 {
@@ -223,6 +233,10 @@ body {
     .largest-heading {
         font-size: 30px;
         line-height: 30px;
+    }
+
+    .smallest-heading {
+        font-size: 12px;
     }
 
     .text-size-1 {

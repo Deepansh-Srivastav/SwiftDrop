@@ -40,7 +40,7 @@ const App = () => {
       <ToastContainer position="top-right" autoClose={2000} />
 
       {isLoading && <LoadingPage />}
-
+      
       {!isLoading && <AppRouter />}
     </>
   )

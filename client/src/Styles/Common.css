@@ -230,7 +230,7 @@ Product Display Section
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgb(40, 40, 43);
+    background: white;
     font-family: "Poppins", sans-serif;
     text-align: center;
     padding: 20px;
@@ -241,7 +241,18 @@ Product Display Section
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 100px;
+    
+}
+
+.loading-page-logo{
+    /* background-color: red; */
+
+}
+
+.loading-page-logo img{
+    width: 500px;
+    /* background-color: red; */
 }
 
 .loading-text {

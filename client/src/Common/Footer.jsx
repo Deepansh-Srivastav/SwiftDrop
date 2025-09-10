@@ -36,7 +36,11 @@ const Footer = () => {
                             {footerList?.map((item, index) => {
                                 return (
                                     <div key={index} className="footer-list-item" onClick={() => navigate(item?.path)}>
-                                        <CustomButtons buttonText={item?.label} size="46px" color={"var(--black-theme)"} />
+                                        <CustomButtons
+                                            buttonText={item?.label}
+                                            size="46px"
+                                            color={"var(--black-theme)"}
+                                            className={"footer-button"} />
                                     </div>
                                 )
                             })}
@@ -90,7 +94,6 @@ const Footer = () => {
                     © {new Date().getFullYear()} SwiftDrop. All rights reserved. | Terms & Privacy
                 </p>
             </div>
-
 
         </section>
     )
