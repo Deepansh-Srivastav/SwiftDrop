@@ -1,13 +1,11 @@
 
-const CustomButtons = ({ buttonText, size = "14px", color = "var(--white-theme)", fontWeight = 100 }) => {
+const CustomButtons = ({ buttonText, color = "var(--white-theme)", className }) => {
     return (
         <button className='custom-button' style={{
             color: `${color}`,
-            fontSize: `${size}`,
-            fontWeight: `${fontWeight}`,
         }}>
-            <span className="custom-button-upper-text">{buttonText}</span>
-            <span className="custom-button-lower-text ">{buttonText}</span>
+            <span className={`custom-button-upper-text ${className}`}>{buttonText}</span>
+            <span className={`custom-button-lower-text ${className}`}>{buttonText}</span>
         </button>
     )
 }
