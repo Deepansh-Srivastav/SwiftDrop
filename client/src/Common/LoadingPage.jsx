@@ -1,16 +1,17 @@
-import { PropagateLoader } from 'react-spinners'
+import { PropagateLoader } from 'react-spinners';
+import { projectImages } from '../Assets/Assets';
 
 const LoadingPage = () => {
     return (
         <section className="loading-page">
             <div className="loading-container">
-                <div className="swiftdrop-logo">
-                    <h1><span className="highlighter">SW</span>IFTDROP</h1>
+                <div className="loading-page-logo">
+                    <img src={projectImages?.swiftDropLogo} alt="" />
                 </div>
-                <PropagateLoader color="var(--color-one)" size={10} />
+                <PropagateLoader color="var(--purple-theme)" size={20} />
             </div>
         </section>
-    )
-}
+    );
+};
 
-export default LoadingPage
+export default LoadingPage;
