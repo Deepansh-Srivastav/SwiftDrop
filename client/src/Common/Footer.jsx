@@ -66,7 +66,7 @@ const Footer = () => {
                             <h3 className="smallest-heading">{"(INFO)"}</h3>
 
                             <p className="text-size-4">
-                                <span className="alphabet">A : </span> SwiftDrop, Sector 21, Noida, India
+                                <span className="alphabet">A : </span> SwiftDrop, Sector 62, Noida, India
                             </p>
 
                             <p className="text-size-4">

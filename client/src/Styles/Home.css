@@ -187,7 +187,9 @@
  */
 
 .parallax2 {
-    height: 30vh;
+    height: 20vh;
+    border-radius: 50px;
+    overflow: hidden;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
