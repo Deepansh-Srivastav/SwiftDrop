@@ -17,19 +17,19 @@ import CustomButtons from "../Components/CustomButtons.jsx";
 
 const Home = () => {
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const slowScroll = scrollY * -0.1; // scroll speed reduced to 10%
-            const parallax = document.querySelector(".parallax1");
-            if (parallax) {
-                parallax.style.backgroundPosition = `center ${slowScroll}px`;
-            }
-        };
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         const scrollY = window.scrollY;
+    //         const slowScroll = scrollY * -0.1; // scroll speed reduced to 10%
+    //         const parallax = document.querySelector(".parallax1");
+    //         if (parallax) {
+    //             parallax.style.backgroundPosition = `center ${slowScroll}px`;
+    //         }
+    //     };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => window.removeEventListener("scroll", handleScroll);
+    // }, []);
 
 
     return (
@@ -110,15 +110,24 @@ export function HomeNavbar() {
 
     const isUserLoggedIn = userData && Object.keys(userData).length > 0;
 
-    function dropdownHandler() {
-        setShowDropdown((prev) => {
-            return !prev;
-        });
-    }
-
     function handleClose() {
         setShowDropdown(false);
     }
+
+    function dropdownHandler() {
+
+        if (showDropdown) {
+            handleClose();
+            return;
+        }
+
+        setShowDropdown((prev) => {
+            return !prev;
+        });
+
+    };
+
+
 
     return (
         <>
@@ -154,7 +163,11 @@ export function HomeNavbar() {
                     <div>
 
                         <div className="nav-button">
-                            <CustomButtons buttonText={"Menu"} color={"var(--color-one)"} fontWeight="800"/>
+                            <CustomButtons
+                                buttonText={"Menu"}
+                                color={"var(--color-one)"}
+                                fontWeight="800"
+                                onClick={dropdownHandler} />
                         </div>
 
 
@@ -164,7 +177,6 @@ export function HomeNavbar() {
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ duration: 0.5, ease: "easeIn" }}>
 
-                                    <div className="arrow"></div>
 
                                     {isUserLoggedIn ?
                                         <>
@@ -210,5 +222,4 @@ export function HomeNavbar() {
 
         </>
     );
-}
-
+};

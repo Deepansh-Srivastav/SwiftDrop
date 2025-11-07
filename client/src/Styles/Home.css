@@ -22,16 +22,24 @@
 }
 
 .dropDown {
-    background-color: white;
+    background: white;
     position: absolute;
-    bottom: -125px;
+    bottom: -150px;
     right: 20px;
     width: 150px;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 20px;
-    border-radius: 20px;
+    padding: 40px 20px 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 
+    clip-path: polygon(0% 12%,
+            70% 12%,
+            78% 0%,
+            /* smooth arrow tip */
+            85% 12%,
+            /* smooth curve back */
+            100% 12%,
+            100% 100%,
+            0% 100%);
 }
 
 .dropDown span {
@@ -258,7 +266,7 @@
 }
 
 
-.arrow {
+/* .arrow {
     width: 10px;
     height: 10px;
     background-color: white;
@@ -267,4 +275,4 @@
     top: -4%;
     right: 20px;
 
-}
+} */
