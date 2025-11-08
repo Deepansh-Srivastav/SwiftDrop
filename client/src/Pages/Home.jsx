@@ -3,17 +3,18 @@ import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
 import { motion } from "framer-motion";
 import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
-import Person4Icon from '@mui/icons-material/Person4';
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LogoutIcon from '@mui/icons-material/Logout';
-import HomeIcon from '@mui/icons-material/Home';
 import Footer from "../Common/Footer.jsx";
 import CustomButtons from "../Components/CustomButtons.jsx";
+import { loggedInNavMenu } from "../Constants/menuConfig.js";
+import { handleUserLogOut } from "../Networking/Configuration/UserLogout.js";
+import { useDispatch } from "react-redux";
+import { clearUserDetails } from "../Redux/Features/UserDetailsSlice.js";
 
 const Home = () => {
 
@@ -95,12 +96,13 @@ const Home = () => {
 
         </section>
     )
-}
+};
 
 export default Home;
 
 export function HomeNavbar() {
 
+    const dispatch = useDispatch();
     const [showDropdown, setShowDropdown] = useState(false);
     const navigate = useNavigate();
 
@@ -116,6 +118,9 @@ export function HomeNavbar() {
 
     function dropdownHandler() {
 
+        console.log(showDropdown);
+
+
         if (showDropdown) {
             handleClose();
             return;
@@ -127,6 +132,14 @@ export function HomeNavbar() {
 
     };
 
+    async function logoutHandler() {
+        const response = await handleUserLogOut(handleClose)
+
+        if (response === true) {
+            dispatch(clearUserDetails());
+            return;
+        }
+    }
 
 
     return (
@@ -141,83 +154,88 @@ export function HomeNavbar() {
                     <h1><span className="highlighter">SW</span>IFTDROP</h1>
                 </div>
 
-                {isUserLoggedIn
-                    ?
-                    <>
-                        <div className="userAvatar" onClick={() => {
-                            dropdownHandler()
-                        }}>
-                            <Avatar src={userData?.avatar} alt={name} sx={{
-                                width: "40px",
-                                height: "420x",
-                                marginRight: "15px"
+                <div className="nav-menu">
+
+                    {isUserLoggedIn ?
+                        <>
+                            <div className="userAvatar" onClick={() => {
+                                dropdownHandler()
                             }}>
-                                {userData?.name?.charAt(0).toUpperCase() || '?'}
-                            </Avatar>
+                                <Avatar src={userData?.avatar} alt={name} sx={{
+                                    width: "40px",
+                                    height: "420x",
+                                    marginRight: "15px"
+                                }}>
+                                    {userData?.name?.charAt(0).toUpperCase() || '?'}
+                                </Avatar>
 
-                            <p>{userData?.name}</p>
+                                <p>{userData?.name}</p>
 
-                        </div>
-                    </>
-                    :
-                    <div>
-
-                        <div className="nav-button">
+                            </div>
+                        </>
+                        :
+                        <div className="nav-button"
+                            onClick={dropdownHandler}>
                             <CustomButtons
                                 buttonText={"Menu"}
                                 color={"var(--color-one)"}
-                                fontWeight="800"
-                                onClick={dropdownHandler} />
+                                fontWeight="800" />
                         </div>
+                    }
 
+                    {showDropdown && (
 
-                        {showDropdown && (
-                            <>
-                                <motion.div className="dropDown" initial={{ y: 10, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ duration: 0.5, ease: "easeIn" }}>
+                        <div className="dropDown">
 
+                            <div className="menu-list-container">
+                                {isUserLoggedIn ?
+                                    <>
 
-                                    {isUserLoggedIn ?
-                                        <>
-                                            <span>
-                                                <Person4Icon sx={{ mr: 2 }} fontSize='medium'
+                                        {loggedInNavMenu?.map((item, index) => {
+
+                                            const Icon = item?.icon
+                                            return <>
+                                                <span
+                                                    key={index}
                                                     onClick={() => {
-                                                        navigate("/my-account/orders");
+                                                        navigate(item?.path);
                                                         handleClose();
-                                                    }}
-                                                />
-                                                My Profile
-                                            </span>
-
-                                            <span>
-                                                <ShoppingBagIcon sx={{ mr: 2 }} />
-                                                Orders
-                                            </span>
+                                                    }} >
+                                                    <Icon sx={{ mr: 2 }} fontSize='medium' />
+                                                    {item?.label}
+                                                </span>
+                                            </>
+                                        })}
 
 
-                                            <span onClick={() => {
-                                                navigate("/my-account/address");
-                                                handleClose()
-                                            }} >
-                                                <HomeIcon sx={{ mr: 2 }} />
-                                                Address
-                                            </span>
+                                        <Divider />
+
+                                        <span onClick={() => {
+                                            logoutHandler()
+                                        }} >
+                                            <LogoutIcon sx={{ mr: 2 }} />
+                                            Log Out
+                                        </span>
 
 
 
-                                        </>
-                                        :
-                                        <>
-                                            <span onClick={() => navigate("/auth/log-in")}> Login </span>
-                                            <span onClick={() => navigate("/auth/register-user")}> Signup </span>
-                                        </>
-                                    }
 
-                                </motion.div>
-                            </>
-                        )}
-                    </div>}
+
+
+
+
+
+                                    </>
+                                    :
+                                    <>
+                                        <span onClick={() => navigate("/auth/log-in")}> Login </span>
+                                        <span onClick={() => navigate("/auth/register-user")}> Signup </span>
+                                    </>
+                                }
+                            </div>
+                        </div>
+                    )}
+                </div>
             </motion.nav >
 
         </>

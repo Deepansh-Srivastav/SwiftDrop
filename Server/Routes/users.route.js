@@ -12,6 +12,7 @@ import {
     resetPasswordController,
     getLoginUserDetails,
     googleOAuthController,
+    refreshTokenController,
 
 } from "../Controller/user.controller.js";
 import auth from "../Middleware/authMiddleware.js";
@@ -29,6 +30,7 @@ userRouter.put("/reset-password", resetPasswordController)
 userRouter.get('/logout', auth, logoutController);
 userRouter.get("/user-details", auth, getLoginUserDetails)
 userRouter.post("/google-oauth", googleOAuthController)
+userRouter.post("/refresh-token", refreshTokenController)
 
 //Refresh token route remaining
 

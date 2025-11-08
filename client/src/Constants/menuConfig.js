@@ -7,7 +7,32 @@ import {
     CategoryIcon,
     LibraryAddIcon,
     Inventory2Icon,
+    LogoutIcon,
 } from "../Assets/Icons";
+
+export const loggedInNavMenu = [
+    {
+        icon: Person4Icon,
+        label: "My Profile",
+        path: "/my-account/profile",
+        role: "user"
+    },
+    {
+        icon: ShoppingBasketIcon,
+        label: "Orders",
+        path: "/my-account/orders",
+        role: "user"
+    },
+    {
+        icon: ImportContactsIcon,
+        label: "Address",
+        path: "/my-account/address",
+        role: "user"
+    },
+
+]
+
+
 
 export const accountSideMenu = [
     {
