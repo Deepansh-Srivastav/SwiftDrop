@@ -1,5 +1,6 @@
 import CategoryModel from "../Model/category.model.js";
 
+// Add Category Controller
 export async function addCategoryController(req, res) {
     try {
 
@@ -42,4 +43,4 @@ export async function addCategoryController(req, res) {
             success: false
         })
     }
-}
+};
