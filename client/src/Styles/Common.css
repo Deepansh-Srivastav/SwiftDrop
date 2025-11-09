@@ -115,24 +115,6 @@
     object-fit: cover;
 }
 
-.imageUploadButton {
-    background-color: #121a17;
-    color: white;
-    border: none;
-    padding: 6px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 12px;
-    transition: background-color 0.3s ease;
-}
-
-
-.imageUploadButton:hover {
-    background-color: #1a2420;
-}
-
 /*=================================================================================
 Product Display Section
 =================================================================================*/
@@ -261,6 +243,91 @@ Product Display Section
     color: var(--text-color);
     letter-spacing: 0.5px;
 }
+
+
+/*=================================================================================
+Category cards
+=================================================================================*/
+
+.category-card {
+    width: 240px;
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.category-image {
+    width: 50%;
+    overflow: hidden;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.category-details {
+    padding: 12px 10px 0;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.category-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.category-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0 14px;
+    border-top: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.btn {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-btn {
+    background-color: #4caf50;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #45a047;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #d7382f;
+}
+
 
 /* Tablet */
 @media (max-width: 900px) {
