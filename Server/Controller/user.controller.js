@@ -207,8 +207,6 @@ export async function loginController(req, res) {
             message: "User login successful",
             error: false,
             success: true,
-            at: accessToken,
-            rt: refreshToken
         })
 
     }
@@ -661,42 +659,62 @@ export async function refreshTokenController(req, res) {
             })
         }
 
-        const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY)
 
-        if (!verifyToken) {
-            res.status(401).json({
-                message: "Token Expired",
-                success: false,
-                error: true
+        try {
+            const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY);
+
+            if (!verifyToken) {
+                return res.status(401).json({
+                    message: "Token Expired",
+                    success: false,
+                    error: true
+                });
+            };
+
+            const newAccessToken = await generateAccessToken(verifyToken?.userId)
+
+            const cookieOptions = {
+                httpOnly: true,
+                secure: true,
+                sameSite: "None"
+            }
+
+            res.cookie('accessToken', newAccessToken, cookieOptions)
+
+            res.status(200).json({
+                success: true,
+                error: false,
+                message: "New Access token generated"
             })
-        }
-
-        const newAccessToken = await generateAccessToken(verifyToken?.userId)
-
-        if (newAccessToken) {
-            console.log("New Access Token Generated");
-            
-        }
-        const cookieOptions = {
-            httpOnly: true,
-            secure: true,
-            sameSite: "None"
-        }
-
-        res.cookie('accessToken', newAccessToken, cookieOptions)
-
-        res.status(200).json({
-            success: true,
-            error: false,
-            message:"New Access token generated"
-        })
 
 
+        } catch (error) {
 
+            const cookieOptions = {
+                httpOnly: true,
+                secure: true,
+                sameSite: "None"
+            }
+            res.clearCookie("accessToken", cookieOptions)
+            res.clearCookie("refreshToken", cookieOptions)
+
+            if (error?.name === "TokenExpiredError") {
+                return res.status(498).json({
+                    message: `${error?.name} Refresh token expired`,
+                    error: true,
+                    success: false,
+                });
+            }
+            return res.status(401).json({
+                message: "Invalid token. Unauthorized access.",
+                error: true,
+                success: false,
+            });
+        };
     }
     catch (error) {
         return res.status(500).json({
-            message: error.message || "Error Occurred",
+            message: "Internal server error",
             error: true,
             success: false,
         })

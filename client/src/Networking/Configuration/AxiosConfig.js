@@ -25,7 +25,7 @@ Axios.interceptors.response.use(
                 await Axios.post(APIConfig.apiPath.refreshAccessToken);
                 return Axios(originalRequest);
             } catch (refreshError) {
-                window.location.href = "/";
+                // window.location.href = "/";
                 return Promise.reject(refreshError);
             }
         }
