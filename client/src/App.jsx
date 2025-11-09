@@ -1,10 +1,11 @@
-import "./Styles/Common.css"
-import "./Styles/Themes.css"
-import "./Styles/Responsive.css"
+import "./Styles/Common.css";
+import "./Styles/Themes.css";
+import "./Styles/Responsive.css";
+import "./Styles/Pages.css"
 import { ToastContainer } from "react-toastify";
 import AppRouter from "./Routes/AppRouter.jsx"
 import { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { setUserDetails } from "./Redux/Features/UserDetailsSlice.js";
 import LoadingPage from "./Common/LoadingPage.jsx";
 
@@ -15,7 +16,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
-    }, 1000)
+    }, 0)
   }, [])
 
   const dispatch = useDispatch()

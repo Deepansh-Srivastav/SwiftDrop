@@ -16,7 +16,7 @@ import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { showSuccessToast, showErrorToast } from "./CostomAlert.jsx";
 
-const AddCategoryModal = ({ closeModal }) => {
+const AddCategoryModal = ({ closeModal, setIsUploaded }) => {
   const [data, setData] = useState({
     name: "",
     image: "",
@@ -78,6 +78,9 @@ const AddCategoryModal = ({ closeModal }) => {
 
     if (response?.success === true && response?.error === false) {
       showSuccessToast(response?.message);
+      setIsUploaded((prev) => {
+        return !prev;
+      });
       resetAll();
       return;
     };

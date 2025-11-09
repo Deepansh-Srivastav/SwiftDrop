@@ -1,7 +1,6 @@
-import { Box, Container, Typography } from "@mui/material"
-import { alignProperty } from "@mui/material/styles/cssUtils"
+import { Box, Container, Typography } from "@mui/material";
 
-const PageBanner = ({ heading, closeModal, isModalOpen }) => {
+const PageBanner = ({ heading }) => {
     return (
         <Box sx={{ position: "relative" }}>
 
@@ -15,11 +14,10 @@ const PageBanner = ({ heading, closeModal, isModalOpen }) => {
                 maxHeight: "150px",
                 background: "var(--gradient-purple)",
                 position: 'relative',
-                marginBottom: "80px !important",
+                marginBottom: "20px !important",
                 borderBottomRightRadius: "50px",
                 borderBottomLeftRadius: "50px"
             }}>
-
 
                 <Typography
                     sx={{
@@ -38,22 +36,8 @@ const PageBanner = ({ heading, closeModal, isModalOpen }) => {
                 </Typography>
 
             </Container>
-
-            {!isModalOpen && (
-                <>
-                    <Container disableGutters sx={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}>
-                        <button className="imageUploadButton" onClick={closeModal}>Add Category</button>
-                    </Container>
-                </>
-            )}
-
         </Box>
-    )
-}
+    );
+};
 
-export default PageBanner
+export default PageBanner;

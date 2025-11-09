@@ -1,0 +1,47 @@
+/*=================================================================================
+CATEGORY PAGE
+=================================================================================*/
+
+.category-page {
+    height: 100vh;
+    width: inherit;
+}
+
+.add-category-button {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding: 0 2rem;
+    max-width: 1600px;
+}
+
+.add-category-button button {
+    background-color: #121a17;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-category-button button {
+    background-color: #1a2420;
+}
+
+.display-category-container{
+    width: 100%;
+    margin-top: 20px;
+    height: 70vh;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: start;
+    gap: 1rem; 
+    flex-wrap: wrap;
+    overflow-y: auto;
+    /* background-color: red; */
+}
