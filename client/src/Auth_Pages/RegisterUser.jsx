@@ -57,7 +57,7 @@ const RegisterUser = () => {
         try {
             setIsLoading(true)
             const BASE_URL = getBaseUrl();
-            const REGISTRATION_URL = APIConfig.apiPath.register
+            const REGISTRATION_URL = APIConfig.userApiPath.register
             const FINAL_URL = BASE_URL + REGISTRATION_URL
             const response = await postApiRequestWrapper(FINAL_URL, registrationFormData)
 

@@ -1,10 +1,9 @@
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
-import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import Axios from "../Networking/Configuration/AxiosConfig";
 
 export async function uploadImage(image) {
     try {
-        const URL = APIConfig?.apiPath?.uploadImage;
+        const URL = APIConfig?.uploadImageApiPath?.uploadImage;
         const formData = new FormData();
         formData.append("image", image);
 

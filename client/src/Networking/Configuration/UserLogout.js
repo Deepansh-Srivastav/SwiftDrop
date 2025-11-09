@@ -10,7 +10,7 @@ export async function handleUserLogOut(handleclose = null) {
         handleclose();
     };
 
-    const LOGOUT_ENDPOINT = APIConfig?.apiPath?.logout;
+    const LOGOUT_ENDPOINT = APIConfig?.userApiPath?.logout;
 
     const response = await getApiRequestWrapper(LOGOUT_ENDPOINT);
 

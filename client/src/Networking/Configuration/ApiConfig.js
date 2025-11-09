@@ -7,7 +7,7 @@ export function getBaseUrl() {
 };
 
 export const APIConfig = {
-    apiPath: {
+    userApiPath: {
         register: '/api/user/register',
         login: '/api/user/login',
         oAuth: '/api/user/google-oauth',
@@ -20,8 +20,15 @@ export const APIConfig = {
         resetPassword: '/api/user/reset-password',
         getUserDetails: '/api/user/user-details',
         refreshAccessToken: "/api/user/refresh-token",
+    },
 
+    categoryApiPath: {
         addCategory: "/api/category/add-category",
-        uploadImage: "/api/file/upload-image"
+        getAllCategory: "/api/category/get-all-category",
+
+    },
+
+    uploadImageApiPath: {
+        uploadImage: "/api/file/upload-image",
     }
 };

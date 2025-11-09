@@ -24,14 +24,12 @@ userRouter.post("/verify-email", userEmailVerificationController);
 userRouter.post("/login", loginController);
 userRouter.patch("/update-user", auth, updateUserDetailsController)
 userRouter.put('/upload-avatar', auth, upload.single('avatar'), uploadAvatarController);
-userRouter.put("/forgot-password", forgotPasswordController)
-userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOTPController)
-userRouter.put("/reset-password", resetPasswordController)
+userRouter.put("/forgot-password", forgotPasswordController);
+userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOTPController);
+userRouter.put("/reset-password", resetPasswordController);
 userRouter.get('/logout', auth, logoutController);
-userRouter.get("/user-details", auth, getLoginUserDetails)
-userRouter.post("/google-oauth", googleOAuthController)
-userRouter.post("/refresh-token", refreshTokenController)
-
-//Refresh token route remaining
+userRouter.get("/user-details", auth, getLoginUserDetails);
+userRouter.post("/google-oauth", googleOAuthController);
+userRouter.post("/refresh-token", refreshTokenController);
 
 export default userRouter; 

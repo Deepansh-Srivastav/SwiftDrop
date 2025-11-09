@@ -39,7 +39,7 @@ const ForgotPassword = () => {
         try {
             setIsLoading(true)
 
-            const FORGOT_PASSWORD_ENDPOINT = APIConfig.apiPath.forgotPassword
+            const FORGOT_PASSWORD_ENDPOINT = APIConfig.userApiPath.forgotPassword
             const payload = {
                 email: emailInputValue
             }
@@ -65,7 +65,7 @@ const ForgotPassword = () => {
     async function verifyOtp() {
         setIsLoading(true)
 
-        const VERIFY_OTP_ENDPOINT = APIConfig.apiPath.verifyOtp
+        const VERIFY_OTP_ENDPOINT = APIConfig.userApiPath.verifyOtp
         const payload = {
             email: emailInputValue,
             otp: otpInputValue
@@ -239,7 +239,7 @@ const ForgotPassword = () => {
                                             }}
                                             type="submit"
                                             onClick={handleFormSubmission}
-                                        disabled={isLoading }
+                                            disabled={isLoading}
                                         >
                                             Get OTP
                                         </Button>

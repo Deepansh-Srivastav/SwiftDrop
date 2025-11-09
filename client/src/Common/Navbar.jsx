@@ -345,7 +345,7 @@ export default function Navbar() {
     async function handleLogout() {
         handleClose();
 
-        const LOGOUT_ENDPOINT = APIConfig.apiPath.logout;
+        const LOGOUT_ENDPOINT = APIConfig.userApiPath.logout;
         const response = await getApiRequestWrapper(LOGOUT_ENDPOINT);
 
         if (response?.success === true && response?.error === false) {
@@ -486,7 +486,7 @@ export default function Navbar() {
                                         />
                                     </Box>
 
-                                    <StyledMenuItem onClick={()=>{
+                                    <StyledMenuItem onClick={() => {
                                         navigate("/my-account/profile");
                                         handleClose();
                                     }}>

@@ -3,7 +3,7 @@ import {
     KeyboardBackspaceSharpIcon,
 } from '../Assets/Icons.js'
 import { projectImages } from "../Assets/Assets";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 import { getBaseUrl, APIConfig } from "../Networking/Configuration/ApiConfig.js";
@@ -49,7 +49,7 @@ const ResetPassword = () => {
             setIsLoading(true)
 
             const BASE_URL = getBaseUrl();
-            const RESET_PASSWORD_ENDPOINT = APIConfig.apiPath.resetPassword
+            const RESET_PASSWORD_ENDPOINT = APIConfig.userApiPath.resetPassword
             const FINAL_URL = BASE_URL + RESET_PASSWORD_ENDPOINT
             const payload = {
                 email: userEmail,
