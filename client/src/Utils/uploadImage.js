@@ -4,7 +4,7 @@ import Axios from "../Networking/Configuration/AxiosConfig";
 
 export async function uploadImage(image) {
     try {
-        const URL = APIConfig?.apiPath?.uploadImage;
+        const URL = APIConfig?.userApiPath?.uploadImage;
         const formData = new FormData();
         formData.append("image", image);
 

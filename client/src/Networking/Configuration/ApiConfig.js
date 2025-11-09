@@ -7,7 +7,7 @@ export function getBaseUrl() {
 };
 
 export const APIConfig = {
-    apiPath: {
+    userApiPath: {
         register: '/api/user/register',
         login: '/api/user/login',
         oAuth: '/api/user/google-oauth',

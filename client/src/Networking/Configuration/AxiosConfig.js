@@ -10,7 +10,7 @@ const Axios = axios.create({
     headers: {
         "Content-Type": "application/json",
     },
-    
+
 });
 
 // Automatic refresh token logic
@@ -22,7 +22,7 @@ Axios.interceptors.response.use(
         if (err.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
-                await Axios.post(APIConfig.apiPath.refreshAccessToken);
+                await Axios.post(APIConfig.userApiPath.refreshAccessToken);
                 return Axios(originalRequest);
             } catch (refreshError) {
                 // window.location.href = "/";

@@ -76,7 +76,7 @@ const AddCategoryModal = ({ closeModal }) => {
       };
     });
 
-    const URL = APIConfig?.apiPath?.addCategory;
+    const URL = APIConfig?.userApiPath?.addCategory;
 
     const response = await postApiRequestWrapper(URL, data);
 

@@ -35,7 +35,7 @@ export async function putApiRequestWrapper(URL, payload) {
 }
 
 export async function googleOAuthApi(code) {
-    const URL = `${APIConfig?.apiPath?.oAuth}?code=${code}`;
+    const URL = `${APIConfig?.userApiPath?.oAuth}?code=${code}`;
 
     try {
         const response = await Axios.post(URL);

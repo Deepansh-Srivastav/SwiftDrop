@@ -43,12 +43,12 @@ const LogIn = () => {
   const handleLogin = async (payload) => {
     try {
       setIsLoading(true);
-      const LOGIN_URL = APIConfig?.apiPath?.login;
+      const LOGIN_URL = APIConfig?.userApiPath?.login;
       const response = await postApiRequestWrapper(LOGIN_URL, payload);
 
       if (response?.success === true && response?.error === false) {
 
-        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.apiPath.getUserDetails;
+        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.userApiPath.getUserDetails;
 
         const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT);
 
