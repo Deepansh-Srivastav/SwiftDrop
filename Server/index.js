@@ -35,8 +35,8 @@ app.use(helmet({
 
 const PORT = process.env.PORT_2 || process.env.PORT_1
 
-app.use('/api/user', userRouter);
-app.use("/api/category",categoryRouter);
+app.use("/api/user", userRouter);
+app.use("/api/category", categoryRouter);
 app.use("/api/file", uploadImageRouter);
 
 app.get('/', (req, res) => {

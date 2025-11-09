@@ -60,25 +60,21 @@ const AddCategoryModal = ({ closeModal }) => {
 
     setIsImageUploaded(uploadedImageData);
 
-    console.log("The value is -- ", uploadedImageData);
-
-  }
+  };
 
   const handleRemoveImage = () => {
     setIsImageUploaded(null)
   };
 
   async function handleCategorySubmit() {
-    setData((prev) => {
-      return {
-        ...prev,
-        image: isImageUploaded?.secure_url
-      };
-    });
 
-    const URL = APIConfig?.userApiPath?.addCategory;
+    const imageUrl = isImageUploaded?.secure_url || data.image;
 
-    const response = await postApiRequestWrapper(URL, data);
+    const payload = { ...data, image: imageUrl };
+
+    const URL = APIConfig?.categoryApiPath?.addCategory;
+
+    const response = await postApiRequestWrapper(URL, payload);
 
     if (response?.success === true && response?.error === false) {
       showSuccessToast(response?.message);
@@ -190,3 +186,6 @@ const AddCategoryModal = ({ closeModal }) => {
 };
 
 export default AddCategoryModal;
+
+
+// ISSUE ------ Image not Its not picking the image.

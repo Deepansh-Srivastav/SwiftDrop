@@ -1,7 +1,9 @@
-import { Box, Container, Typography } from "@mui/material"
-import { useState } from "react"
-import PageBanner from "../../Common/PageBanner"
-import AddCategoryModal from "../../Components/AddCategoryModal.jsx"
+import { Box, Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import PageBanner from "../../Common/PageBanner";
+import AddCategoryModal from "../../Components/AddCategoryModal.jsx";
+import { APIConfig } from "../../Networking/Configuration/ApiConfig.js";
+import { getApiRequestWrapper } from "../../Networking/Services/ApiCalls.js";
 
 const Category = () => {
 
@@ -9,7 +11,19 @@ const Category = () => {
 
     function handleModalClose() {
         return setIsModalOpen(!isModalOpen);
-    }; 
+    };
+
+    async function fetchCategory() {
+        const CATEGORY_URL = APIConfig?.categoryApiPath?.getAllCategory;
+        const response = await getApiRequestWrapper(CATEGORY_URL);
+
+        console.log(response);
+
+    }
+
+    useEffect(() => {
+        fetchCategory()
+    }, [])
 
     return (
         <Box sx={{
@@ -33,11 +47,8 @@ const Category = () => {
                 {isModalOpen && <AddCategoryModal closeModal={handleModalClose} />}
             </Container>
 
-
-
-
         </Box>
-    )
-}
+    );
+};
 
-export default Category
+export default Category;
