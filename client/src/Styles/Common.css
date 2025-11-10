@@ -381,13 +381,24 @@ Modal Style
 .modal-container .image-preview {
     position: relative;
     width: 120px;
-    height: 120px;
-    margin-top: 10px;
+    height: 160px;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid #ccc;
 }
 
+.image-preview{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-upload-body{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
 
 .modal-container .image-preview img {
     width: 100%;

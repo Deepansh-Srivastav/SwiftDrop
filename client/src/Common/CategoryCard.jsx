@@ -1,7 +1,7 @@
 import { useState } from "react";
 import EditCategoryModal from "./EditCategoryModal";
 
-const CategoryCard = ({ _id, name, image }) => {
+const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
 
     const [editCategoryModal, setEditCategoryModal] = useState(false);
 
@@ -15,7 +15,7 @@ const CategoryCard = ({ _id, name, image }) => {
         <>
             <div className="category-card-container">
                 <div className="category-card-image-container">
-                    <img src={image} alt="Category Image" loading="lazy"/>
+                    <img src={image} alt="Category Image" loading="lazy" />
                 </div>
 
                 <div className="category-card-info-container">
@@ -37,7 +37,13 @@ const CategoryCard = ({ _id, name, image }) => {
 
             {editCategoryModal && (
                 <>
-                    <EditCategoryModal categoryId={_id} categoryName={name} categoryImage={image} setEditCategoryModal={setEditCategoryModal}/>
+                    <EditCategoryModal
+                        categoryId={_id}
+                        categoryName={name}
+                        categoryImage={image}
+                        setEditCategoryModal={setEditCategoryModal}
+                        setIsUploaded={setIsUploaded}
+                    />
                 </>
             )}
         </>

@@ -35,9 +35,6 @@ const Category = () => {
         fetchCategory()
     }, [isUploaded])
 
-    console.log(categoryList);
-
-
     return (
         <section className="category-page">
 
@@ -69,9 +66,9 @@ const Category = () => {
             <div className="display-category-container">
 
                 {categoryList?.map((categoryItem, index) => {
-                    return <CategoryCard {...categoryItem} key={index} />
+                    return <CategoryCard {...categoryItem} key={index} setIsUploaded={setIsUploaded} />
                 })}
-                
+
             </div>
 
         </section>

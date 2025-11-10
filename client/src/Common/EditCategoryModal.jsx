@@ -3,33 +3,44 @@ import { useState } from "react";
 import {
     CancelIcon,
 } from "../Assets/Icons.js"
+import RotateLoader from "react-spinners/RotateLoader";
 
 import TextField from '@mui/material/TextField';
 import { showSuccessToast, showErrorToast } from "../Components/CostomAlert.jsx";
 import { patchApiRequestWrapper } from "../Networking/Services/ApiCalls.js"
-import { uploadImage, handleImageUpload } from "../Utils/uploadImage.js";
+import { handleImageUpload } from "../Utils/uploadImage.js";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 
-const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCategoryModal }) => {
+const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCategoryModal, setIsUploaded }) => {
 
     const [formData, setFormData] = useState({
         name: "",
         image: ""
     });
 
+    const [isUploading, setIsUploading] = useState(false);
+
 
     async function imageUploader(e) {
+
+        setIsUploading(true);
+
         const IMAGE_URL = await handleImageUpload(e)
 
         if (IMAGE_URL) {
+            setIsUploading(false);
             setFormData((prev) => {
                 return {
                     ...prev,
                     image: IMAGE_URL
                 };
-            })
-        }
-    }
+            });
+            return;
+        };
+
+
+        setIsUploading(false);
+    };
 
     function handleInputChange(e) {
         const { name, value } = e.target;
@@ -38,7 +49,14 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
             ...prev,
             [name]: value,
         }));
-    }
+    };
+
+    function resetForm() {
+        setFormData({
+            name: "",
+            image: ""
+        });
+    };
 
     async function handleCategoryUpdateRequest(payload) {
 
@@ -49,9 +67,15 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
         if (response?.success === true && response?.error === false) {
             setEditCategoryModal(false);
             showSuccessToast(response?.message);
-        }
+            resetForm();
+            setIsUploaded((prev) => {
+                return !prev
+            })
+        };
 
-    }
+        showErrorToast(response?.message);
+
+    };
 
     function handleSubmit() {
 
@@ -62,6 +86,15 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
         };
 
         handleCategoryUpdateRequest(payload);
+    };
+
+    function clearImage() {
+        setFormData((prev) => {
+            return {
+                ...prev,
+                image: ""
+            };
+        });
     };
 
 
@@ -90,24 +123,34 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
                         />
                     </div>
 
-
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => { imageUploader(e) }}
-                    />
-
-
                     <div className="image-upload">
                         <p className="text-size-2">Upload Image</p>
-                        <input type="file" accept="image/*" />
+                        <div className="image-upload-body">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => { imageUploader(e) }}
+                            />
 
-                        {categoryImage && (
-                            <div className="image-preview">
-                                <img src={categoryImage} alt="Preview" />
-                                <button >✕</button>
-                            </div>
-                        )}
+                            {categoryImage && (
+                                <div className="image-preview">
+
+                                    {isUploading
+                                        ?
+                                        <RotateLoader speedMultiplier={0.5} size={11} />
+                                        :
+                                        <>
+                                            <img src={formData?.image || categoryImage} alt="Preview" />
+
+                                            {formData?.image && <button onClick={clearImage}>✕</button>}
+
+                                        </>
+                                    }
+
+                                </div>
+
+                            )}
+                        </div>
                     </div>
 
                     <button className="submit-btn" onClick={handleSubmit} >
