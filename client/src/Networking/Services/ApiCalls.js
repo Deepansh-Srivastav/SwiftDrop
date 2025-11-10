@@ -11,7 +11,7 @@ export async function postApiRequestWrapper(URL, payload) {
     catch (error) {
         return error.response.data
     }
-}
+};
 
 export async function getApiRequestWrapper(URL) {
 
@@ -22,7 +22,7 @@ export async function getApiRequestWrapper(URL) {
     catch (error) {
         return error?.response.data
     }
-}
+};
 
 export async function putApiRequestWrapper(URL, payload) {
     try {
@@ -32,7 +32,17 @@ export async function putApiRequestWrapper(URL, payload) {
     catch (error) {
         return error?.response.data
     }
-}
+};
+
+export async function patchApiRequestWrapper(URL, payload) {
+    try {
+        const response = await Axios.patch(URL, payload)
+        return response?.data
+    }
+    catch (error) {
+        return error?.response.data
+    }
+};
 
 export async function googleOAuthApi(code) {
     const URL = `${APIConfig?.userApiPath?.oAuth}?code=${code}`;
@@ -46,4 +56,4 @@ export async function googleOAuthApi(code) {
         return error.response.data
     }
 
-}
+};

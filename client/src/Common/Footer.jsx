@@ -6,7 +6,6 @@ import CustomButtons from "../Components/CustomButtons.jsx";
 import { useNavigate } from "react-router-dom"
 import { Divider } from "@mui/material";
 
-
 const Footer = () => {
 
     const navigate = useNavigate();
