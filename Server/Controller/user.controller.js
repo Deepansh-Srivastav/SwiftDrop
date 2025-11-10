@@ -1,16 +1,16 @@
-import UserModel from "../Model/user.model.js"
-import bcryptjs from "bcryptjs"
-import sendEmail from "../Config/sendEmail.js"
-import generateAccessToken from "../Utils/generateAccessToken.js"
-import generateRefreshToken from "../Utils/generateRefreshToken.js"
-import uploadImageClodinary from "../Utils/uploadImageCloudinary.js"
-import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js"
-import { encryptPassword, validatePassword } from "../Utils/encrypt.js"
-import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js"
-import { registerUser, validateUserAndUpdate } from "../Services/userService.js"
-import generateOTP from "../Services/generateOTP.js"
-import { OAUTH } from "../Utils/googleOAuthConfig.js"
-import axios from "axios"
+import UserModel from "../Model/user.model.js";
+import bcryptjs from "bcryptjs";
+import sendEmail from "../Config/sendEmail.js";
+import generateAccessToken from "../Utils/generateAccessToken.js";
+import generateRefreshToken from "../Utils/generateRefreshToken.js";
+import uploadImageClodinary from "../Utils/uploadImageCloudinary.js";
+import forgotPasswordOTPTemplate from "../Utils/forgotPasswordOTPTemplate.js";
+import { encryptPassword, validatePassword } from "../Utils/encrypt.js";
+import verifyEmailTemplate from "../Utils/verifyEmailTemplate.js";
+import { registerUser, validateUserAndUpdate } from "../Services/userService.js";
+import generateOTP from "../Services/generateOTP.js";
+import { OAUTH } from "../Utils/googleOAuthConfig.js";
+import axios from "axios";
 import jwt from "jsonwebtoken";
 import dotenv from 'dotenv'
 dotenv.config();
@@ -96,7 +96,7 @@ export async function registerUserController(req, res) {
             success: false,
         })
     }
-}
+};
 
 // Email  Verification Controller 
 export async function userEmailVerificationController(req, res) {
@@ -136,7 +136,7 @@ export async function userEmailVerificationController(req, res) {
             success: false,
         })
     }
-}
+};
 
 // Login Controller 
 export async function loginController(req, res) {
@@ -174,7 +174,7 @@ export async function loginController(req, res) {
         const isPasswordValid = await validatePassword(password, existingUser?.password)
 
         if (!isPasswordValid) {
-            return res.status(409).json({
+            return res.status(401).json({
                 "message": "Invalid password. Please try again.",
                 "error": true,
                 "success": false
@@ -217,7 +217,7 @@ export async function loginController(req, res) {
             success: false,
         })
     }
-}
+};
 
 export async function googleOAuthController(req, res) {
     try {
@@ -350,7 +350,7 @@ export async function logoutController(req, res) {
             success: false,
         })
     }
-}
+};
 
 // Get Login user details
 export async function getLoginUserDetails(req, res) {
@@ -384,7 +384,7 @@ export async function getLoginUserDetails(req, res) {
     }
 
 
-}
+};
 
 // Profile Picture Controller
 export async function uploadAvatarController(request, response) {
@@ -415,7 +415,7 @@ export async function uploadAvatarController(request, response) {
             success: false
         })
     }
-}
+};
 
 //Update User Details Controller
 export async function updateUserDetailsController(req, res) {
@@ -456,7 +456,7 @@ export async function updateUserDetailsController(req, res) {
         })
     }
 
-}
+};
 
 //Forgot Password Controller
 export async function forgotPasswordController(req, res) {
@@ -518,7 +518,7 @@ export async function forgotPasswordController(req, res) {
     }
 
 
-}
+};
 
 // verify forgot password error
 export async function verifyForgotPasswordOTPController(req, res) {
@@ -581,7 +581,7 @@ export async function verifyForgotPasswordOTPController(req, res) {
             success: false
         })
     }
-}
+};
 
 // reset password controller
 export async function resetPasswordController(req, res) {
@@ -644,7 +644,7 @@ export async function resetPasswordController(req, res) {
             success: false
         })
     }
-}
+};
 
 //Refresh token route remaining
 export async function refreshTokenController(req, res) {
@@ -718,4 +718,4 @@ export async function refreshTokenController(req, res) {
             success: false,
         })
     }
-}
+};

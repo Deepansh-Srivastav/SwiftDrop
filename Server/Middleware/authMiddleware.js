@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
         const token = req.cookies.accessToken || req.header.authorization.split(" ")[1]
 
         if (!token) {
-            return res.status(401).json({
+            return res.status(409).json({
                 message: "No token provided. Unauthorized access.",
                 error: true,
                 success: false,
@@ -21,13 +21,13 @@ const auth = async (req, res, next) => {
             next();
         } catch (error) {
             if (error?.name === "TokenExpiredError") {
-                return res.status(401).json({
+                return res.status(409).json({
                     message: error?.name,
                     error: true,
                     success: false,
                 });
             }
-            return res.status(401).json({
+            return res.status(409).json({
                 message: "Invalid token. Unauthorized access.",
                 error: true,
                 success: false,
