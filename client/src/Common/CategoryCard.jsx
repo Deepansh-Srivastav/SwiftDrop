@@ -1,19 +1,46 @@
-import React from 'react';
+import { useState } from "react";
+import EditCategoryModal from "./EditCategoryModal";
 
 const CategoryCard = ({ _id, name, image }) => {
+
+    const [editCategoryModal, setEditCategoryModal] = useState(false);
+
+    function handleModal() {
+        setEditCategoryModal((prev) => {
+            return !prev;
+        });
+    };
+
     return (
-        <div className="category-card">
-            <div className="category-image">
-                <img src={image} alt={image} />
-            </div>
-            <div className="category-details">
-                <h3 className="category-name">{name}</h3>
-            </div>
-            <div className="category-actions">
-                <button className="btn edit-btn" >Edit</button>
-                <button className="btn delete-btn" >Delete</button>
-            </div>
-        </div>
+        <>
+            <div className="category-card-container">
+                <div className="category-card-image-container">
+                    <img src={image} alt="Category Image" loading="lazy"/>
+                </div>
+
+                <div className="category-card-info-container">
+                    <div className="category-card-name-container">
+                        <h3 className='smallest-heading'>
+                            {name}
+                        </h3>
+                    </div>
+
+                    <div className="category-card-action-container">
+
+                        <button onClick={handleModal}>Edit</button>
+
+                        <button>Delete</button>
+
+                    </div >
+                </div>
+            </div >
+
+            {editCategoryModal && (
+                <>
+                    <EditCategoryModal categoryId={_id} categoryName={name} categoryImage={image} setEditCategoryModal={setEditCategoryModal}/>
+                </>
+            )}
+        </>
     );
 };
 

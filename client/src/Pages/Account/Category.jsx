@@ -71,7 +71,7 @@ const Category = () => {
                 {categoryList?.map((categoryItem, index) => {
                     return <CategoryCard {...categoryItem} key={index} />
                 })}
-
+                
             </div>
 
         </section>
