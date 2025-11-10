@@ -174,7 +174,7 @@ export async function loginController(req, res) {
         const isPasswordValid = await validatePassword(password, existingUser?.password)
 
         if (!isPasswordValid) {
-            return res.status(401).json({
+            return res.status(409).json({
                 "message": "Invalid password. Please try again.",
                 "error": true,
                 "success": false
@@ -658,7 +658,6 @@ export async function refreshTokenController(req, res) {
                 error: false
             })
         }
-
 
         try {
             const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY);
