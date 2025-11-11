@@ -50,7 +50,7 @@ const productSchema = new mongoose.Schema({
     }
 }, {
     timestamps: true
-})
+});
 
 //create a text index
 productSchema.index({
@@ -59,9 +59,9 @@ productSchema.index({
 }, {
     name: 10,
     description: 5
-})
+});
 
 
-const ProductModel = mongoose.model('product', productSchema)
+const ProductModel = mongoose.model('product', productSchema);
 
-export default ProductModel
+export default ProductModel;

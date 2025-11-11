@@ -40,7 +40,7 @@ body {
     --white-theme: #ffffff;
     --card-background: rgba(225, 225, 225, 0.625);
 
-        --button-theme-blue: #3A7F99;
+    --button-theme-blue: #3A7F99;
     --button-hover-theme-blue: #035776;
     /* --button-color: #4CAF50; */
     --button-hover-color: #035776;
@@ -48,6 +48,20 @@ body {
     --purple-theme: #979df7;
     --black-theme: #1C1C1C;
     --black-border-theme: rgba(101, 97, 97, 0.195);
+
+    --btn-delete-bg: #e53935;
+    /* main */
+    --btn-delete-hover: #c61111;
+    /* darker hover */
+    --btn-delete-active: #b71c1c;
+    /* pressed */
+
+    --btn-success-bg: #43a047;
+    /* main */
+    --btn-success-hover: #388e3c;
+    /* darker hover */
+    --btn-success-active: #2e7d32;
+    /* pressed */
 
     /* --gradient-primary: linear-gradient(100deg, #673AB7, #9575CD, #D1C4E9); */
 

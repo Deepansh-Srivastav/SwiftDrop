@@ -1,9 +1,19 @@
 import { useState } from "react";
 import EditCategoryModal from "./EditCategoryModal";
+import DeleteModal from "../Components/DeleteModal";
 
 const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
 
     const [editCategoryModal, setEditCategoryModal] = useState(false);
+
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+
+    function handleDeleteModal() {
+        setIsDeleteModalOpen((prev) => {
+            return !prev;
+        });
+    };
 
     function handleModal() {
         setEditCategoryModal((prev) => {
@@ -29,7 +39,7 @@ const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
 
                         <button onClick={handleModal}>Edit</button>
 
-                        <button>Delete</button>
+                        <button onClick={handleDeleteModal}>Delete</button>
 
                     </div >
                 </div>
@@ -46,6 +56,15 @@ const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
                     />
                 </>
             )}
+
+            {isDeleteModalOpen && (
+                <>
+                    <DeleteModal 
+                        heading={"Category"}
+                    setEditCategoryModal={setIsDeleteModalOpen} />
+                </>
+            )}
+
         </>
     );
 };
