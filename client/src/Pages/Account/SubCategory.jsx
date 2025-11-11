@@ -1,14 +1,37 @@
-import { Box, Container, Typography } from "@mui/material"
-import PageBanner from "../../Common/PageBanner"
+import { useState } from "react";
+import PageBanner from "../../Common/PageBanner";
+import AddSubCategoryModal from "../../Components/AddSubCategoryModal";
 
 const SubCategory = () => {
+
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [isUploaded, setIsUploaded] = useState(false);
+
+    function handleModalClose() {
+        return setIsModalOpen(!isModalOpen);
+    };
+
     return (
-        <Box>
+        <>
+            <section className="category-page">
+                <PageBanner heading={"sub-category"} />
 
-            <PageBanner heading={"sub-category"} />
+                <aside className="add-category-button">
+                    {!isModalOpen && (
 
-        </Box>
-    )
-}
+                        <button className="imageUploadButton" onClick={handleModalClose} >+ Add Category</button>
 
-export default SubCategory
+                    )}
+                </aside>
+            </section>
+
+            <div className="category-modal-container">
+                {isModalOpen && <AddSubCategoryModal closeModal={handleModalClose} setIsUploaded={setIsUploaded} />}
+            </div>
+        </>
+    );
+};
+
+export default SubCategory;

@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import userRouter from './Routes/users.route.js';
 import categoryRouter from './Routes/category.route.js';
 import uploadImageRouter from './Routes/uploadImage.route.js';
+import subCategoryRouter from './Routes/subCategory.route.js';
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ const PORT = process.env.PORT_2 || process.env.PORT_1
 app.use("/api/user", userRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/file", uploadImageRouter);
+app.use("/api/sub-category", subCategoryRouter)
 
 app.get('/', (req, res) => {
     res.send("This is the home page");

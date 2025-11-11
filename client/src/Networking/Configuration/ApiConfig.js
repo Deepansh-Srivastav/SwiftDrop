@@ -26,7 +26,13 @@ export const APIConfig = {
         addCategory: "/api/category/add-category",
         getAllCategory: "/api/category/get-all-category",
         updateCategory: "/api/category/update-category",
+    },
 
+    subCategoryApiPath:{
+        addSubCategory:"/api/sub-category/add-sub-category",
+        getSubCategory: "/api/sub-category/get-all-sub-category",
+        updateSubCategory:"/api/sub-category/update-sub-category",
+        deleteSubCategory:"/api/sub-category/delete-sub-category",
     },
 
     uploadImageApiPath: {
