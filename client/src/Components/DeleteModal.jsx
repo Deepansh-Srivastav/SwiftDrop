@@ -1,8 +1,10 @@
 import {
     CancelIcon,
 } from "../Assets/Icons.js"
+import ClipLoader from "react-spinners/ClipLoader";
 
-const DeleteModal = ({ heading, categoryId, categoryName, setEditCategoryModal, handleDeleteCAtegory }) => {
+
+const DeleteModal = ({ heading, categoryId, categoryName, setEditCategoryModal, handleDeleteCAtegory, isLoading }) => {
 
     return (
         <div className="modal-overlay">
@@ -22,15 +24,34 @@ const DeleteModal = ({ heading, categoryId, categoryName, setEditCategoryModal, 
 
                     </div>
 
-                    <button className="success-btn" onClick={setEditCategoryModal}>
-                        Cancel
-                    </button>
+                    {isLoading
+                        ?
+                        (
+                            <div className="loader">
+                                <ClipLoader color="var(--purple-theme)" size={50} />
+                            </div>
+                        )
+                        :
+                        (
+                            <>
+                                <button className="success-btn" onClick={setEditCategoryModal}>
+                                    Cancel
+                                </button>
 
-                    <button className="cancel-btn" onClick={()=>{
-                        handleDeleteCAtegory(categoryId)
-                    }} >
-                        Confirm
-                    </button>
+                                <button className="cancel-btn" onClick={() => {
+                                    handleDeleteCAtegory(categoryId)
+                                }} >
+                                    Confirm
+                                </button>
+                            </>
+                        )
+                    }
+
+
+
+
+
+
                 </div>
             </div>
         </div>

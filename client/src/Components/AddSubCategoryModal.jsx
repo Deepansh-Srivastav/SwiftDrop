@@ -80,7 +80,7 @@ const AddSubCategoryModal = ({ closeModal, setIsUploaded }) => {
 
         const payload = { ...data, image: imageUrl };
 
-        const URL = APIConfig?.categoryApiPath?.addCategory;
+        const URL = APIConfig?.subCategoryApiPath?.addSubCategory;
 
         const response = await postApiRequestWrapper(URL, payload);
 

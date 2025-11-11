@@ -43,7 +43,7 @@ export async function createSubCategoryController(req, res) {
     };
 };
 
-export async function getAllSubCategory(req, res) {
+export async function getAllSubCategoryController(req, res) {
     try {
         const allSubCategories = await SubCategoryModel.find();
 
@@ -71,7 +71,7 @@ export async function getAllSubCategory(req, res) {
     };
 };
 
-export async function updateSubCategory(req, res) {
+export async function updateSubCategoryController(req, res) {
     try {
         const { _id, name, image, category } = req.body;
 
