@@ -171,6 +171,8 @@ const AddSubCategoryModal = ({ closeModal, setIsUploaded }) => {
                     )}
                 </Box>
 
+                
+
                 <Button
                     variant="contained"
                     fullWidth
