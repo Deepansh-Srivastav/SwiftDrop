@@ -39,7 +39,7 @@ const Category = () => {
         <>
             <section className="category-page">
 
-                <PageBanner heading={"category"}/>
+                <PageBanner heading={"category"} />
 
                 <aside className="add-category-button">
                     {!isModalOpen && (
@@ -63,6 +63,8 @@ const Category = () => {
             <div className="category-modal-container">
                 {isModalOpen && <AddCategoryModal closeModal={handleModalClose} setIsUploaded={setIsUploaded} />}
             </div>
+
+
 
         </>
     );

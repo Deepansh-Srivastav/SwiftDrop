@@ -1,4 +1,6 @@
 import CategoryModel from "../Model/category.model.js";
+import SubCategoryModel from "../Model/subcategory.model.js";
+import ProductModel from "../Model/product.model.js";
 
 // Add Category Controller
 export async function addCategoryController(req, res) {
@@ -6,7 +8,7 @@ export async function addCategoryController(req, res) {
         const { name, image } = req.body;
 
         if (!name || !image) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 error: true,
                 message: "Provide both name and image."
@@ -45,12 +47,12 @@ export async function addCategoryController(req, res) {
 };
 
 //Get all category Controller
-export async function getAllCategory(req, res) {
+export async function getAllCategoryController(req, res) {
     try {
 
         const AllCategoryItems = await CategoryModel.find();
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Get category api running",
             error: false,
             success: true,
@@ -67,7 +69,8 @@ export async function getAllCategory(req, res) {
     };
 };
 
-export async function editCategory(req, res) {
+//Edit Category Controller
+export async function editCategoryController(req, res) {
     try {
 
         const { _id, name, image } = req.body;
@@ -124,4 +127,56 @@ export async function editCategory(req, res) {
             success: false
         });
     };
+};
+
+//Delete Category Controller
+export async function deleteCategoryController(req, res) {
+    try {
+
+        const { _id } = req.body;
+
+        const checkSubCategory = await SubCategoryModel.find({
+            category: {
+                "$in": [_id]
+            }
+        }).countDocuments();
+
+        const checkProduct = await ProductModel.find({
+            category: {
+                "$in": [_id]
+            }
+        }).countDocuments();
+
+        if (checkSubCategory > 0 || checkProduct > 0) {
+            return res.status(400).json({
+                message: "Category already in use.",
+                error: true,
+                success: false
+            });
+        };
+
+
+        const deleteCategory = await CategoryModel.findByIdAndDelete(_id);
+
+        if (!deleteCategory) {
+            return res.status(400).json({
+                message: "Failed to delete this category.",
+                error: true,
+                success: false
+            });
+        }
+
+        return res.status(200).json({
+            message: "Category deleted successfully",
+            error: false,
+            success: true
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message,
+            error: true,
+            success: false
+        });
+    }
 };

@@ -7,7 +7,7 @@ export default async function generateAccessToken(userId) {
 
     const secretKey = process.env.ACCESS_SECRET_KEY;
 
-    const expiresIn = '5m'; 
+    const expiresIn = '5d'; 
 
     const token = jwt.sign(payload, secretKey, { expiresIn });
 

@@ -44,6 +44,16 @@ export async function patchApiRequestWrapper(URL, payload) {
     }
 };
 
+export async function deleteApiRequestWrapper(URL, payload) {
+    try {
+        const response = await Axios.delete(URL, { data: payload })
+        return response?.data
+    }
+    catch (error) {
+        return error?.response.data
+    }
+};
+
 export async function googleOAuthApi(code) {
     const URL = `${APIConfig?.userApiPath?.oAuth}?code=${code}`;
 

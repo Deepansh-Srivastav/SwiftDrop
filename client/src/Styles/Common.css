@@ -369,7 +369,7 @@ Modal Style
     transform: scale(1.15);
 }
 
-.categoryNameContainer{
+.categoryNameContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -387,13 +387,13 @@ Modal Style
     border: 1px solid #ccc;
 }
 
-.image-preview{
+.image-preview {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.image-upload-body{
+.image-upload-body {
     width: 100%;
     display: flex;
     align-items: center;
@@ -441,6 +441,42 @@ Modal Style
     background-color: #622ec5;
 }
 
+/* Cancel button */
+.cancel-btn {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--btn-delete-bg);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+ .cancel-btn:hover {
+    background-color: var(--btn-delete-hover);
+}
+
+/* success button */
+.success-btn {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--btn-success-bg);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+ .success-btn:hover {
+    background-color: var(--btn-success-active);
+}
+
 
 /* Animations */
 @keyframes fadeIn {
@@ -483,5 +519,3 @@ Modal Style
         font-size: 14px;
     }
 }
-
-
