@@ -1,15 +1,8 @@
-import { useState } from "react";
 import {
     CancelIcon,
 } from "../Assets/Icons.js"
-import { showSuccessToast, showErrorToast } from "../Components/CostomAlert.jsx";
-import { patchApiRequestWrapper } from "../Networking/Services/ApiCalls.js"
-import { handleImageUpload } from "../Utils/uploadImage.js";
-import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 
-const DeleteModal = ({ heading, categoryId, categoryName, categoryImage, setEditCategoryModal, setIsUploaded }) => {
-
-
+const DeleteModal = ({ heading, categoryId, categoryName, setEditCategoryModal, handleDeleteCAtegory }) => {
 
     return (
         <div className="modal-overlay">
@@ -29,11 +22,13 @@ const DeleteModal = ({ heading, categoryId, categoryName, categoryImage, setEdit
 
                     </div>
 
-                    <button className=" success-btn"  >
+                    <button className="success-btn" onClick={setEditCategoryModal}>
                         Cancel
                     </button>
 
-                    <button className="cancel-btn"  >
+                    <button className="cancel-btn" onClick={()=>{
+                        handleDeleteCAtegory(categoryId)
+                    }} >
                         Confirm
                     </button>
                 </div>

@@ -26,6 +26,7 @@ export const APIConfig = {
         addCategory: "/api/category/add-category",
         getAllCategory: "/api/category/get-all-category",
         updateCategory: "/api/category/update-category",
+        deleteCategory: "/api/category/delete-category",
     },
 
     subCategoryApiPath:{

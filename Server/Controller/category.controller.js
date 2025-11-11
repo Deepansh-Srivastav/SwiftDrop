@@ -8,7 +8,7 @@ export async function addCategoryController(req, res) {
         const { name, image } = req.body;
 
         if (!name || !image) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 error: true,
                 message: "Provide both name and image."
@@ -52,7 +52,7 @@ export async function getAllCategoryController(req, res) {
 
         const AllCategoryItems = await CategoryModel.find();
 
-        res.status(200).json({
+        return res.status(200).json({
             message: "Get category api running",
             error: false,
             success: true,
@@ -154,6 +154,7 @@ export async function deleteCategoryController(req, res) {
                 success: false
             });
         };
+
 
         const deleteCategory = await CategoryModel.findByIdAndDelete(_id);
 
