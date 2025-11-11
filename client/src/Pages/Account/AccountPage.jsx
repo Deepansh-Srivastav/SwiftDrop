@@ -6,14 +6,18 @@ import { Outlet } from "react-router-dom";
 const AccountPage = () => {
 
   return (
-    <Box display="flex" height="100vh !important">
+    <>
+      <Box display="flex" height="100vh !important">
 
-      <SideNav accountSideMenu={accountSideMenu} />
+        <SideNav accountSideMenu={accountSideMenu} />
 
-      <Box flex={1}>
-        <Outlet />
+        <Box flex={1}>
+          <Outlet />
+        </Box>
       </Box>
-    </Box>
+
+      
+    </>
   );
 };
 

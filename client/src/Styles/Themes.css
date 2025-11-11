@@ -22,7 +22,7 @@ html {
     margin: 0;
     box-sizing: border-box;
     transition: all 0.5s;
-    
+
 }
 
 body {
@@ -38,8 +38,9 @@ body {
     --button-color: #3A7F99;
     --text-green: #5dc067;
     --white-theme: #ffffff;
+    --card-background: rgba(225, 225, 225, 0.625);
 
-    --button-theme-blue: #3A7F99;
+        --button-theme-blue: #3A7F99;
     --button-hover-theme-blue: #035776;
     /* --button-color: #4CAF50; */
     --button-hover-color: #035776;

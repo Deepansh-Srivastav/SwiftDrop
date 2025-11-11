@@ -11,8 +11,8 @@ export default function SideNav({ accountSideMenu }) {
     const [isSideNavOpen, setIsSideNavOpen] = useState(true);
 
     function handleSideNavOpen() {
-        setIsSideNavOpen(!isSideNavOpen)
-    }
+        setIsSideNavOpen(!isSideNavOpen);
+    };
 
     return (
         <Box component="main" position={"relative"} sx={{
@@ -122,7 +122,7 @@ export function BrandLogoBadge({ isSideNavOpen }) {
             }}
         >
             <Box>
-                <img src={projectImages?.swiftDropLogo} alt="" width={isSideNavOpen ? "70px" : "50px"} />
+                <img src={projectImages?.swiftDropLogo} alt="" width={isSideNavOpen ? "120px" : "50px"} />
             </Box>
 
 
@@ -139,7 +139,7 @@ export function BrandLogoBadge({ isSideNavOpen }) {
                 marginLeft: isSideNavOpen ? "12px" : "0px",
 
             }}>
-                <Typography sx={{
+                {/* <Typography sx={{
                     fontSize: "22px",
                     fontWeight: "600"
                 }}>
@@ -153,13 +153,12 @@ export function BrandLogoBadge({ isSideNavOpen }) {
                     fontFamily: "Edu NSW ACT Cursive, cursive"
                 }}>
                     Swift. Simple. Reliable.
-                </Typography>
+                </Typography> */}
 
             </Box>
 
-
         </Box >
-    )
+    );
 };
 
 function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
@@ -168,12 +167,11 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
 
     console.log("This is the user details from side nav", userDetails);
 
-
     const navigate = useNavigate();
 
     function handleClick(path) {
         return navigate(`/my-account/${path}`);
-    }
+    };
 
     return (
         <List sx={{ margin: "20px 0" }}>
@@ -209,8 +207,6 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
                 );
             })}
 
-
-
             <Divider sx={{ my: 4, borderColor: "var(--border-color)", borderBottomWidth: '1px' }} />
 
             <ListItemButton>
@@ -225,8 +221,6 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
                     marginLeft: isSideNavOpen ? "12px" : "0px",
                 }} />
             </ListItemButton>
-
-
         </List>
     );
 };

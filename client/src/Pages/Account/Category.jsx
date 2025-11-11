@@ -35,46 +35,36 @@ const Category = () => {
         fetchCategory()
     }, [isUploaded])
 
-    console.log(categoryList);
-
-
     return (
-        <section className="category-page">
+        <>
+            <section className="category-page">
 
-            <PageBanner heading={"category"} closeModal={handleModalClose} isModalOpen={isModalOpen} />
+                <PageBanner heading={"category"}/>
 
-            <aside className="add-category-button">
-                {!isModalOpen && (
+                <aside className="add-category-button">
+                    {!isModalOpen && (
 
-                    <button className="imageUploadButton" onClick={handleModalClose} >+ Add Category</button>
+                        <button className="imageUploadButton" onClick={handleModalClose} >+ Add Category</button>
 
-                )}
-            </aside>
+                    )}
+                </aside>
 
-            <Container
-                disableGutters
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
-                    backdropFilter: isModalOpen ? "blur(5px)" : "none",
-                    transition: "backdrop-filter 0.3s ease",
-                    position: "absolute",
-                }}
-            >
+                <div className="display-category-container">
+
+                    {categoryList?.map((categoryItem, index) => {
+                        return <CategoryCard {...categoryItem} key={index} setIsUploaded={setIsUploaded} />
+                    })}
+
+                </div>
+
+            </section>
+
+
+            <div className="category-modal-container">
                 {isModalOpen && <AddCategoryModal closeModal={handleModalClose} setIsUploaded={setIsUploaded} />}
-            </Container>
-
-            <div className="display-category-container">
-
-                {categoryList?.map((categoryItem, index) => {
-                    return <CategoryCard {...categoryItem} key={index} />
-                })}
-
             </div>
 
-        </section>
+        </>
     );
 };
 
