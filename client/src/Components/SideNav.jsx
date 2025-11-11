@@ -165,8 +165,6 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
 
     const userDetails = useSelector((state) => state.userDetails);
 
-    console.log("This is the user details from side nav", userDetails);
-
     const navigate = useNavigate();
 
     function handleClick(path) {

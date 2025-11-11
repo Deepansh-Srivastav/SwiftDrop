@@ -5,7 +5,7 @@ import { deleteApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { showSuccessToast, showErrorToast } from "../Components/CostomAlert";
 
-const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
+const CategoryCard = ({ _id, name, image, setIsUploaded, cardType = null, onDelete }) => {
 
     const [editCategoryModal, setEditCategoryModal] = useState(false);
 
@@ -26,18 +26,11 @@ const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
         });
     };
 
-
-    async function handleDeleteCAtegory(id) {
+    async function handleDeleteCategory(id) {
 
         setLoading(true);
 
-        const payload = { _id: id };
-
-        console.log("DELETE PAYLOAD - ", payload);
-
-        const DELETE_URL = APIConfig?.categoryApiPath?.deleteCategory;
-
-        const response = await deleteApiRequestWrapper(DELETE_URL, payload);
+        const response = await onDelete(id);
 
         if (response?.error === false && response?.success === true) {
             showSuccessToast(response?.message);
@@ -96,7 +89,8 @@ const CategoryCard = ({ _id, name, image, setIsUploaded }) => {
                         categoryId={_id}
                         heading={"Category"}
                         setEditCategoryModal={setIsDeleteModalOpen}
-                        handleDeleteCAtegory={handleDeleteCAtegory}
+                        handleDeleteCAtegory={handleDeleteCategory}
+                        isLoading={loading}
                     />
 
                 </>

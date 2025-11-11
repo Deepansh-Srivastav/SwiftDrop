@@ -71,6 +71,7 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
             setIsUploaded((prev) => {
                 return !prev
             })
+            return;
         };
 
         showErrorToast(response?.message);

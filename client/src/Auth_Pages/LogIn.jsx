@@ -22,15 +22,15 @@ import OAuthComponent from "../Redux/Features/OAuthComponent.jsx";
 
 const LogIn = () => {
 
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
   const [loginFormData, setLoginFormData] = useState({
     email: '',
     password: '',
-  })
+  });
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
