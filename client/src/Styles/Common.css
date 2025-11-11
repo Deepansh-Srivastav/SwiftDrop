@@ -477,6 +477,149 @@ Modal Style
     background-color: var(--btn-success-active);
 }
 
+/*=================================================================================
+Common Select Style
+=================================================================================*/
+
+.dropdown-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.dropdown {
+    width: 100%;
+    position: relative;
+    outline: none;
+}
+
+/* toggle button */
+.dropdown__toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 14px;
+    /* background: linear-gradient(180deg, rgba(122, 62, 240, 0.04), rgba(122, 62, 240, 0.02)); */
+    border: 1px solid var(--black-border-theme);
+    border-radius: 4px;
+    /* box-shadow: var(--dd-shadow); */
+    cursor: pointer;
+    transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
+    color: #111827;
+    user-select: none;
+}
+
+.dropdown__toggle:active {
+    transform: translateY(1px);
+}
+
+/* label inside toggle */
+.dropdown__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--black-theme);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* chevron icon */
+.dropdown__chevron {
+    /* color: red; */
+    /* color: var(--dd-muted); */
+    transition: transform .18s ease;
+    flex: 0 0 18px;
+}
+
+.dropdown--open .dropdown__chevron {
+    transform: rotate(180deg);
+    color: var(--dd-accent);
+}
+
+/* dropdown option body*/
+.dropdown__menu {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 5px;
+    padding: 8px;
+    list-style: none;
+    background: var(--background-color);
+    border-radius: 5px;
+    border: 1px solid var(--black-border-theme);
+    max-height: 250px;
+    overflow: auto;
+    transform-origin: top center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px) scale(.98);
+    transition: opacity .16s ease, transform .16s ease;
+    z-index: 40;
+    overflow-y: scroll;
+}
+
+.dropdown--open .dropdown__menu {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+/* dropdown options */
+.dropdown__item {
+    padding: 1rem 12px;
+    border-radius: 8px;
+    margin: 4px 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background .12s ease, color .12s ease, transform .06s ease;
+}
+
+/* hover and active */
+.dropdown__item:hover,
+.dropdown__item:active {
+    background: var(--gradient-purple);
+    color: var(--white-theme);
+    transform: translateY(-1px);
+}
+
+
+/* small visual spacing between items */
+.dropdown__item+.dropdown__item {
+    margin-top: 6px;
+}
+
+/* scrollbar for menu */
+.dropdown__menu::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.dropdown__menu::-webkit-scrollbar-thumb {
+    background: rgba(10, 10, 20, 0.08);
+    border-radius: 8px;
+}
+
+.dropdown__menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* responsive */
+@media (max-width: 420px) {
+    .dropdown {
+        width: 92vw;
+    }
+
+    .dropdown__menu {
+        max-height: 40vh;
+    }
+}
+
 
 /* Animations */
 @keyframes fadeIn {

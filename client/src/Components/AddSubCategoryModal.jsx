@@ -10,13 +10,20 @@ import {
 import {
     CancelIcon,
     CloseIcon
-} from "../Assets/Icons.js"
+} from "../Assets/Icons.js";
 import { uploadImage } from "../Utils/uploadImage.js";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { postApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { showSuccessToast, showErrorToast } from "./CostomAlert.jsx";
+import CommonSelect from "./CommonSelect.jsx";
+import { useSelector } from "react-redux";
 
 const AddSubCategoryModal = ({ closeModal, setIsUploaded }) => {
+
+    const categoryDetails = useSelector((state) => {
+        return state.categoryDetails;
+    })
+
     const [data, setData] = useState({
         name: "",
         image: "",
@@ -171,7 +178,11 @@ const AddSubCategoryModal = ({ closeModal, setIsUploaded }) => {
                     )}
                 </Box>
 
-                
+                <CommonSelect
+                    heading={"Category"}
+                    options={categoryDetails}
+                    setData={setData}
+                />
 
                 <Button
                     variant="contained"
