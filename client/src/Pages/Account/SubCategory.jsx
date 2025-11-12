@@ -9,16 +9,11 @@ import { showErrorToast } from "../../Components/CostomAlert";
 
 const SubCategory = () => {
 
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const [isUploaded, setIsUploaded] = useState(false);
 
     const [subCatData, setSubCatData] = useState([]);
-
-    const categoryDetails = useSelector((state) => {
-        return state.categoryDetails;
-    })
 
     function handleModalClose() {
         return setIsModalOpen(!isModalOpen);
@@ -46,14 +41,11 @@ const SubCategory = () => {
         const response = await deleteApiRequestWrapper(DELETE_URL, payload);
 
         return response;
-    }
+    };
 
     useEffect(() => {
         fetchSubCategory();
     }, [])
-
-    console.log("SUBCATEGORYDATAIS", subCatData);
-
 
     return (
         <>
@@ -68,12 +60,19 @@ const SubCategory = () => {
                     )}
                 </aside>
 
-
                 <div className="display-category-container">
 
                     {subCatData.length > 0 && subCatData?.map((categoryItem, index) => {
-                        return <CategoryCard {...categoryItem} key={index} setIsUploaded={setIsUploaded} onDelete={deleteSubCategory} />
-                    })}
+                        return (
+                            <CategoryCard
+                                {...categoryItem}
+                                setIsUploaded={setIsUploaded}
+                                onDelete={deleteSubCategory}
+                                cardType={"subCategoryCard"}
+                                key={index}
+                            />
+                        );
+                    })};
 
                 </div>
 

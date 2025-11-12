@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-const CommonSelect = ({ heading = "Option", options, setData, selectedOption }) => {
+const CommonSelect = ({
+    heading = "Option",
+    options,
+    setData,
+    selectedOption,
+}) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedLabel, setSelectedLabel] = useState(`Select ${heading}`);

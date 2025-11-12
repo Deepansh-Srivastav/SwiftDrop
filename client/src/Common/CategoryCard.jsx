@@ -5,7 +5,15 @@ import { deleteApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { showSuccessToast, showErrorToast } from "../Components/CostomAlert";
 
-const CategoryCard = ({ _id, name, image, setIsUploaded, cardType = null, onDelete }) => {
+const CategoryCard = ({
+    _id,
+    name,
+    image,
+    cardType = null,
+    setIsUploaded,
+    onDelete,
+    onUpdate,
+}) => {
 
     const [editCategoryModal, setEditCategoryModal] = useState(false);
 
@@ -20,7 +28,7 @@ const CategoryCard = ({ _id, name, image, setIsUploaded, cardType = null, onDele
         });
     };
 
-    function handleModal() {
+    function handleEditModal() {
         setEditCategoryModal((prev) => {
             return !prev;
         });
@@ -62,11 +70,8 @@ const CategoryCard = ({ _id, name, image, setIsUploaded, cardType = null, onDele
                     </div>
 
                     <div className="category-card-action-container">
-
-                        <button onClick={handleModal}>Edit</button>
-
+                        <button onClick={handleEditModal}>Edit</button>
                         <button onClick={handleDeleteModal}>Delete</button>
-
                     </div >
                 </div>
             </div >
@@ -78,7 +83,9 @@ const CategoryCard = ({ _id, name, image, setIsUploaded, cardType = null, onDele
                         categoryName={name}
                         categoryImage={image}
                         setEditCategoryModal={setEditCategoryModal}
+                        onUpdate={onUpdate}
                         setIsUploaded={setIsUploaded}
+                        cardType={cardType}
                     />
                 </>
             )}
