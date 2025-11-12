@@ -50,10 +50,9 @@ CATEGORY PAGE
     padding: 2rem 1rem;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: center;
     align-items: start;
     gap: 1rem; 
     flex-wrap: wrap;
     overflow-y: auto;
-    /* background-color: red; */
 }

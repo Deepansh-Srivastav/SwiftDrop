@@ -48,7 +48,6 @@ const CommonSelect = ({
                                             });
                                             setSelectedLabel(option?.name);
                                             setIsOpen(false);
-
                                         }}
                                     >
                                         {option?.name}

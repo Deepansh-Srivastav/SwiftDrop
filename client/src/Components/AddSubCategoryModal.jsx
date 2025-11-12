@@ -24,20 +24,21 @@ const AddSubCategoryModal = ({ closeModal, setIsUploaded }) => {
         return state.categoryDetails;
     })
 
+    const [isImageUploaded, setIsImageUploaded] = useState(null)
+
     const [data, setData] = useState({
         name: "",
         image: "",
         category: []
     });
 
-    const [isImageUploaded, setIsImageUploaded] = useState(null)
-
     function resetAll() {
         setIsImageUploaded(null);
 
         setData({
             name: "",
-            image: ""
+            image: "",
+            category: []
         });
 
         closeModal();

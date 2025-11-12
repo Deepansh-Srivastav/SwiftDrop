@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddSubCategoryModal from "../../Components/AddSubCategoryModal";
 import CategoryCard from "../../Common/CategoryCard";
 import { APIConfig } from "../../Networking/Configuration/ApiConfig";
-import { deleteApiRequestWrapper, getApiRequestWrapper } from "../../Networking/Services/ApiCalls";
+import { deleteApiRequestWrapper, getApiRequestWrapper, patchApiRequestWrapper } from "../../Networking/Services/ApiCalls";
 import { showErrorToast } from "../../Components/CostomAlert";
 
 const SubCategory = () => {
@@ -30,17 +30,24 @@ const SubCategory = () => {
         }
 
         showErrorToast(response?.message)
-    }
+    };
+
+    async function updateSubCategory(payload) {
+
+        const UPDATE_URL = APIConfig?.subCategoryApiPath?.updateSubCategory;
+        const response = await patchApiRequestWrapper(UPDATE_URL,payload);
+        return response;
+
+    };
+
 
     async function deleteSubCategory(id) {
 
         const payload = { _id: id };
-
         const DELETE_URL = APIConfig?.subCategoryApiPath?.deleteSubCategory;
-
         const response = await deleteApiRequestWrapper(DELETE_URL, payload);
-
         return response;
+
     };
 
     useEffect(() => {
@@ -67,19 +74,23 @@ const SubCategory = () => {
                             <CategoryCard
                                 {...categoryItem}
                                 setIsUploaded={setIsUploaded}
+                                onUpdate={updateSubCategory}
                                 onDelete={deleteSubCategory}
                                 cardType={"subCategoryCard"}
                                 key={index}
                             />
                         );
-                    })};
+                    })}
 
                 </div>
-
             </section>
 
             <div className="category-modal-container">
-                {isModalOpen && <AddSubCategoryModal closeModal={handleModalClose} setIsUploaded={setIsUploaded} />}
+                {isModalOpen && (
+                    <AddSubCategoryModal
+                        closeModal={handleModalClose}
+                        setIsUploaded={setIsUploaded} />
+                )}
             </div>
         </>
     );

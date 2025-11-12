@@ -99,7 +99,6 @@ const CategoryCard = ({
                         handleDeleteCAtegory={handleDeleteCategory}
                         isLoading={loading}
                     />
-
                 </>
             )}
 

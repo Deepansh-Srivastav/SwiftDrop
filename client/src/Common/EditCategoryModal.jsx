@@ -26,6 +26,8 @@ const EditCategoryModal = ({
         category: [],
     });
 
+    const [loading, setLoading] = useState(false);
+
     const categoryDetails = useSelector((state) => {
         return state.categoryDetails;
     })
@@ -169,6 +171,7 @@ const EditCategoryModal = ({
                                 cardType={cardType}
                                 categoryName={categoryName}
                                 options={categoryDetails}
+                                setData={setFormData}
                             />
                         </div>
                     )}
