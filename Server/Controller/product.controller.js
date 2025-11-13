@@ -1,7 +1,7 @@
 import ProductModel from "../Model/product.model.js"
 
 // Create Product Controller
-export async function createProduct(req, res) {
+export async function createProductController(req, res) {
     try {
         const {
             name,
@@ -14,10 +14,10 @@ export async function createProduct(req, res) {
             discount,
             description,
             more_details,
-        } = request.body
+        } = req.body
 
         if (!name || !image[0] || !category[0] || !subCategory[0] || !unit || !price || !description) {
-            return response.status(400).json({
+            return res.status(400).json({
                 message: "Enter all the required fields",
                 error: true,
                 success: false
@@ -38,6 +38,20 @@ export async function createProduct(req, res) {
         }
 
         const createProduct = await ProductModel.create(payload);
+
+        if (!createProduct) {
+            return res.status(400).json({
+                message: "Failed to create product.",
+                error: true,
+                success: false
+            });
+        };
+
+        return res.status(200).json({
+            message: "Product created successfully.",
+            error: false,
+            success: true
+        })
 
     }
 

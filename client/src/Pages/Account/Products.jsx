@@ -5,13 +5,24 @@ import CommonSelect from "../../Components/CommonSelect.jsx"
 import { useSelector } from "react-redux";
 import CommonMultiSelect from "../../Components/CommonMultiSelect.jsx";
 import { CloseIcon, DeleteIcon } from "../../Assets/Icons.js";
+import { postApiRequestWrapper } from "../../Networking/Services/ApiCalls.js";
+import { APIConfig } from "../../Networking/Configuration/ApiConfig.js";
+import { showSuccessToast, showErrorToast } from "../../Components/CostomAlert.jsx"
 
 const Products = () => {
+
+    async function handleCreateProduct(payload) {
+        const CREATE_PRODUCT_URL = APIConfig?.productPath?.addProduct;
+
+        const response = await postApiRequestWrapper(CREATE_PRODUCT_URL, payload);
+
+        return response;
+    }
 
     return (
         <section>
             <PageBanner heading={"upload product"} />
-            <UploadProductForm />
+            <UploadProductForm onCreate={handleCreateProduct} />
         </section>
     )
 }
@@ -19,7 +30,7 @@ const Products = () => {
 export default Products;
 
 
-function UploadProductForm() {
+function UploadProductForm({ onCreate }) {
 
     const categoryDetails = useSelector((state) => {
         return state.categoryDetails;
@@ -76,9 +87,38 @@ function UploadProductForm() {
         })
     }
 
+    async function handleSubmit() {
+
+        const payload = {
+            name: formData.name,
+            image: formData.image,
+            category: formData.category,
+            subCategory: formData.subCategory?.map(subCat => subCat?.id),
+            unit: formData.unit,
+            stock: formData.stock,
+            price: formData.price,
+            discount: formData.discount,
+            description: formData.description,
+            more_details: formData.more_details
+        };
+
+        const response = await onCreate(payload);
+
+        if (response?.error === false && response?.success === true) {
+            return showSuccessToast(response?.message);
+        };
+        return showErrorToast(response?.message);
+
+
+
+    }
+
     return (
         <div className="edit-form">
-            <form action="">
+            <form action="" onSubmit={(e) => {
+                e.preventDefault();
+                return;
+            }}>
 
                 <div className="full-sized-input">
                     <label htmlFor="name">Product Name</label>
@@ -89,6 +129,7 @@ function UploadProductForm() {
                         value={formData?.name}
                         onChange={handleFormChange}
                         className="form-input"
+                        required
                     />
                 </div>
 
@@ -157,10 +198,10 @@ function UploadProductForm() {
                         required
                         onChange={(e) => {
                             handleFormChange(e)
-                        }} 
+                        }}
                         className="form-input"
-                        />
-                        
+                    />
+
                 </div>
 
                 <div className="full-sized-input">
@@ -173,8 +214,8 @@ function UploadProductForm() {
                         required
                         onChange={(e) => {
                             handleFormChange(e)
-                        }} 
-                        className="form-input"/>
+                        }}
+                        className="form-input" />
                 </div>
 
                 <div className="full-sized-input">
@@ -187,7 +228,7 @@ function UploadProductForm() {
                         required
                         onChange={(e) => {
                             handleFormChange(e)
-                        }} className="form-input"/>
+                        }} className="form-input" />
                 </div>
 
                 <div className="full-sized-input">
@@ -201,7 +242,7 @@ function UploadProductForm() {
                         onChange={(e) => {
                             if (e.target.value.length > 3) return;
                             handleFormChange(e)
-                        }} className="form-input"/>
+                        }} className="form-input" />
                 </div>
 
                 <div className="full-sized-input">
@@ -213,11 +254,16 @@ function UploadProductForm() {
                         name={"description"}
                         required
                         onChange={(e) => {
-                            if (e.target.value.length > 3) return;
                             handleFormChange(e)
                         }}
                         className=" form-input no-resize-textarea"
                     />
+                </div>
+
+                <div className="form-button-container">
+                    <button className="submit-btn" type="submit" onClick={handleSubmit}>
+                        Add
+                    </button>
                 </div>
 
             </form>

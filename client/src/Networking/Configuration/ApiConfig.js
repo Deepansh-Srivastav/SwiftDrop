@@ -29,11 +29,15 @@ export const APIConfig = {
         deleteCategory: "/api/category/delete-category",
     },
 
-    subCategoryApiPath:{
-        addSubCategory:"/api/sub-category/add-sub-category",
+    subCategoryApiPath: {
+        addSubCategory: "/api/sub-category/add-sub-category",
         getSubCategory: "/api/sub-category/get-all-sub-category",
-        updateSubCategory:"/api/sub-category/update-sub-category",
-        deleteSubCategory:"/api/sub-category/delete-sub-category",
+        updateSubCategory: "/api/sub-category/update-sub-category",
+        deleteSubCategory: "/api/sub-category/delete-sub-category",
+    },
+
+    productPath: {
+        addProduct: "/api/product/add-product",
     },
 
     uploadImageApiPath: {

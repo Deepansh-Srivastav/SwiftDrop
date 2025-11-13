@@ -202,7 +202,7 @@ Upload products pagedesigns
     margin-top: 0.5rem;
 }
 
-.sub-category-badge-container{
+.sub-category-badge-container {
     position: relative;
 }
 
@@ -250,4 +250,25 @@ Upload products pagedesigns
     height: 12px;
     color: white;
     pointer-events: none;
+}
+
+.form-button-container {
+    width: 20%;
+}
+
+.form-button-container button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--purple-theme, #7a3ef0);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.form-button-container button:hover {
+    background-color: #622ec5;
 }
