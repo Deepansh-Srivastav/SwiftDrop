@@ -25,7 +25,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import XIcon from '@mui/icons-material/X';
 import EditIcon from '@mui/icons-material/Edit';
 
-
 export {
     EmailIcon,
     LockIcon,

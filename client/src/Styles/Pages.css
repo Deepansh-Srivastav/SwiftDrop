@@ -78,7 +78,7 @@ Upload products pagedesigns
     margin-top: 1rem;
     max-width: 1500px;
     border-radius: 10px;
-    background-color: var(--card-background);
+    /* background-color: var(--card-background); */
 }
 
 .full-sized-input {
@@ -149,4 +149,63 @@ Upload products pagedesigns
 
 .hover-delete-option svg {
     color: white;
+}
+
+.sub-category-preview-container {
+    width: 100%;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.sub-category-badge-container{
+    position: relative;
+}
+
+.sub-category-badge {
+    padding: 6px 12px;
+    background-color: var(--badge-theme-background);
+    color: var(--white-theme);
+
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    cursor: default;
+    user-select: none;
+}
+
+.category-delete {
+    width: 20px;
+    height: 20px;
+    background-color: var(--btn-delete-bg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -35%);
+}
+
+.category-delete:hover {
+    background-color: var(--btn-delete-hover);
+}
+
+.category-delete svg {
+    width: 12px;
+    height: 12px;
+    color: white;
+    pointer-events: none;
 }

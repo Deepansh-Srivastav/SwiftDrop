@@ -1,9 +1,10 @@
 import { useState } from "react";
 import PageBanner from "../../Common/PageBanner";
 import ImageUploader from "../../Components/ImageUploader";
-import DeleteIcon from '@mui/icons-material/Delete';
 import CommonSelect from "../../Components/CommonSelect.jsx"
 import { useSelector } from "react-redux";
+import CommonMultiSelect from "../../Components/CommonMultiSelect.jsx";
+import { CloseIcon, DeleteIcon } from "../../Assets/Icons.js";
 
 const Products = () => {
 
@@ -62,8 +63,7 @@ function UploadProductForm() {
 
     };
 
-    console.log("UPLOAD PRODCUT FORM - ", formData?.category);
-
+    console.log(" PRODucT subCategory  - ", formData?.subCategory);
 
     return (
         <div className="edit-form">
@@ -102,6 +102,34 @@ function UploadProductForm() {
                         options={categoryDetails}
                         setData={setFormData}
                     />
+                </div>
+
+                <div className="full-sized-input">
+                    <CommonMultiSelect
+                        heading={"Sub Category"}
+                        options={categoryDetails}
+                        setData={setFormData}
+                    />
+
+                    <div className="sub-category-preview-container">
+
+                        {formData?.subCategory?.map((subCat, index) => {
+                            return (
+                                <div className="sub-category-badge-container" key={index}>
+                                    <span className="sub-category-badge">
+                                        {subCat?.name}
+                                    </span>
+
+                                    <span className="category-delete">
+                                        <CloseIcon />
+                                    </span>
+                                </div>
+                            )
+                        })}
+
+
+
+                    </div>
                 </div>
 
 
