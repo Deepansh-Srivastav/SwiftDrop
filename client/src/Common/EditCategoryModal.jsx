@@ -4,22 +4,35 @@ import {
     CancelIcon,
 } from "../Assets/Icons.js"
 import RotateLoader from "react-spinners/RotateLoader";
-
 import TextField from '@mui/material/TextField';
 import { showSuccessToast, showErrorToast } from "../Components/CostomAlert.jsx";
-import { patchApiRequestWrapper } from "../Networking/Services/ApiCalls.js"
 import { handleImageUpload } from "../Utils/uploadImage.js";
-import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
+import CommonSelect from "../Components/CommonSelect.jsx"
+import { useSelector } from "react-redux";
 
-const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCategoryModal, setIsUploaded }) => {
+const EditCategoryModal = ({
+    categoryId,
+    categoryName,
+    categoryImage,
+    setEditCategoryModal,
+    setIsUploaded,
+    onUpdate,
+    cardType = null
+}) => {
 
     const [formData, setFormData] = useState({
         name: "",
-        image: ""
+        image: "",
+        category: [],
     });
 
-    const [isUploading, setIsUploading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
+    const categoryDetails = useSelector((state) => {
+        return state.categoryDetails;
+    })
+
+    const [isUploading, setIsUploading] = useState(false);
 
     async function imageUploader(e) {
 
@@ -60,9 +73,7 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
 
     async function handleCategoryUpdateRequest(payload) {
 
-        const UPDATE_CATEGORY_URL = APIConfig?.categoryApiPath?.updateCategory;
-
-        const response = await patchApiRequestWrapper(UPDATE_CATEGORY_URL, payload);
+        const response = await onUpdate(payload);
 
         if (response?.success === true && response?.error === false) {
             setEditCategoryModal(false);
@@ -84,6 +95,7 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
             _id: categoryId,
             ...(formData?.name && { name: formData?.name }),
             ...(formData?.image && { image: formData?.image }),
+            ...(formData?.category?.length > 0 && { category: formData?.category })
         };
 
         handleCategoryUpdateRequest(payload);
@@ -97,7 +109,6 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
             };
         });
     };
-
 
     return (
         <div className="modal-overlay">
@@ -153,6 +164,17 @@ const EditCategoryModal = ({ categoryId, categoryName, categoryImage, setEditCat
                             )}
                         </div>
                     </div>
+
+                    {cardType && (
+                        <div>
+                            <CommonSelect
+                                cardType={cardType}
+                                categoryName={categoryName}
+                                options={categoryDetails}
+                                setData={setFormData}
+                            />
+                        </div>
+                    )}
 
                     <button className="submit-btn" onClick={handleSubmit} >
                         Submit

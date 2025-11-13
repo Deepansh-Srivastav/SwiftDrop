@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageBanner from "../../Common/PageBanner";
 import AddCategoryModal from "../../Components/AddCategoryModal.jsx";
 import { APIConfig } from "../../Networking/Configuration/ApiConfig.js";
-import { deleteApiRequestWrapper, getApiRequestWrapper } from "../../Networking/Services/ApiCalls.js";
+import { deleteApiRequestWrapper, getApiRequestWrapper, patchApiRequestWrapper } from "../../Networking/Services/ApiCalls.js";
 import CategoryCard from "../../Common/CategoryCard.jsx";
 import { setCategoryDetails } from "../../Redux/Features/CategoryDetailsSlice.js";
 
@@ -46,7 +46,16 @@ const Category = () => {
         const response = await deleteApiRequestWrapper(DELETE_URL, payload);
 
         return response;
-    }
+    };
+
+    async function updateCategory(payload) {
+
+        const UPDATE_CATEGORY_URL = APIConfig?.categoryApiPath?.updateCategory;
+
+        const response = await patchApiRequestWrapper(UPDATE_CATEGORY_URL, payload);
+
+        return response;
+    };
 
     useEffect(() => {
         fetchCategory()
@@ -70,7 +79,13 @@ const Category = () => {
                 <div className="display-category-container">
 
                     {categoryDetails?.map((categoryItem, index) => {
-                        return <CategoryCard {...categoryItem} key={index} setIsUploaded={setIsUploaded} onDelete={deleteCategory} />
+                        return <CategoryCard
+                            {...categoryItem}
+                            setIsUploaded={setIsUploaded}
+                            onDelete={deleteCategory}
+                            onUpdate={updateCategory}
+                            key={index}
+                        />
                     })}
 
                 </div>

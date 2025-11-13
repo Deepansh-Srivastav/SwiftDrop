@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CommonSelect = ({
+const CommonMultiSelect = ({
     heading = "Option",
     options,
     setData,
@@ -8,7 +8,27 @@ const CommonSelect = ({
 }) => {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedLabel, setSelectedLabel] = useState(`Select ${heading}`);
+
+    function handleSelectedOption(option) {
+        setData((prev) => {
+            const alreadyExists = prev.subCategory?.some(
+                item => item.id === option._id
+            );
+            
+            return {
+                ...prev,
+                subCategory: alreadyExists
+                    ? prev.subCategory
+                    : [
+                        ...prev.subCategory,
+                        {
+                            id: option._id,
+                            name: option.name
+                        }
+                    ]
+            };
+        })
+    };
 
     return (
         <>
@@ -25,7 +45,7 @@ const CommonSelect = ({
                         aria-haspopup="menu"
                         aria-expanded={isOpen}
                     >
-                        <span className="dropdown__label">{selectedLabel}</span>
+                        <span className="dropdown__label">{`Select ${heading}`}</span>
                         <svg className="dropdown__chevron" width="18" height="18" viewBox="0 0 24 24" aria-hidden>
                             <path fill="currentColor" d="M7 10l5 5 5-5H7z" />
                         </svg>
@@ -40,13 +60,7 @@ const CommonSelect = ({
                                         className="dropdown__item"
                                         role="menuitem"
                                         onMouseDown={() => {
-                                            setData((prev) => {
-                                                return {
-                                                    ...prev,
-                                                    category: [option?._id]
-                                                };
-                                            });
-                                            setSelectedLabel(option?.name);
+                                            handleSelectedOption(option)
                                             setIsOpen(false);
                                         }}
                                     >
@@ -62,4 +76,4 @@ const CommonSelect = ({
     );
 };
 
-export default CommonSelect;
+export default CommonMultiSelect;

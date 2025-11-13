@@ -39,7 +39,7 @@ body {
     --text-green: #5dc067;
     --white-theme: #ffffff;
     --card-background: rgba(225, 225, 225, 0.625);
-
+    --badge-theme-background:rgba(27, 167, 52, 0.835);
     --button-theme-blue: #3A7F99;
     --button-hover-theme-blue: #035776;
     /* --button-color: #4CAF50; */
@@ -89,6 +89,10 @@ body {
 .highlighter {
     font-family: "Nunito Sans", sans-serif;
     color: var(--purple-theme);
+}
+
+.no-resize-textarea{
+    resize: none;
 }
 
 .alphabet {

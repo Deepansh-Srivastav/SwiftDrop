@@ -7,8 +7,8 @@ export async function createSubCategoryController(req, res) {
         if (!name || !image || (!category || category.length === 0)) {
             return res.status(400).send({
                 message: "Provide Name, Image, Category.",
-                error: false,
-                success: true
+                error: true,
+                success: false
             });
         };
 

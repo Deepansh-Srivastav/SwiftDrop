@@ -31,8 +31,8 @@ CATEGORY PAGE
     background-color: #1a2420;
 }
 
-.category-modal-container{
-  
+.category-modal-container {
+
     position: absolute;
     top: 25%;
     left: 50%;
@@ -40,20 +40,235 @@ CATEGORY PAGE
     width: 100%;
     max-width: 700px;
     min-width: 300px;
-    
+
 }
 
-.display-category-container{
+.display-category-container {
     width: 100%;
     margin-top: 20px;
     height: 70vh;
     padding: 2rem 1rem;
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: center;
     align-items: start;
-    gap: 1rem; 
+    gap: 1rem;
     flex-wrap: wrap;
     overflow-y: auto;
-    /* background-color: red; */
+}
+
+
+/*=================================================================================
+Upload products pagedesigns
+=================================================================================*/
+.edit-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-form form {
+    width: 80%;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+    padding: 1rem;
+    margin-top: 1rem;
+    max-width: 1500px;
+    border-radius: 10px;
+    /* background-color: var(--card-background); */
+}
+
+.full-sized-input {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+}
+
+/* Label styling */
+.full-sized-input label {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Input styling */
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+
+    border: 1px solid var(--border-color);
+    background-color: var(--white-theme);
+    border-radius: 8px;
+
+    color: var(--text-color);
+    font-size: 0.95rem;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* On focus */
+.form-input:focus {
+    outline: none;
+    border-color: var(--button-theme-blue);
+    box-shadow: 0 0 0 3px rgba(58, 127, 153, 0.2);
+}
+
+/* Placeholder styling (optional) */
+.form-input::placeholder {
+    color: var(--dd-muted);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .form-input {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+}
+
+.form-image-uploader {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    gap: 1rem;
+
+}
+
+.form-image-preview-container {
+    width: 80%;
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+}
+
+.form-image-preview {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    min-width: 90px;
+    max-width: 130px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.form-image-preview img {
+    width: 100%;
+    object-fit: cover;
+    transition: filter 0.25s ease;
+}
+
+.form-image-preview:hover .hover-delete-option {
+    transform: translate(0%, 0%);
+}
+
+.form-image-preview:hover img {
+    filter: brightness(70%);
+}
+
+
+
+.hover-delete-option {
+    background-color: red;
+    border-bottom-left-radius: 50px;
+    padding: 12px;
+    width: fit-content;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: translate(100%, -100%);
+    transition: transform 0.25s ease;
+}
+
+.hover-delete-option svg {
+    color: white;
+}
+
+.sub-category-preview-container {
+    width: 100%;
+    padding: 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.sub-category-badge-container {
+    position: relative;
+}
+
+.sub-category-badge {
+    padding: 6px 12px;
+    background-color: var(--badge-theme-background);
+    color: var(--white-theme);
+
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    cursor: default;
+    user-select: none;
+}
+
+.category-delete {
+    width: 20px;
+    height: 20px;
+    background-color: var(--btn-delete-bg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -35%);
+}
+
+.category-delete:hover {
+    background-color: var(--btn-delete-hover);
+}
+
+.category-delete svg {
+    width: 12px;
+    height: 12px;
+    color: white;
+    pointer-events: none;
+}
+
+.form-button-container {
+    width: 20%;
+}
+
+.form-button-container button {
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--purple-theme, #7a3ef0);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.form-button-container button:hover {
+    background-color: #622ec5;
 }
