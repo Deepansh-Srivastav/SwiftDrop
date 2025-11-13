@@ -8,7 +8,6 @@ const CommonMultiSelect = ({
 }) => {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedLabel, setSelectedLabel] = useState(`Select ${heading}`);
 
     function handleSelectedOption(option) {
         setData((prev) => {
@@ -46,7 +45,7 @@ const CommonMultiSelect = ({
                         aria-haspopup="menu"
                         aria-expanded={isOpen}
                     >
-                        <span className="dropdown__label">{selectedLabel}</span>
+                        <span className="dropdown__label">{`Select ${heading}`}</span>
                         <svg className="dropdown__chevron" width="18" height="18" viewBox="0 0 24 24" aria-hidden>
                             <path fill="currentColor" d="M7 10l5 5 5-5H7z" />
                         </svg>
@@ -62,11 +61,8 @@ const CommonMultiSelect = ({
                                         role="menuitem"
                                         onMouseDown={() => {
                                             handleSelectedOption(option)
-                                            // handleSelectedOption(option?._id)
-                                            setSelectedLabel(option?.name);
                                             setIsOpen(false);
                                         }}
-
                                     >
                                         {option?.name}
                                     </li>

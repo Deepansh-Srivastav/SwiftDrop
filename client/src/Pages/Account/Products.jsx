@@ -63,7 +63,18 @@ function UploadProductForm() {
 
     };
 
-    console.log(" PRODucT subCategory  - ", formData?.subCategory);
+    function handleRemoveSubcategory(index) {
+        const newSubCategoryList = formData?.subCategory?.filter((subCat) => {
+            return subCat?.id !== formData?.subCategory[index]?.id;
+        });
+
+        setFormData((prev) => {
+            return ({
+                ...prev,
+                subCategory: [...newSubCategoryList]
+            });
+        })
+    }
 
     return (
         <div className="edit-form">
@@ -71,9 +82,14 @@ function UploadProductForm() {
 
                 <div className="full-sized-input">
                     <label htmlFor="name">Product Name</label>
-                    <input type="text" value={formData?.name} id="name" name={"name"} onChange={(e) => {
-                        handleFormChange(e)
-                    }} />
+                    <input
+                        type="text"
+                        id="name"
+                        name={"name"}
+                        value={formData?.name}
+                        onChange={handleFormChange}
+                        className="form-input"
+                    />
                 </div>
 
                 <div className="form-image-uploader">
@@ -120,19 +136,89 @@ function UploadProductForm() {
                                         {subCat?.name}
                                     </span>
 
-                                    <span className="category-delete">
+                                    <span className="category-delete" onClick={() => {
+                                        handleRemoveSubcategory(index)
+                                    }}>
                                         <CloseIcon />
                                     </span>
                                 </div>
                             )
                         })}
-
-
-
                     </div>
                 </div>
 
+                <div className="full-sized-input">
+                    <label htmlFor="unit">Unit</label>
+                    <input
+                        type="text"
+                        value={formData?.unit}
+                        id="unit"
+                        name={"unit"}
+                        required
+                        onChange={(e) => {
+                            handleFormChange(e)
+                        }} 
+                        className="form-input"
+                        />
+                        
+                </div>
 
+                <div className="full-sized-input">
+                    <label htmlFor="stock">Stock</label>
+                    <input
+                        type="number"
+                        value={formData?.stock}
+                        id="stock"
+                        name={"stock"}
+                        required
+                        onChange={(e) => {
+                            handleFormChange(e)
+                        }} 
+                        className="form-input"/>
+                </div>
+
+                <div className="full-sized-input">
+                    <label htmlFor="price">Price</label>
+                    <input
+                        type="number"
+                        value={formData?.price}
+                        id="price"
+                        name={"price"}
+                        required
+                        onChange={(e) => {
+                            handleFormChange(e)
+                        }} className="form-input"/>
+                </div>
+
+                <div className="full-sized-input">
+                    <label htmlFor="price">Discount</label>
+                    <input
+                        type="number"
+                        value={formData?.discount}
+                        id="discount"
+                        name={"discount"}
+                        required
+                        onChange={(e) => {
+                            if (e.target.value.length > 3) return;
+                            handleFormChange(e)
+                        }} className="form-input"/>
+                </div>
+
+                <div className="full-sized-input">
+                    <label htmlFor="price">Product Description</label>
+                    <textarea
+                        rows={8}
+                        value={formData?.description}
+                        id="description"
+                        name={"description"}
+                        required
+                        onChange={(e) => {
+                            if (e.target.value.length > 3) return;
+                            handleFormChange(e)
+                        }}
+                        className=" form-input no-resize-textarea"
+                    />
+                </div>
 
             </form>
         </div>

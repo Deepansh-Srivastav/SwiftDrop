@@ -91,6 +91,10 @@ body {
     color: var(--purple-theme);
 }
 
+.no-resize-textarea{
+    resize: none;
+}
+
 .alphabet {
     font-family: "Bebas Neue", sans-serif;
 }

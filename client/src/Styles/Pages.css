@@ -89,6 +89,48 @@ Upload products pagedesigns
     flex-direction: column;
 }
 
+/* Label styling */
+.full-sized-input label {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Input styling */
+.form-input {
+    width: 100%;
+    padding: 10px 14px;
+
+    border: 1px solid var(--border-color);
+    background-color: var(--white-theme);
+    border-radius: 8px;
+
+    color: var(--text-color);
+    font-size: 0.95rem;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* On focus */
+.form-input:focus {
+    outline: none;
+    border-color: var(--button-theme-blue);
+    box-shadow: 0 0 0 3px rgba(58, 127, 153, 0.2);
+}
+
+/* Placeholder styling (optional) */
+.form-input::placeholder {
+    color: var(--dd-muted);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .form-input {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+}
+
 .form-image-uploader {
     width: 100%;
     height: fit-content;
