@@ -12,6 +12,7 @@ import AccountPage from "../Pages/Account/AccountPage";
 import MyProfile from "../Pages/Account/MyProfile";
 import Category from "../Pages/Account/Category";
 import SubCategory from "../Pages/Account/SubCategory";
+import Products from "../Pages/Account/Products";
 
 const AppRouter = () => {
 
@@ -53,7 +54,7 @@ const AppRouter = () => {
 
                     <Route path="sub-category" element={<SubCategory />} />
 
-                    <Route path="upload-product" element={<h1>thi si the upload-product page</h1>} />
+                    <Route path="upload-product" element={<Products/>} />
 
                     <Route path="all-products" element={<h1>thi si the all-products page</h1>} />
 
