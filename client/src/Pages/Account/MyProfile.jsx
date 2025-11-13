@@ -7,7 +7,11 @@ const MyProfile = () => {
 
     return (
         <Box disableGutters sx={{
-            width: "100",
+            width: "100%",
+            height: "100%",
+            maxHeight: "130px",
+            marginBottom: "20px",
+            padding: "0 4rem"
         }}>
             <Container disableGutters sx={{
                 width: "100% !important",
@@ -30,13 +34,16 @@ const MyProfile = () => {
                             }
                             alt="User Avatar"
                         />
+                        <div className="edit-profile-image">
+                            <span>Edit</span>
+                        </div>
                     </div>
 
-                    <button className="imageUploadButton">Edit Photo</button>
+
                 </div>
 
             </Container>
-            
+
             <Container
                 disableGutters
                 sx={{
@@ -68,7 +75,7 @@ const MyProfile = () => {
                                 defaultValue={userDetails?.name}
                             />
                         </Grid>
-                        
+
                         {/* Email */}
                         <Grid item xs={12}>
                             <TextField
@@ -129,7 +136,7 @@ const MyProfile = () => {
             </Container>
 
 
-          
+
         </Box>
     );
 };

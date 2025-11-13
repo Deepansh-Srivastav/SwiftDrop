@@ -16,8 +16,8 @@ export default function SideNav({ accountSideMenu }) {
 
     return (
         <Box component="main" position={"relative"} sx={{
-            height:"auto",
-            minWidth: isSideNavOpen ? "300px" : '50px',
+            minHeight:"100dvh",
+            minWidth: isSideNavOpen ? "280px" : '0px',
             transition: "all 0.3s ease",
             borderRight: "1px solid var(--border-color)",
             padding: "36px 5px 20px 5px",
@@ -172,7 +172,7 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
     };
 
     return (
-        <List sx={{ margin: "20px 0" }}>
+        <List sx={{ margin: "20px 0"}}>
             {accountSideMenu?.map((menuItem, index) => {
                 const Icon = menuItem.icon;
                 const userRole = userDetails?.role;
@@ -181,12 +181,12 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
                 if (userRole !== "Admin" && menuItem.role !== userRole) return null;
 
                 return (
-                    <ListItemButton key={index} onClick={() => handleClick(menuItem?.path)}>
+                    <ListItemButton key={index} onClick={() => handleClick(menuItem?.path)} >
                         <ListItemIcon
                             sx={{
                                 display: 'flex',
                                 justifyContent: isSideNavOpen ? "start" : "center",
-                                alignItems: "center"
+                                alignItems: "center",
                             }}
                         >
                             <Icon />
@@ -195,7 +195,7 @@ function MenuOptions({ accountSideMenu, isSideNavOpen, }) {
                             primary={menuItem.label}
                             sx={{
                                 transition: "all 0.4s ease",
-                                maxWidth: isSideNavOpen ? "300px" : "0px",
+                                maxWidth: isSideNavOpen ? "280px" : "0px",
                                 opacity: isSideNavOpen ? 1 : 0,
                                 whiteSpace: "nowrap",
                                 marginLeft: isSideNavOpen ? "12px" : "0px",

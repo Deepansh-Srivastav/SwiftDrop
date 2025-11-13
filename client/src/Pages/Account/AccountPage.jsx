@@ -7,16 +7,25 @@ const AccountPage = () => {
 
   return (
     <>
-      <Box display="flex" height="100vh !important">
+      <Box display="flex" sx={{
+        width: "100vw !important",
+        minHeight: "100dvh !important",
+        overflow: "hidden",
+      }} >
 
         <SideNav accountSideMenu={accountSideMenu} />
 
-        <Box flex={1}>
+        <Box flex={1} sx={{
+          height: "100vh",
+          width:"100%",
+          display:'flex',
+          alignItems:"stretch",
+          justifyContent:"start",
+          flexDirection:"column"
+        }}>
           <Outlet />
         </Box>
       </Box>
-
-      
     </>
   );
 };

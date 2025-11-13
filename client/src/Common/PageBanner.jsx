@@ -2,19 +2,22 @@ import { Box, Container, Typography } from "@mui/material";
 
 const PageBanner = ({ heading }) => {
     return (
-        <Box sx={{ position: "relative" }}>
-
-            <Container disableGutters sx={{
-                width: "100% !important",
+        <Box sx={
+            {
+                width: "100%",
+                height: "100%",
+                maxHeight: "130px",
+                marginBottom: "20px",
+                padding: "0 4rem"
+            }
+        }>
+            <Container maxWidth={false} disableGutters sx={{
+                width: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 height: "100%",
-                minHeight: "150px",
-                maxHeight: "150px",
                 background: "var(--gradient-purple)",
-                position: 'relative',
-                marginBottom: "20px !important",
                 borderBottomRightRadius: "50px",
                 borderBottomLeftRadius: "50px"
             }}>
