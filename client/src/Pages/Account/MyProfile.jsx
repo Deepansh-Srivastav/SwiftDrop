@@ -1,5 +1,6 @@
 import { Box, Container, Grid, TextField, Button } from "@mui/material";
 import { useSelector } from "react-redux";
+import { EditIcon,DeleteIcon } from "../../Assets/Icons";
 
 const MyProfile = () => {
 
@@ -35,7 +36,8 @@ const MyProfile = () => {
                             alt="User Avatar"
                         />
                         <div className="edit-profile-image">
-                            <span>Edit</span>
+                            <span className="edit-profile"><EditIcon /></span>
+                            <span className="delete-profile"><DeleteIcon /></span>
                         </div>
                     </div>
 
