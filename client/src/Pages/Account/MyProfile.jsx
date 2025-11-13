@@ -1,136 +1,71 @@
 import { Box, Container, Grid, TextField, Button } from "@mui/material";
 import { useSelector } from "react-redux";
+import { EditIcon, DeleteIcon } from "../../Assets/Icons";
+import ProfileBanner from "../../Common/ProfileBanner";
 
 const MyProfile = () => {
 
     const userDetails = useSelector((state) => state.userDetails);
 
     return (
-        <Box disableGutters sx={{
-            width: "100",
-        }}>
-            <Container disableGutters sx={{
-                width: "100% !important",
-                height: "100%",
-                minHeight: "200px",
-                maxHeight: "300px",
-                background: "var(--gradient-purple)",
-                position: 'relative',
-                marginBottom: "150px !important",
-                borderBottomRightRadius: "50px",
-                borderBottomLeftRadius: "50px"
-            }}>
+        <>
 
-                <div className="avatarWrapper">
-                    <div className="avatarContainer">
-                        <img
-                            src={
-                                userDetails?.avatar ||
-                                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                            }
-                            alt="User Avatar"
-                        />
-                    </div>
 
-                    <button className="imageUploadButton">Edit Photo</button>
-                </div>
+            <section className="category-page">
 
-            </Container>
-            
-            <Container
-                disableGutters
-                sx={{
-                    width: '90%',
-                    p: 3,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'transparent',
-                }}
-            >
-                <Box
-                    component="form"
-                    noValidate
-                    autoComplete="off"
-                    sx={{
-                        width: '100%',
-                    }}
-                >
-                    <Grid container spacing={3}>
+                <ProfileBanner />
 
-                        {/* Name */}
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Name"
-                                variant="outlined"
-                                size="small"
+                <div className="edit-form">
+                    <form action="" onSubmit={(e) => {
+                        e.preventDefault();
+                        return;
+                    }}>
+
+                        <div className="full-sized-input">
+                            <label htmlFor="name">Name</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name={"name"}
+                                // value={}
                                 defaultValue={userDetails?.name}
+                                className="form-input"
+                                required
                             />
-                        </Grid>
-                        
-                        {/* Email */}
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Email"
-                                variant="outlined"
-                                size="small"
-                                type="email"
-                                defaultValue="thomashardison@dayrep.com"
+                        </div>
+
+                        <div className="full-sized-input">
+                            <label htmlFor="name">Email</label>
+                            <input
+                                type="text"
+                                id="name"
+                                name={"name"}
+                                // value={}
+                                defaultValue={userDetails?.email}
+                                className="form-input"
+                                required
                             />
-                        </Grid>
+                        </div>
 
-                        {/* Mobile */}
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label="Contact Number"
-                                variant="outlined"
-                                size="small"
-                                type="tel"
-                                defaultValue="661-724-7734"
+                        <div className="full-sized-input">
+                            <label htmlFor="name">Phone</label>
+                            <input
+                                type="number"
+                                id="name"
+                                name={"name"}
+                                // value={}
+                                className="form-input"
+                                required
                             />
-                        </Grid>
-
-                        {/* Change Password Button */}
-                        <Grid item xs={12}>
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    textTransform: 'none',
-                                    fontWeight: 500,
-                                    borderRadius: 2,
-                                    py: 1.2,
-                                    px: 3,
-                                }}
-                            >
-                                Change Password
-                            </Button>
-                        </Grid>
-
-                        {/* Submit Button */}
-                        <Grid item xs={12}>
-                            <Button
-                                variant="contained"
-                                sx={{
-                                    textTransform: 'none',
-                                    borderRadius: 2,
-                                    py: 1.2,
-                                    px: 3,
-                                    fontWeight: 600,
-                                }}
-                            >
-                                Submit
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </Container>
+                        </div>
 
 
-          
-        </Box>
+                    </form>
+
+                </div>
+                
+            </section>
+        </>
     );
 };
 
