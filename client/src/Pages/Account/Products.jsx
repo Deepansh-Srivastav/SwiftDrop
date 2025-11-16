@@ -36,6 +36,10 @@ function UploadProductForm({ onCreate }) {
         return state.categoryDetails;
     })
 
+    const subCategoryDetails = useSelector((state) => {
+        return state.subCategoryDetails;
+    });
+
     const [formData, setFormData] = useState({
         name: "",
         image: [],
@@ -164,7 +168,7 @@ function UploadProductForm({ onCreate }) {
                 <div className="full-sized-input">
                     <CommonMultiSelect
                         heading={"Sub Category"}
-                        options={categoryDetails}
+                        options={subCategoryDetails}
                         setData={setFormData}
                     />
 

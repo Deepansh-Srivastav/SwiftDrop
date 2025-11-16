@@ -6,14 +6,19 @@ import CategoryCard from "../../Common/CategoryCard";
 import { APIConfig } from "../../Networking/Configuration/ApiConfig";
 import { deleteApiRequestWrapper, getApiRequestWrapper, patchApiRequestWrapper } from "../../Networking/Services/ApiCalls";
 import { showErrorToast } from "../../Components/CostomAlert";
+import { setSubCategoryDetails } from "../../Redux/Features/SubCategoryDetailsSlice";
 
 const SubCategory = () => {
 
+    const dispatch = useDispatch();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const [isUploaded, setIsUploaded] = useState(false);
+    const subCategoryDetails = useSelector((state) => {
+        return state.subCategoryDetails;
+    });
 
-    const [subCatData, setSubCatData] = useState([]);
+    const [isUploaded, setIsUploaded] = useState(false);
 
     function handleModalClose() {
         return setIsModalOpen(!isModalOpen);
@@ -26,7 +31,7 @@ const SubCategory = () => {
         const response = await getApiRequestWrapper(SUB_CATEGORY_URL);
 
         if (response?.success === true & response?.error === false) {
-            return setSubCatData(response?.data);
+            return dispatch(setSubCategoryDetails(response?.data));
         }
 
         showErrorToast(response?.message)
@@ -35,11 +40,10 @@ const SubCategory = () => {
     async function updateSubCategory(payload) {
 
         const UPDATE_URL = APIConfig?.subCategoryApiPath?.updateSubCategory;
-        const response = await patchApiRequestWrapper(UPDATE_URL,payload);
+        const response = await patchApiRequestWrapper(UPDATE_URL, payload);
         return response;
 
     };
-
 
     async function deleteSubCategory(id) {
 
@@ -69,7 +73,7 @@ const SubCategory = () => {
 
                 <div className="display-category-container">
 
-                    {subCatData.length > 0 && subCatData?.map((categoryItem, index) => {
+                    {subCategoryDetails.length > 0 && subCategoryDetails?.map((categoryItem, index) => {
                         return (
                             <CategoryCard
                                 {...categoryItem}
