@@ -10,11 +10,13 @@ const AllProducts = () => {
 
   const [pageNumber, setPageNumber] = useState(1);
 
+  const [search, setSearch] = useState("");
+
   async function fetchProductsList() {
 
     const GET_PRODUCT_URL = APIConfig?.productPath?.getProducts;
 
-    const url = `${GET_PRODUCT_URL}?page=${pageNumber}&limit=5`;
+    const url = `${GET_PRODUCT_URL}?page=${pageNumber}&limit=5&search=${search}`;
 
     const response = await getApiRequestWrapper(url);
 
@@ -27,16 +29,16 @@ const AllProducts = () => {
 
   useEffect(() => {
     fetchProductsList();
-  }, [pageNumber])
+  }, [pageNumber, search])
 
   function handlePageNUmber(action) {
     if (action === "add" && pageNumber < productsData?.totalPages) {
       return setPageNumber(prev => prev + 1);
-    }
+    };
     if (action === "sub" && pageNumber > 1) {
       return setPageNumber(prev => prev - 1);
-    }
-  }
+    };
+  };
 
   return (
     <section className="category-page">

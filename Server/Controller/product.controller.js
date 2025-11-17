@@ -74,29 +74,41 @@ export async function getAllProductsController(req, res) {
     try {
 
         const pageNumber = Math.max(1, (Math.min(Number(req?.query?.page) || 1, 50)));
-
-        const pageDataLimit = Math.max(5, (Math.min((Number(req?.query?.limit)) || 5, 50)))
-
+        const pageDataLimit = Math.max(5, (Math.min((Number(req?.query?.limit)) || 5, 50)));
         const skipNumberOfItems = (pageNumber - 1) * pageDataLimit;
+        const search = (req?.query?.search || "").trim();
 
-        const item = await ProductModel.find().skip(skipNumberOfItems).limit(pageDataLimit);
+        let query = {};
 
-        const totalItem = await ProductModel.countDocuments();
+        if (search) {
+            const safe = escapeRegex(search);
+            query = {
+                $or: [
+                    { name: { $regex: safe, $options: "i" } },
+                    { description: { $regex: safe, $options: "i" } }
+                ]
+            };
+        };
 
-        const totalPages = Math.ceil(totalItem / pageDataLimit);
+        const [items, totalItems] = await Promise.all([
+            ProductModel.find(query).sort({ createdAt: -1 }).skip(skipNumberOfItems).limit(pageDataLimit),
+            ProductModel.countDocuments(query)
+        ]);
+
+        const totalPages = Math.ceil(totalItems / pageDataLimit);
 
         return res.status(200).json({
-            message: "Products Fetched successfully",
             error: false,
             success: true,
-            data: item,
+            data: items,
+            page: pageNumber,
             totalPages: totalPages
         });
 
 
     } catch (error) {
         return res.status(500).json({
-            message: error.message || "Error Occurred !! ",
+            message: error?.message || "Error occurred while fetching products",
             error: true,
             success: false,
         })
