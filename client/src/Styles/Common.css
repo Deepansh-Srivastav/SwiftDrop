@@ -115,7 +115,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: translate(0,50%);
+    transform: translate(0, 50%);
     cursor: pointer;
 }
 
@@ -142,18 +142,19 @@
     background: transparent;
 }
 
-.edit-profile, .delete-profile{
+.edit-profile,
+.delete-profile {
     padding: .5rem;
     background-color: white;
     border-radius: 50%;
 }
 
-.edit-profile:hover{
+.edit-profile:hover {
     transform: scale(1.2);
     color: green;
 }
 
-.delete-profile:hover{
+.delete-profile:hover {
     transform: scale(1.2);
     color: red;
 }
@@ -716,20 +717,20 @@ Common image uploader style
 /*=================================================================================
 Product card
 =================================================================================*/
-.product-card{
+.product-card {
     display: flex;
     width: 100%;
     gap: 1rem;
 
 }
 
-.card{
+.card {
     width: 250px;
     border: 1px solid black;
     padding: 10px;
 }
 
-.card img{
+.card img {
     width: 100%;
     height: 150px;
     object-fit: contain;
@@ -776,4 +777,53 @@ Product card
     .loading-text {
         font-size: 14px;
     }
+}
+
+
+/*=================================================================================
+Search
+=================================================================================*/
+.add-category-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 8px 14px;
+    border-radius: 30px;
+
+    background: #ffffff;
+    border: 1px solid #dcdcdc;
+    width: 100%;
+    max-width: 260px !important;
+    margin-left: auto;
+    margin-right: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    height: 45px;
+}
+
+.add-category-button:hover {
+    border-color: #c5c5c5;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+.add-category-button svg {
+    width: 18px;
+    height: 18px;
+    color: #555;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    flex: 1;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+    font-weight: 400;
 }
