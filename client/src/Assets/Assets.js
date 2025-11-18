@@ -13,6 +13,8 @@ import bakeryCategoryImage from "./CategoryImages/bakery_category.png";
 import chickenMeatImage from "./CategoryImages/chicken_meat_fish.png";
 import drinksImage from "./CategoryImages/drinks.png";
 import healthyFoodImage from "./CategoryImages/healthy_food.png";
+import AttaDalRiceImage from "./CategoryImages/Aata,Dal,Rice.png"
+import FreshMeat from "./CategoryImages/Fish,Chicken,Meat.png"
 
 export const projectImages = {
     loginImage,
@@ -27,4 +29,6 @@ export const projectImages = {
     chickenMeatImage,
     drinksImage,
     healthyFoodImage,
+    AttaDalRiceImage,
+    FreshMeat
 };

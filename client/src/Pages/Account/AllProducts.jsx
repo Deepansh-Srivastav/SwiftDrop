@@ -3,7 +3,8 @@ import { getApiRequestWrapper } from "../../Networking/Services/ApiCalls"
 import { APIConfig } from "../../Networking/Configuration/ApiConfig";
 import { showErrorToast } from "../../Components/CostomAlert.jsx";
 import PageBanner from "../../Common/PageBanner.jsx";
-
+import { SearchIcon }
+  from "../../Assets/Icons.js"
 const AllProducts = () => {
 
   const [productsData, setProductsData] = useState(null);
@@ -27,6 +28,10 @@ const AllProducts = () => {
     showErrorToast(response?.message);
   };
 
+  function handleSearch(e) {
+    setSearch(e.target.value);
+  };
+
   useEffect(() => {
     fetchProductsList();
   }, [pageNumber, search])
@@ -43,6 +48,20 @@ const AllProducts = () => {
   return (
     <section className="category-page">
       <PageBanner heading={"All Products"} />
+
+      <aside className="add-category-button">
+        <SearchIcon />
+        <input
+          type="text"
+          className="search-input"
+          placeholder="Search..."
+          value={search}
+          onChange={handleSearch}
+        />
+      </aside>
+
+
+
       <div className="display-category-container">
 
         <div className="product-card">
