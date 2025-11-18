@@ -9,7 +9,7 @@ const GalleryComponent = () => {
         <section className="mainContainer">
 
             <div className="layoutDivision pr1">
-                <img src={projectImages?.bakeryCategoryImage} className="largePortrait br4" alt="" />
+                <img src={projectImages?.AttaDalRiceImage} className="largePortrait br4" alt="" />
             </div>
 
             <div className="layoutDivision pr1 flexColumn">
@@ -35,7 +35,7 @@ const GalleryComponent = () => {
             <div className="layoutDivision pr1 flexColumn">
 
                 <div className="layoutLandscapeDivision pb1">
-                    <img src={projectImages?.chickenMeatImage} alt="" className="br4" />
+                    <img src={projectImages?.FreshMeat} alt="" className="br4" />
                 </div>
 
                 <div className="layoutPortraitDivision">

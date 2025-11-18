@@ -1,0 +1,158 @@
+.side-nav {
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 250px;
+    padding: 1rem 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    border-right: 1px solid var(--black-border-theme);
+    background: var(--white-theme);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 0 12px 12px 0;
+    transition: max-width 0.4s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+
+    box-sizing: border-box;
+}
+
+
+
+.menu-icon-and-list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.brand-logo-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+
+}
+
+.brand-logo-container img {
+    max-width: 100px;
+}
+
+.side-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.side-nav-list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    color: var(--text-color);
+    background: transparent;
+
+    transition: background 0.18s ease, color 0.18s ease, transform 0.15s ease;
+}
+
+.side-nav-list-item:hover {
+    transform: translateX(4px);
+}
+
+.active {
+    background: var(--gradient-purple);
+    color: var(--white-theme);
+    font-weight: 600;
+}
+
+.sid-nav-list-icon {
+    font-size: 18px;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+}
+
+.sid-nav-list-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: inherit;
+    white-space: nowrap;
+}
+
+
+.user-badge-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+/* Avatar wrapper */
+.user-badge-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Avatar itself */
+.user-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--button-theme-blue);
+    color: var(--white-theme);
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    text-transform: uppercase;
+    border: 2px solid var(--black-border-theme);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+
+/* Badge text area */
+.user-badge-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.user-name {
+    font-size: clamp(13px, 2vw, 15px);
+    font-weight: 500;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-email {
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: var(--text-color);
+    opacity: 0.65;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
