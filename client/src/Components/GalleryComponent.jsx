@@ -4,13 +4,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 const GalleryComponent = ({ preview }) => {
     return (
-        <section className="mainContainer">
+        <section className="mainContainer border-shadow">
 
             <div className="layoutDivision pr1 ">
                 {preview?.[0]?.secondaryImage ? (
                     <img src={preview[0].secondaryImage} className="largePortrait br4" alt="" />
                 ) : (
-                    <Skeleton height={350} className="br4 largePortrait" />
+                    <Skeleton height={"100%"} className="br4 largePortrait" />
                 )}
             </div>
 
@@ -22,7 +22,7 @@ const GalleryComponent = ({ preview }) => {
                         {preview?.[1]?.secondaryImage ? (
                             <img src={preview[1].secondaryImage} className="br4" alt="" />
                         ) : (
-                            <Skeleton height={160} className="br4" />
+                            <Skeleton height={"100%"} className="br4" />
                         )}
                     </div>
 
@@ -30,17 +30,17 @@ const GalleryComponent = ({ preview }) => {
                         {preview?.[2]?.secondaryImage ? (
                             <img src={preview[2].secondaryImage} className="br4" alt="" />
                         ) : (
-                            <Skeleton height={160} className="br4" />
+                            <Skeleton height={"100%"} className="br4" />
                         )}
                     </div>
 
                 </div>
 
-                <div className="layoutLandscapeDivision border-shadow">
+                <div className="layoutLandscapeDivision">
                     {preview?.[3]?.secondaryImage ? (
                         <img src={preview[3].secondaryImage} alt="" className="br4" />
                     ) : (
-                        <Skeleton height={180} className="br4" />
+                        <Skeleton height={"100%"} className="br4" />
                     )}
                 </div>
 
@@ -52,7 +52,7 @@ const GalleryComponent = ({ preview }) => {
                     {preview?.[4]?.secondaryImage ? (
                         <img src={preview[4].secondaryImage} alt="" className="br4" />
                     ) : (
-                        <Skeleton height={180} className="br4" />
+                        <Skeleton height={"100%"} className="br4" />
                     )}
                 </div>
 
@@ -62,7 +62,7 @@ const GalleryComponent = ({ preview }) => {
                         {preview?.[5]?.secondaryImage ? (
                             <img src={preview[5].secondaryImage} alt="" className="br4" />
                         ) : (
-                            <Skeleton height={160} className="br4" />
+                            <Skeleton height={"100%"} className="br4" />
                         )}
                     </div>
 
@@ -70,7 +70,7 @@ const GalleryComponent = ({ preview }) => {
                         {preview?.[6]?.secondaryImage ? (
                             <img src={preview[6].secondaryImage} alt="" className="br4" />
                         ) : (
-                            <Skeleton height={160} className="br4" />
+                            <Skeleton height={"100%"} className="br4" />
                         )}
                     </div>
 
@@ -86,7 +86,7 @@ const GalleryComponent = ({ preview }) => {
                         {preview?.[7]?.secondaryImage ? (
                             <img src={preview[7].secondaryImage} alt="" className="br4" />
                         ) : (
-                            <Skeleton height={160} className="br4" />
+                            <Skeleton height={"100%"} className="br4" />
                         )}
                     </div>
 
@@ -94,7 +94,7 @@ const GalleryComponent = ({ preview }) => {
                         {preview?.[8]?.secondaryImage ? (
                             <img src={preview[8].secondaryImage} alt="" className="br4" />
                         ) : (
-                            <Skeleton height={160} className="br4" />
+                            <Skeleton height={"100%"} className="br4" />
                         )}
                     </div>
 
@@ -104,7 +104,7 @@ const GalleryComponent = ({ preview }) => {
                     {preview?.[9]?.secondaryImage ? (
                         <img src={preview[9].secondaryImage} alt="" className="br4" />
                     ) : (
-                        <Skeleton height={180} className="br4" />
+                        <Skeleton height={"100%"} className="br4" />
                     )}
                 </div>
 
