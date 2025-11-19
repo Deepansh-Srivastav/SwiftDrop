@@ -81,5 +81,6 @@
 }
 
 .border-shadow {
-    border: 1px solid var(--black-border-theme);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
 }
