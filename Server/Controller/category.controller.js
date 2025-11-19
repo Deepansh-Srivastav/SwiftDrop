@@ -73,7 +73,7 @@ export async function getAllCategoryController(req, res) {
 export async function editCategoryController(req, res) {
     try {
 
-        const { _id, name, image } = req.body;
+        const { _id, name, image, secondaryImage, banner } = req.body;
 
         if (!_id) {
             return res.status(400).json({
@@ -83,7 +83,7 @@ export async function editCategoryController(req, res) {
             });
         }
 
-        if (!name && !image) {
+        if (!name && !image && !secondaryImage && !banner) {
             return res.status(400).json({
                 success: false,
                 error: true,
@@ -104,6 +104,8 @@ export async function editCategoryController(req, res) {
         const updateData = {};
         if (name) updateData.name = name;
         if (image) updateData.image = image;
+        if (secondaryImage) updateData.secondaryImage = secondaryImage;
+        if (banner) updateData.banner = banner;
 
         const updatedCategory = await CategoryModel.findByIdAndUpdate(_id, { $set: updateData });
 
@@ -171,6 +173,42 @@ export async function deleteCategoryController(req, res) {
             error: false,
             success: true
         });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message,
+            error: true,
+            success: false
+        });
+    }
+};
+
+export async function categoryPreviewController(req, res) {
+    try {
+        const { preview } = req?.query;
+
+        console.log("preview recievd - ", preview);
+
+        if (!preview) {
+            return res.status(400).json({
+                error: true,
+                success: false,
+                message: "Failed to fetch the preview."
+            })
+        };
+
+        // const categoryPreview = await CategoryModel().find({}, { name: 1, secondaryImage: 1 }).limit(10);
+
+        const categoryPreview = await CategoryModel.find({}, 'name secondaryImage')
+            .limit(10)
+            .lean();
+
+        return res.status(200).json({
+            error: false,
+            success: true,
+            data: categoryPreview
+        });
+
 
     } catch (error) {
         return res.status(500).json({

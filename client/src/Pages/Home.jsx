@@ -1,7 +1,7 @@
 import ProductsDisplaySection from "../Common/ProductsDisplaySection";
 import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
-import { motion } from "framer-motion";
+import { maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
 import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +15,14 @@ import { loggedInNavMenu } from "../Constants/menuConfig.js";
 import { handleUserLogOut } from "../Networking/Configuration/UserLogout.js";
 import { useDispatch } from "react-redux";
 import { clearUserDetails } from "../Redux/Features/UserDetailsSlice.js";
+import CategoryDisplaySection from "../Components/CategoryDisplaySection.jsx";
+import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
+import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
+import { useEffect } from "react";
 
 const Home = () => {
+
+    const [preview, setPreview] = useState(null);
 
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -32,6 +38,21 @@ const Home = () => {
     //     return () => window.removeEventListener("scroll", handleScroll);
     // }, []);
 
+    async function fetchPreview() {
+        const PREVIEW_URL = APIConfig?.categoryApiPath?.previewCategory;
+
+        const FINAL_URL = `${PREVIEW_URL}?preview=true`;
+
+        const response = await getApiRequestWrapper(FINAL_URL);
+
+        if (response?.success === true && response?.error === false) {
+            return setPreview(response?.data);
+        }
+    };
+
+    useEffect(() => {
+        fetchPreview();
+    }, [])
 
     return (
         <section>
@@ -84,11 +105,14 @@ const Home = () => {
                         EXPLORE <br /> OUR RANGE
                     </h3>
 
-                    <GalleryComponent />
+                    <GalleryComponent preview={preview} />
                 </motion.div>
             </div>
 
-            <ProductsDisplaySection products={bakeryProducts} heading={"Bakery & Biscuits"} image={"https://images.unsplash.com/photo-1608198093002-ad4e005484ec?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
+
+            <CategoryDisplaySection />
+
+            <ProductsDisplaySection products={bakeryProducts} heading={"Aata Daal & Rice"} image={"https://res.cloudinary.com/dqo7vuizb/image/upload/v1763464071/SwiftDrop/ybljtd4o9cagyghv23cs.png"} />
 
             <ProductsDisplaySection products={meatProducts} heading={"Fresh Meat & Seafood"} image={"https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
 

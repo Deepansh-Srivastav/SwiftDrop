@@ -10,6 +10,14 @@ const categorySchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    secondaryImage: {
+        type: String,
+        default: ""
+    },
+    banner: {
+        type: String,
+        default: ""
+    },
 }, {
     timestamps: true
 })

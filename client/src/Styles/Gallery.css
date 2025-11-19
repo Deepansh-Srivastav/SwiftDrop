@@ -79,3 +79,7 @@
     width: 100% !important;
     object-fit: cover;
 }
+
+.border-shadow {
+    border: 1px solid var(--black-border-theme);
+}
