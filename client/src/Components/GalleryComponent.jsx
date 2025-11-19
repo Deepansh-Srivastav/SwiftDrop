@@ -21,7 +21,7 @@ const GalleryComponent = () => {
                     </div>
 
                     <div className="quarter pl1">
-                        <img src="https://images.unsplash.com/photo-1757151380289-a7e0a1f2a39d?q=80&w=736&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" className="br4" />
+                        <img src="" alt="" className="br4" />
                     </div>
 
                 </div>

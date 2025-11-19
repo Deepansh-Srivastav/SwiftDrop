@@ -73,7 +73,7 @@ export async function getAllCategoryController(req, res) {
 export async function editCategoryController(req, res) {
     try {
 
-        const { _id, name, image } = req.body;
+        const { _id, name, image, secondaryImage, banner } = req.body;
 
         if (!_id) {
             return res.status(400).json({
@@ -83,7 +83,7 @@ export async function editCategoryController(req, res) {
             });
         }
 
-        if (!name && !image) {
+        if (!name && !image && !secondaryImage && !banner) {
             return res.status(400).json({
                 success: false,
                 error: true,
@@ -104,6 +104,8 @@ export async function editCategoryController(req, res) {
         const updateData = {};
         if (name) updateData.name = name;
         if (image) updateData.image = image;
+        if (secondaryImage) updateData.secondaryImage = secondaryImage;
+        if (banner) updateData.banner = banner;
 
         const updatedCategory = await CategoryModel.findByIdAndUpdate(_id, { $set: updateData });
 

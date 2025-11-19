@@ -829,6 +829,31 @@ Search
 }
 
 /*=================================================================================
-Sidenav
+Parallax
 =================================================================================*/
+.parallax-container {
+    overflow: hidden;
+    height: 40vh;
+    max-height: 600px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    z-index: 0;
 
+}
+
+.parallax-container::before{
+    content: "";
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.485);
+    position: absolute;
+    z-index: -1;
+}

@@ -9,6 +9,7 @@ import { showSuccessToast, showErrorToast } from "../Components/CostomAlert.jsx"
 import { handleImageUpload } from "../Utils/uploadImage.js";
 import CommonSelect from "../Components/CommonSelect.jsx"
 import { useSelector } from "react-redux";
+import CommonImageUploader from "./CommonImageUploader.jsx";
 
 const EditCategoryModal = ({
     categoryId,
@@ -26,7 +27,10 @@ const EditCategoryModal = ({
         category: [],
     });
 
-    const [loading, setLoading] = useState(false);
+    const [secondaryImage, setSecondaryImage] = useState(null);
+
+    const [banner, setBanner] = useState(null);
+
 
     const categoryDetails = useSelector((state) => {
         return state.categoryDetails;
@@ -95,7 +99,9 @@ const EditCategoryModal = ({
             _id: categoryId,
             ...(formData?.name && { name: formData?.name }),
             ...(formData?.image && { image: formData?.image }),
-            ...(formData?.category?.length > 0 && { category: formData?.category })
+            ...(secondaryImage && { secondaryImage }),
+            ...(banner && { banner }),
+            ...(formData?.category?.length > 0 && { category: formData?.category }),
         };
 
         handleCategoryUpdateRequest(payload);
@@ -109,6 +115,11 @@ const EditCategoryModal = ({
             };
         });
     };
+
+
+    console.log("Sc image is this ", secondaryImage);
+    console.log("Banner image is this ", banner);
+
 
     return (
         <div className="modal-overlay">
@@ -164,6 +175,26 @@ const EditCategoryModal = ({
                             )}
                         </div>
                     </div>
+
+                    <CommonImageUploader setImage={setSecondaryImage} id={"secondaryImage"} title={"Secondary Image"}/>
+                    {secondaryImage && (
+                        <div className="image-preview">
+                            <img src={secondaryImage} alt="Preview" />
+
+                            {secondaryImage && <button onClick={clearImage}>✕</button>}
+
+                        </div>
+                    )}
+
+                    <CommonImageUploader setImage={setBanner} id={"primaryImage"} title={"Banner"} />
+                    {banner && (
+                        <div className="image-preview">
+                            <img src={banner} alt="Preview" />
+
+                            {banner && <button onClick={clearImage}>✕</button>}
+
+                        </div>
+                    )}
 
                     {cardType && (
                         <div>
