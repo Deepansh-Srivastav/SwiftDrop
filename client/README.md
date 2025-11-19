@@ -9,6 +9,22 @@ Currently, two official plugins are available:
 
 
 TODO remaining changes to be done-
+- Improve the styling of the dashboard.
+- FIX the all category fetch data. 
+- Learn and Add Debouncing 
 
+
+##Features Remaining:
+
+##Best Practices:
 - managing the user data into localstorage correctly .
 - clearing the local storage when the tokens are expired and cleared.
+- the way of checking the role of user (ADMIN,USER) is best practice or not ?
+
+
+
+#Today TODO
+
+
+
+Timestamp-

@@ -36,6 +36,7 @@ export const APIConfig = {
         getAllCategory: `${API_BASE.category}/get-all-category`,
         updateCategory: `${API_BASE.category}/update-category`,
         deleteCategory: `${API_BASE.category}/delete-category`,
+        previewCategory: `${API_BASE.category}/category-preview`,
     },
 
     subCategoryApiPath: {

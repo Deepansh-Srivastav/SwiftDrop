@@ -1,7 +1,7 @@
 import ProductsDisplaySection from "../Common/ProductsDisplaySection";
 import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
-import { maxGeneratorDuration, motion } from "framer-motion";
+import { maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
 import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,8 +18,11 @@ import { clearUserDetails } from "../Redux/Features/UserDetailsSlice.js";
 import CategoryDisplaySection from "../Components/CategoryDisplaySection.jsx";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
+import { useEffect } from "react";
 
 const Home = () => {
+
+    const [preview, setPreview] = useState(null);
 
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -35,7 +38,21 @@ const Home = () => {
     //     return () => window.removeEventListener("scroll", handleScroll);
     // }, []);
 
+    async function fetchPreview() {
+        const PREVIEW_URL = APIConfig?.categoryApiPath?.previewCategory;
 
+        const FINAL_URL = `${PREVIEW_URL}?preview=true`;
+
+        const response = await getApiRequestWrapper(FINAL_URL);
+
+        if (response?.success === true && response?.error === false) {
+            return setPreview(response?.data);
+        }
+    };
+
+    useEffect(() => {
+        fetchPreview();
+    }, [])
 
     return (
         <section>
@@ -88,7 +105,7 @@ const Home = () => {
                         EXPLORE <br /> OUR RANGE
                     </h3>
 
-                    <GalleryComponent />
+                    <GalleryComponent preview={preview} />
                 </motion.div>
             </div>
 
