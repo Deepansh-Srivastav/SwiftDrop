@@ -16,24 +16,25 @@
     gap: 0.3rem;
 
     justify-items: stretch;
-        align-items: stretch;
+    align-items: stretch;
     background-color: cyan;
 
-    grid-template-areas: 
-    "image-1 image-1 image-2 image-3 image-5 image-5 image-8 image-9"
-    "image-1 image-1 image-4 image-4 image-6 image-7 image-10 image-10"
+    grid-template-areas:
+        "image-1 image-1 image-2 image-3 image-5 image-5 image-8 image-9"
+        "image-1 image-1 image-4 image-4 image-6 image-7 image-10 image-10"
     ;
 }
-.explore-item{
+
+.explore-item {
     width: 100%;
     height: 100%;
     background-color: white;
-    border-radius: 10px ;
+    border-radius: 2%;
     overflow: hidden;
     aspect-ratio: 1;
 }
 
-.explore-item img{
+.explore-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -41,9 +42,21 @@
 
 }
 
-.portrait-image{
-    background-color: cyan;
+.portrait-image {
+    background-color: red;
     height: 100% !important;
 
 
+}
+
+.small-portrait-image {
+    aspect-ratio: 138.5 / 185.5 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.landscape-portrait-image {
+    aspect-ratio: 281/185 !important;
+    width: 100% !important;
+    height: 100% !important;
 }
