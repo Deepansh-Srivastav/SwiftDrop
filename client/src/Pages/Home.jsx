@@ -19,6 +19,7 @@ import CategoryDisplaySection from "../Components/CategoryDisplaySection.jsx";
 import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { useEffect } from "react";
+import ExploreRangeComponent from "../Components/ExploreRangeComponent.jsx";
 
 const Home = () => {
 
@@ -106,6 +107,9 @@ const Home = () => {
                     </h3>
 
                     <GalleryComponent preview={preview} />
+
+                    <ExploreRangeComponent preview={preview} />
+
                 </motion.div>
             </div>
 
