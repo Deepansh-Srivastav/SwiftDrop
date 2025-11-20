@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { bakeryProducts } from "../Assets/DummyData";
+import ProductCard from "./ProductCard";
 
 const CategoryDisplaySection = ({
   heading,
@@ -9,7 +10,7 @@ const CategoryDisplaySection = ({
 
   let parallaxStyle = { backgroundImage: `url(${banner})` }
   return (
-    <section>
+    <section style={{ backgroundColor: "white", marginBottom:"100px" }}>
 
       <div style={parallaxStyle} className="parallax-container">
         <p className="text-size-1">
@@ -18,22 +19,12 @@ const CategoryDisplaySection = ({
         </p>
       </div>
 
-
-      <div className="bakery-container">
-        {bakeryProducts.map((product) => (
-          <div className="bakery-card" key={product.id}>
-            <img
-              src={`/images/${product.image}`} // make sure images are in public/images/
-              alt={product.name}
-              className="bakery-image"
-            />
-            <h3 className="bakery-name">{product.name}</h3>
-            <p className="bakery-unit">{product.unit}</p>
-            <p className="bakery-price">₹{product.price.toFixed(2)}</p>
-            <p className="bakery-discount">Discount: {product.discount}</p>
-            <p className="bakery-preptime">Prep Time: {product.prepTime}</p>
-          </div>
-        ))}
+      <div className="product-container">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
       </div>
     </section>
   );
