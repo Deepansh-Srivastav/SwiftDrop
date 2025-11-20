@@ -3,27 +3,31 @@
 
     overflow: hidden;
     max-width: 2000px;
-    aspect-ratio: 3.1 !important;
+    aspect-ratio: 2.7 !important;
     margin-top: 50px;
 
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: 1fr 1fr;
-    gap: 5px;
+    gap: clamp(2px, 1vw, 5px);
 
     justify-items: center;
     align-items: center;
+    background-color: rgba(128, 128, 128, 0.408);
 
     grid-template-areas:
-        "image-1 image-1 image-2 image-3 image-5 image-5 image-8 image-9"
+        "image-1 image-1 image-2 image-3 image-5 image-5 image-10 image-10"
         "image-1 image-1 image-4 image-4 image-6 image-7 image-10 image-10"
     ;
+    border-radius: 5px;
+    box-shadow:
+        0 2px 4px rgba(128, 128, 128, 0.408),
+        0 8px 16px rgba(128, 128, 128, 0.408);
 }
 
 .explore-item {
     width: 100%;
     height: 100%;
-    background-color: white;
     border-radius: 2%;
     overflow: hidden;
     aspect-ratio: 1;
@@ -37,11 +41,8 @@
 
 }
 
-.portrait-image {
-    background-color: red;
+/* .portrait-image {
     height: 100% !important;
-
-
 }
 
 .small-portrait-image {
@@ -54,4 +55,37 @@
     aspect-ratio: 281/185 !important;
     width: 100% !important;
     height: 100% !important;
+} */
+
+@media (max-width: 980px) {
+
+
+    .explore-range-container {
+        width: 100%;
+
+        overflow: hidden;
+        max-width: 2000px;
+        aspect-ratio: 9/12 !important;
+        /* margin-top: 50px; */
+
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+
+        justify-items: center;
+        align-items: center;
+        background-color: rgba(128, 128, 128, 0.408);
+
+        grid-template-areas:
+            "image-1 image-1 image-2 image-3"
+            "image-1 image-1 image-4 image-4"
+            "image-5 image-5 image-10 image-10"
+            "image-6 image-7 image-10 image-10"
+        ;
+        border-radius: 5px;
+        box-shadow:
+            0 2px 4px rgba(128, 128, 128, 0.408),
+            0 8px 16px rgba(128, 128, 128, 0.408);
+    }
+
 }

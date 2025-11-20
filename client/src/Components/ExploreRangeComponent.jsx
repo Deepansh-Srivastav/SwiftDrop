@@ -69,23 +69,6 @@ const ExploreRangeComponent = ({ preview }) => {
                 )}
             </div>
 
-            {/* 7 small portrait */}
-            <div className="explore-item small-portrait-image" style={{ gridArea: "image-8" }}>
-                {preview?.[7]?.secondaryImage ? (
-                    <img src={preview[7].secondaryImage} className="br4" alt="" />
-                ) : (
-                    <Skeleton height={"100%"} className="br4" />
-                )}
-            </div>
-
-            {/* 8 small portrait */}
-            <div className="explore-item small-portrait-image" style={{ gridArea: "image-9" }}>
-                {preview?.[8]?.secondaryImage ? (
-                    <img src={preview[8].secondaryImage} className="br4" alt="" />
-                ) : (
-                    <Skeleton height={"100%"} className="br4" />
-                )}
-            </div>
 
             {/* 9 landscape */}
             <div className="explore-item landscape-portrait-image" style={{ gridArea: "image-10" }}>

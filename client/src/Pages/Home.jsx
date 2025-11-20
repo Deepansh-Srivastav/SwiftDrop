@@ -106,7 +106,7 @@ const Home = () => {
                         EXPLORE <br /> OUR RANGE
                     </h3>
 
-                    <GalleryComponent preview={preview} />
+                    {/* <GalleryComponent preview={preview} /> */}
 
                     <ExploreRangeComponent preview={preview} />
 
