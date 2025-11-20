@@ -1,5 +1,4 @@
 import ProductsDisplaySection from "../Common/ProductsDisplaySection";
-import GalleryComponent from "../Components/GalleryComponent";
 import "../Styles/Home.css"
 import { maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
 import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
@@ -91,8 +90,6 @@ const Home = () => {
                 </motion.div>
             </div>
 
-
-
             <div className="gallery-section" >
 
                 <motion.div
@@ -102,11 +99,9 @@ const Home = () => {
                     transition={{ duration: 1 }}
                     viewport={{ once: true, amount: 0.3 }}>
 
-                    <h3 className="largest-heading margin-bottom-20">
+                    <h3 className="largest-heading ">
                         EXPLORE <br /> OUR RANGE
                     </h3>
-
-                    {/* <GalleryComponent preview={preview} /> */}
 
                     <ExploreRangeComponent preview={preview} />
 
