@@ -3,21 +3,16 @@
 
     overflow: hidden;
     max-width: 2000px;
-
-    aspect-ratio: 4.15 !important;
-
+    aspect-ratio: 3.1 !important;
     margin-top: 50px;
 
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: 1fr 1fr;
-    /* grid-template-rows: 0.5fr 0.5fr; */
-    /* grid-template-rows: 220px 220px; */
-    gap: 0.3rem;
+    gap: 5px;
 
-    justify-items: stretch;
-    align-items: stretch;
-    background-color: cyan;
+    justify-items: center;
+    align-items: center;
 
     grid-template-areas:
         "image-1 image-1 image-2 image-3 image-5 image-5 image-8 image-9"
