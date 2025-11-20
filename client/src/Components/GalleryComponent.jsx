@@ -6,9 +6,9 @@ const GalleryComponent = ({ preview }) => {
     return (
         <section className="mainContainer border-shadow">
 
-            <div className="layoutDivision pr1 ">
+            <div className="layoutDivision pr1 largePortrait ">
                 {preview?.[0]?.secondaryImage ? (
-                    <img src={preview[0].secondaryImage} className="largePortrait br4" alt="" />
+                    <img src={preview[0].secondaryImage} alt="" className="largePortrait"/>
                 ) : (
                     <Skeleton height={"100%"} className="br4 largePortrait" />
                 )}
@@ -19,8 +19,8 @@ const GalleryComponent = ({ preview }) => {
                 <div className="layoutPortraitDivision pb1">
 
                     <div className="quarter pr1">
-                        {preview?.[1]?.secondaryImage ? (
-                            <img src={preview[1].secondaryImage} className="br4" alt="" />
+                        {preview?.[9]?.secondaryImage ? (
+                            <img src={preview[9].secondaryImage} className="br4" alt="" />
                         ) : (
                             <Skeleton height={"100%"} className="br4" />
                         )}
@@ -101,8 +101,8 @@ const GalleryComponent = ({ preview }) => {
                 </div>
 
                 <div className="layoutLandscapeDivision">
-                    {preview?.[9]?.secondaryImage ? (
-                        <img src={preview[9].secondaryImage} alt="" className="br4" />
+                    {preview?.[1]?.secondaryImage ? (
+                        <img src={preview[1].secondaryImage} alt="" className="br4" />
                     ) : (
                         <Skeleton height={"100%"} className="br4" />
                     )}
