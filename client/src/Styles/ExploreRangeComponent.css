@@ -1,21 +1,23 @@
 .explore-range-container {
     width: 100%;
+
+    overflow: hidden;
     max-width: 2000px;
 
-    aspect-ratio: 16/5 !important;
-    /* aspect-ratio: 4.15 !important; */
+    aspect-ratio: 4.15 !important;
 
     margin-top: 50px;
 
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 0.5fr 0.5fr;
+    grid-template-rows: 1fr 1fr;
+    /* grid-template-rows: 0.5fr 0.5fr; */
     /* grid-template-rows: 220px 220px; */
     gap: 0.3rem;
 
     justify-items: stretch;
         align-items: stretch;
-    background-color: red;
+    background-color: cyan;
 
     grid-template-areas: 
     "image-1 image-1 image-2 image-3 image-5 image-5 image-8 image-9"
@@ -26,7 +28,6 @@
     width: 100%;
     height: 100%;
     background-color: white;
-    max-height: 500px;
     border-radius: 10px ;
     overflow: hidden;
     aspect-ratio: 1;
@@ -36,5 +37,13 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
+
+}
+
+.portrait-image{
+    background-color: cyan;
+    height: 100% !important;
+
 
 }

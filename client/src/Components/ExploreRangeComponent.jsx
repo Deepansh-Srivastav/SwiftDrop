@@ -7,7 +7,7 @@ const ExploreRangeComponent = ({ preview }) => {
         <section className="explore-range-container">
 
             {/* 0 portrait */}
-            <div className="explore-item" style={{ gridArea: "image-1" }}>
+            <div className="explore-item portrait-image" style={{ gridArea: "image-1" }}>
                 {preview?.[0]?.secondaryImage ? (
                     <img src={preview[0].secondaryImage} className="br4" alt="" />
                 ) : (
