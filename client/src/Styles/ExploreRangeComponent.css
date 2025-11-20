@@ -1,0 +1,40 @@
+.explore-range-container {
+    width: 100%;
+    max-width: 2000px;
+
+    aspect-ratio: 16/5 !important;
+    /* aspect-ratio: 4.15 !important; */
+
+    margin-top: 50px;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 0.5fr 0.5fr;
+    /* grid-template-rows: 220px 220px; */
+    gap: 0.3rem;
+
+    justify-items: stretch;
+        align-items: stretch;
+    background-color: red;
+
+    grid-template-areas: 
+    "image-1 image-1 image-2 image-3 image-5 image-5 image-8 image-9"
+    "image-1 image-1 image-4 image-4 image-6 image-7 image-10 image-10"
+    ;
+}
+.explore-item{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    max-height: 500px;
+    border-radius: 10px ;
+    overflow: hidden;
+    aspect-ratio: 1;
+}
+
+.explore-item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
