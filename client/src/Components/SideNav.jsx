@@ -13,14 +13,16 @@ const SideNav = () => {
     const location = useLocation();
     const currentPath = location.pathname;
 
-
-
     const userDetails = useSelector((state) => state.userDetails);
+
+    console.log(userDetails?.avatar);
+
+
     return (
         <aside className="side-nav">
 
             <div className="menu-icon-and-list-container">
-                <div className="brand-logo-container" onClick={()=>navigate('/')}>
+                <div className="brand-logo-container" onClick={() => navigate('/')}>
                     <img src={projectImages?.swiftDropLogo} alt="Swift drop logo" loading="lazy" />
                 </div>
                 <Divider />
@@ -59,7 +61,17 @@ const SideNav = () => {
             <div className="user-badge-container">
                 <div className="user-badge-image">
                     <span className="user-avatar">
-                        {userDetails?.name?.charAt(0).toUpperCase() || '?'}
+
+                        {userDetails?.avatar ? (
+                            <img src={userDetails?.avatar} alt="avatar" />
+                        )
+                            :
+                            (
+                                userDetails?.name?.charAt(0).toUpperCase()
+                            )
+                        }
+
+
                     </span>
                 </div>
                 <div className="user-badge-details">

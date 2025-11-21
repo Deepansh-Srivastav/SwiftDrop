@@ -192,8 +192,6 @@ export function HomeNavbar() {
                                     {userData?.name?.charAt(0).toUpperCase() || '?'}
                                 </Avatar>
 
-                                <p>{userData?.name}</p>
-
                             </div>
                         </>
                         :
