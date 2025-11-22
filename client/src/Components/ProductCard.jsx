@@ -1,7 +1,14 @@
 import '../Styles/ProductCard.css'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const ProductCard = () => {
+const ProductCard = ({
+    _id,
+    name,
+    image,
+    unit,
+    stock,
+    price
+}) => {
     return (
         <div className='product-card-container'>
 
@@ -12,6 +19,8 @@ const ProductCard = () => {
                     <FavoriteBorderIcon />
                 </div>
             </div>
+
+            <p>{name}</p>
 
         </div>
     )
