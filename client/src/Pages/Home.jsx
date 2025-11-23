@@ -1,8 +1,6 @@
-import ProductsDisplaySection from "../Common/ProductsDisplaySection";
 import "../Styles/Home.css"
-import { maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
-import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
-import { useState } from "react";
+import { addPointerEvent, maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Avatar from '@mui/material/Avatar';
@@ -20,9 +18,20 @@ import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { useEffect } from "react";
 import ExploreRangeComponent from "../Components/ExploreRangeComponent.jsx";
 
+
+const PRODUCTS_LIMIT = 5;
+const CATEGORY_LIMIT = 4;
+
+
+
 const Home = () => {
 
     const [preview, setPreview] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [hasMorePages, setHasMorePages] = useState(true);
+
+    let pageRef = useRef(1);
+    let observerRef = useRef();
 
     // useEffect(() => {
     //     const handleScroll = () => {
@@ -50,9 +59,54 @@ const Home = () => {
         }
     };
 
+    async function fetchCategory(PAGE_NUMBER) {
+        const URL = APIConfig?.categoryApiPath?.getCategoryAndProducts;
+
+        const FINAL_URL = `${URL}?page=${PAGE_NUMBER}&limit=${CATEGORY_LIMIT}&product=${PRODUCTS_LIMIT}`
+
+        const response = await getApiRequestWrapper(FINAL_URL);
+
+        setHasMorePages(response?.meta?.hasMore);
+
+        if (response?.error === false && response?.success === true && response?.categories?.length > 0 && response?.meta?.hasMore) {
+            setCategories((prev) => {
+                return [
+                    ...prev,
+                    ...response?.categories || null
+                ]
+            })
+        };
+
+    };
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            console.log(entry.isIntersecting);
+
+            if (entry.isIntersecting) {
+                let pageNumber = ++pageRef.current;
+                if (hasMorePages) {
+                    fetchCategory(pageNumber);
+                };
+
+            }
+        })
+        observer.observe(observerRef.current)
+        if (!hasMorePages) {
+            observer.unobserve(observerRef.current)
+        }
+
+    }, [hasMorePages])
+
+
     useEffect(() => {
         fetchPreview();
+        fetchCategory(1);
     }, [])
+
+    console.log(categories);
+
 
     return (
         <section>
@@ -108,13 +162,13 @@ const Home = () => {
                 </motion.div>
             </div>
 
+            {categories?.map((item, index) => {
+                return (
+                    <CategoryDisplaySection {...item} key={index} />
+                )
+            })}
 
-            <CategoryDisplaySection />
-
-            <ProductsDisplaySection products={bakeryProducts} heading={"Aata Daal & Rice"} image={"https://res.cloudinary.com/dqo7vuizb/image/upload/v1763464071/SwiftDrop/ybljtd4o9cagyghv23cs.png"} />
-
-            <ProductsDisplaySection products={meatProducts} heading={"Fresh Meat & Seafood"} image={"https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
-
+            <div ref={hasMorePages ? observerRef : null}></div>
             <Footer />
 
         </section>

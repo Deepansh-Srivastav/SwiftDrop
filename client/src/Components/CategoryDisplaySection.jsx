@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { bakeryProducts } from "../Assets/DummyData";
 import ProductCard from "./ProductCard";
 
 const CategoryDisplaySection = ({
