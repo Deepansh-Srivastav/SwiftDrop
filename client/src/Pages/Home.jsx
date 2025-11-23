@@ -162,7 +162,7 @@ const Home = () => {
 
             <div ref={observerRef}></div>
 
-            <Footer />
+            {!isLoading && <Footer />}
 
         </section>
     )
