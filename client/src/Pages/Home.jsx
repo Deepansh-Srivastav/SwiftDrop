@@ -1,7 +1,7 @@
 import "../Styles/Home.css"
 import { addPointerEvent, maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useFormAction, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -17,35 +17,21 @@ import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { useEffect } from "react";
 import ExploreRangeComponent from "../Components/ExploreRangeComponent.jsx";
+import { RotateLoader } from "../Common/Loader.js"
 
 
 const PRODUCTS_LIMIT = 5;
 const CATEGORY_LIMIT = 4;
-
-
 
 const Home = () => {
 
     const [preview, setPreview] = useState(null);
     const [categories, setCategories] = useState([]);
     const [hasMorePages, setHasMorePages] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     let pageRef = useRef(1);
     let observerRef = useRef();
-
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         const scrollY = window.scrollY;
-    //         const slowScroll = scrollY * -0.1; // scroll speed reduced to 10%
-    //         const parallax = document.querySelector(".parallax1");
-    //         if (parallax) {
-    //             parallax.style.backgroundPosition = `center ${slowScroll}px`;
-    //         }
-    //     };
-
-    //     window.addEventListener("scroll", handleScroll);
-    //     return () => window.removeEventListener("scroll", handleScroll);
-    // }, []);
 
     async function fetchPreview() {
         const PREVIEW_URL = APIConfig?.categoryApiPath?.previewCategory;
@@ -60,6 +46,7 @@ const Home = () => {
     };
 
     async function fetchCategory(PAGE_NUMBER) {
+        setIsLoading(true);
         const URL = APIConfig?.categoryApiPath?.getCategoryAndProducts;
 
         const FINAL_URL = `${URL}?page=${PAGE_NUMBER}&limit=${CATEGORY_LIMIT}&product=${PRODUCTS_LIMIT}`
@@ -68,35 +55,37 @@ const Home = () => {
 
         setHasMorePages(response?.meta?.hasMore);
 
-        if (response?.error === false && response?.success === true && response?.categories?.length > 0 && response?.meta?.hasMore) {
+        if (response?.error === false && response?.success === true && response?.categories?.length > 0) {
             setCategories((prev) => {
                 return [
                     ...prev,
                     ...response?.categories || null
                 ]
             })
+            return setIsLoading(false);
         };
-
+        setIsLoading(false);
     };
 
     useEffect(() => {
+        const node = observerRef.current;
+        if (!node) return;
+
         const observer = new IntersectionObserver((entries) => {
             const entry = entries[0];
-            console.log(entry.isIntersecting);
-
-            if (entry.isIntersecting) {
-                let pageNumber = ++pageRef.current;
-                if (hasMorePages) {
-                    fetchCategory(pageNumber);
-                };
-
+            if (entry.isIntersecting && hasMorePages) {
+                const nextPage = ++pageRef.current;
+                fetchCategory(nextPage);
             }
         })
         observer.observe(observerRef.current)
-        if (!hasMorePages) {
-            observer.unobserve(observerRef.current)
+        if (hasMorePages) {
+            observer.observe(node);
         }
 
+        return () => {
+            observer.disconnect();
+        };
     }, [hasMorePages])
 
 
@@ -104,9 +93,6 @@ const Home = () => {
         fetchPreview();
         fetchCategory(1);
     }, [])
-
-    console.log(categories);
-
 
     return (
         <section>
@@ -168,7 +154,14 @@ const Home = () => {
                 )
             })}
 
-            <div ref={hasMorePages ? observerRef : null}></div>
+            {isLoading && (
+                <div className="loader-section">
+                    <RotateLoader />
+                </div>
+            )}
+
+            <div ref={observerRef}></div>
+
             <Footer />
 
         </section>
