@@ -1,9 +1,7 @@
-import ProductsDisplaySection from "../Common/ProductsDisplaySection";
 import "../Styles/Home.css"
-import { maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
-import { bakeryProducts, meatProducts } from "../Assets/DummyData.js"
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { addPointerEvent, maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
+import { useRef, useState } from "react";
+import { useFormAction, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
@@ -19,24 +17,21 @@ import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
 import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { useEffect } from "react";
 import ExploreRangeComponent from "../Components/ExploreRangeComponent.jsx";
+import { RotateLoader } from "../Common/Loader.js"
+
+
+const PRODUCTS_LIMIT = 5;
+const CATEGORY_LIMIT = 4;
 
 const Home = () => {
 
     const [preview, setPreview] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [hasMorePages, setHasMorePages] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         const scrollY = window.scrollY;
-    //         const slowScroll = scrollY * -0.1; // scroll speed reduced to 10%
-    //         const parallax = document.querySelector(".parallax1");
-    //         if (parallax) {
-    //             parallax.style.backgroundPosition = `center ${slowScroll}px`;
-    //         }
-    //     };
-
-    //     window.addEventListener("scroll", handleScroll);
-    //     return () => window.removeEventListener("scroll", handleScroll);
-    // }, []);
+    let pageRef = useRef(1);
+    let observerRef = useRef();
 
     async function fetchPreview() {
         const PREVIEW_URL = APIConfig?.categoryApiPath?.previewCategory;
@@ -50,8 +45,53 @@ const Home = () => {
         }
     };
 
+    async function fetchCategory(PAGE_NUMBER) {
+        setIsLoading(true);
+        const URL = APIConfig?.categoryApiPath?.getCategoryAndProducts;
+
+        const FINAL_URL = `${URL}?page=${PAGE_NUMBER}&limit=${CATEGORY_LIMIT}&product=${PRODUCTS_LIMIT}`
+
+        const response = await getApiRequestWrapper(FINAL_URL);
+
+        setHasMorePages(response?.meta?.hasMore);
+
+        if (response?.error === false && response?.success === true && response?.categories?.length > 0) {
+            setCategories((prev) => {
+                return [
+                    ...prev,
+                    ...response?.categories || null
+                ]
+            })
+            return setIsLoading(false);
+        };
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        const node = observerRef.current;
+        if (!node) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (entry.isIntersecting && hasMorePages) {
+                const nextPage = ++pageRef.current;
+                fetchCategory(nextPage);
+            }
+        })
+        observer.observe(observerRef.current)
+        if (hasMorePages) {
+            observer.observe(node);
+        }
+
+        return () => {
+            observer.disconnect();
+        };
+    }, [hasMorePages])
+
+
     useEffect(() => {
         fetchPreview();
+        fetchCategory(1);
     }, [])
 
     return (
@@ -108,12 +148,19 @@ const Home = () => {
                 </motion.div>
             </div>
 
+            {categories?.map((item, index) => {
+                return (
+                    <CategoryDisplaySection {...item} key={index} />
+                )
+            })}
 
-            <CategoryDisplaySection />
+            {isLoading && (
+                <div className="loader-section">
+                    <RotateLoader />
+                </div>
+            )}
 
-            <ProductsDisplaySection products={bakeryProducts} heading={"Aata Daal & Rice"} image={"https://res.cloudinary.com/dqo7vuizb/image/upload/v1763464071/SwiftDrop/ybljtd4o9cagyghv23cs.png"} />
-
-            <ProductsDisplaySection products={meatProducts} heading={"Fresh Meat & Seafood"} image={"https://images.unsplash.com/photo-1587593810167-a84920ea0781?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} />
+            <div ref={observerRef}></div>
 
             <Footer />
 
@@ -191,8 +238,6 @@ export function HomeNavbar() {
                                 }}>
                                     {userData?.name?.charAt(0).toUpperCase() || '?'}
                                 </Avatar>
-
-                                <p>{userData?.name}</p>
 
                             </div>
                         </>

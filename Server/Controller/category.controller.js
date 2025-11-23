@@ -183,6 +183,7 @@ export async function deleteCategoryController(req, res) {
     }
 };
 
+
 export async function categoryPreviewController(req, res) {
     try {
         const { preview } = req?.query;
@@ -215,6 +216,99 @@ export async function categoryPreviewController(req, res) {
             message: error.message,
             error: true,
             success: false
+        });
+    }
+};
+
+
+export async function getCategoriesAndProductsController(req, res) {
+    try {
+        // ===== Parse query params =====
+        const page = Math.max(1, parseInt(req.query.page || "1", 10));
+        const limit = Math.max(1, parseInt(req.query.limit || "4", 10)); // categories per page
+        const productsPerCategory = Math.max(1, parseInt(req.query.product || "6", 10)); // products per cat
+
+        const skip = (page - 1) * limit;
+
+        // ===== Category pipeline =====
+        const pipeline = [
+            { $skip: skip },
+            { $limit: limit },
+
+            {
+                $project: {
+                    name: 1,
+                    banner: 1,
+                    image: 1,
+                    secondaryImage: 1
+                }
+            },
+
+            // ===== Lookup products belonging to this category =====
+            {
+                $lookup: {
+                    from: "products",
+                    let: { catId: "$_id" },
+                    pipeline: [
+                        { $match: { $expr: { $in: ["$$catId", "$category"] } } },
+                        { $match: { publish: true } }, // only published products
+
+                        {
+                            $project: {
+                                name: 1,
+                                image: 1,
+                                price: 1,
+                                unit: 1,
+                                stock: 1,
+                                slug: 1
+                            }
+                        },
+
+                        { $sort: { createdAt: -1 } },
+                        { $limit: productsPerCategory }
+                    ],
+                    as: "products"
+                }
+            }
+        ];
+
+        const categoriesAgg = await CategoryModel.aggregate(pipeline).exec();
+
+        // ===== Pagination meta =====
+        const totalCategories = await CategoryModel.countDocuments();
+        const hasMore = page * limit < totalCategories;
+
+        const placeholderBanner = "/images/default-banner.png";
+
+        // ===== Build final output =====
+        const categories = categoriesAgg.map(cat => ({
+            category_id: cat._id,
+            banner: cat.banner || placeholderBanner,
+            name: cat.name || "",
+            data: cat.products || []
+        }));
+
+        return res.json({
+            message: "Categories fetched successfully.",
+            error: false,
+            success: true,
+            meta: {
+                page,
+                limit,
+                productsPerCategory,
+                totalCategories,
+                hasMore
+            },
+            categories
+        });
+
+    } catch (err) {
+        console.error("fetchCategories error:", err);
+        return res.status(500).json({
+            message: "Failed to fetch categories. Please try again.",
+            error: true,
+            success: false,
+            categories: []
         });
     }
 };

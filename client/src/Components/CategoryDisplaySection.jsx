@@ -1,30 +1,31 @@
 import { useState, useEffect } from "react";
-import { bakeryProducts } from "../Assets/DummyData";
 import ProductCard from "./ProductCard";
 
 const CategoryDisplaySection = ({
-  heading,
-  id,
-  banner = 'https://res.cloudinary.com/dqo7vuizb/image/upload/v1763464071/SwiftDrop/ybljtd4o9cagyghv23cs.png' }) => {
+  category_id,
+  name,
+  banner = 'https://res.cloudinary.com/dqo7vuizb/image/upload/v1763464071/SwiftDrop/ybljtd4o9cagyghv23cs.png',
+  data
+}) => {
 
 
   let parallaxStyle = { backgroundImage: `url(${banner})` }
   return (
-    <section style={{ backgroundColor: "white", marginBottom:"100px" }}>
+    <section style={{ backgroundColor: "white", marginBottom: "100px" }}>
 
       <div style={parallaxStyle} className="parallax-container">
         <p className="text-size-1">
 
-          {heading || "Aata Dal & Rice"}
+          {name || "Aata Dal & Rice"}
         </p>
       </div>
 
       <div className="product-container">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {data?.map((item, index) => {
+          return (
+            <ProductCard {...item} key={index} />
+          )
+        })}
       </div>
     </section>
   );
