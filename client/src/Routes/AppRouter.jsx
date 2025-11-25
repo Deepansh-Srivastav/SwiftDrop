@@ -14,6 +14,7 @@ import Category from "../Pages/Account/Category";
 import SubCategory from "../Pages/Account/SubCategory";
 import Products from "../Pages/Account/Products";
 import AllProducts from "../Pages/Account/AllProducts";
+import CategoryProductsPage from "../Pages/CategoryProductsPage";
 
 const AppRouter = () => {
 
@@ -55,7 +56,7 @@ const AppRouter = () => {
 
                     <Route path="sub-category" element={<SubCategory />} />
 
-                    <Route path="upload-product" element={<Products/>} />
+                    <Route path="upload-product" element={<Products />} />
 
                     <Route path="all-products" element={<AllProducts />} />
 
@@ -64,6 +65,7 @@ const AppRouter = () => {
                     <Route path="delete" element={<h1>thi si the delete page</h1>} />
                 </Route>
 
+                <Route path="/category/:categoryId/sub-category/:subCategoryId" element={<CategoryProductsPage />} />
 
                 <Route path="/auth/log-in" element={<LogIn />}></Route>
                 <Route path="/auth/register-user" element={<RegisterUser />}></Route>
