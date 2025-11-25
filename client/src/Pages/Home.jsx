@@ -1,26 +1,31 @@
-import "../Styles/Home.css"
-import { addPointerEvent, maxGeneratorDuration, motion, useForceUpdate } from "framer-motion";
-import { useRef, useState } from "react";
-import { useFormAction, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Footer from "../Common/Footer.jsx";
+import "../Styles/Home.css";
+
+import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import LogoutIcon from "@mui/icons-material/Logout";
+
 import CustomButtons from "../Components/CustomButtons.jsx";
-import { loggedInNavMenu } from "../Constants/menuConfig.js";
-import { handleUserLogOut } from "../Networking/Configuration/UserLogout.js";
-import { useDispatch } from "react-redux";
-import { clearUserDetails } from "../Redux/Features/UserDetailsSlice.js";
 import CategoryDisplaySection from "../Components/CategoryDisplaySection.jsx";
-import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
-import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
-import { useEffect } from "react";
 import ExploreRangeComponent from "../Components/ExploreRangeComponent.jsx";
-import { RotateLoader } from "../Common/Loader.js"
+import Footer from "../Common/Footer.jsx";
+import { RotateLoader } from "../Common/Loader.js";
+
+import { clearUserDetails } from "../Redux/Features/UserDetailsSlice.js";
+
+import { APIConfig } from "../Networking/Configuration/ApiConfig.js";
+import { handleUserLogOut } from "../Networking/Configuration/UserLogout.js";
+import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
+
+import { loggedInNavMenu } from "../Constants/menuConfig.js";
 
 
-const PRODUCTS_LIMIT = 5;
+
+const PRODUCTS_LIMIT = 6;
 const CATEGORY_LIMIT = 4;
 
 const Home = () => {
@@ -46,6 +51,7 @@ const Home = () => {
     };
 
     async function fetchCategory(PAGE_NUMBER) {
+        if (isLoading) return;
         setIsLoading(true);
         const URL = APIConfig?.categoryApiPath?.getCategoryAndProducts;
 
@@ -149,8 +155,9 @@ const Home = () => {
             </div>
 
             {categories?.map((item, index) => {
+
                 return (
-                    <CategoryDisplaySection {...item} key={index} />
+                    <CategoryDisplaySection {...item} key={index} path={`/category/${item?.category_id}/sub-category/${item?.subCategories[0]?._id}`} />
                 )
             })}
 
@@ -162,7 +169,7 @@ const Home = () => {
 
             <div ref={observerRef}></div>
 
-            <Footer />
+            {!isLoading && <Footer />}
 
         </section>
     )

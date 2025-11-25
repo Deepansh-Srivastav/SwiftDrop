@@ -244,23 +244,69 @@ export async function getCategoriesAndProductsController(req, res) {
                 }
             },
 
-            // ===== Lookup products belonging to this category =====
+            // lookup subcategories that belong to this category
+            {
+                $lookup: {
+                    from: "subcategories", // adjust if your collection name is different
+                    let: { catId: "$_id" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: { $in: ["$$catId", "$category"] } // category is an array in subCategorySchema
+                            }
+                        },
+                        {
+                            $project: {
+                                _id: 1,
+                                name: 1,
+                                image: 1
+                            }
+                        },
+                        { $sort: { createdAt: 1 } } // optional, remove/change if you want
+                    ],
+                    as: "subCategories"
+                }
+            },
+
             {
                 $lookup: {
                     from: "products",
                     let: { catId: "$_id" },
                     pipeline: [
                         { $match: { $expr: { $in: ["$$catId", "$category"] } } },
-                        { $match: { publish: true } }, // only published products
+                        { $match: { publish: true } },
+
+                        {
+                            $addFields: {
+                                finalPrice: {
+                                    $cond: [
+                                        { $gt: ["$discount", 0] },
+                                        {
+                                            $subtract: [
+                                                "$price",
+                                                {
+                                                    $divide: [
+                                                        { $multiply: ["$price", "$discount"] },
+                                                        100
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "$price"
+                                    ]
+                                }
+                            }
+                        },
 
                         {
                             $project: {
                                 name: 1,
                                 image: 1,
                                 price: 1,
+                                discount: 1,
+                                finalPrice: 1,
                                 unit: 1,
-                                stock: 1,
-                                slug: 1
+                                stock: 1
                             }
                         },
 
@@ -271,6 +317,8 @@ export async function getCategoriesAndProductsController(req, res) {
                 }
             }
         ];
+
+
 
         const categoriesAgg = await CategoryModel.aggregate(pipeline).exec();
 
@@ -285,7 +333,8 @@ export async function getCategoriesAndProductsController(req, res) {
             category_id: cat._id,
             banner: cat.banner || placeholderBanner,
             name: cat.name || "",
-            data: cat.products || []
+            data: cat.products || [],
+            subCategories: cat.subCategories || []
         }));
 
         return res.json({
@@ -297,9 +346,9 @@ export async function getCategoriesAndProductsController(req, res) {
                 limit,
                 productsPerCategory,
                 totalCategories,
-                hasMore
+                hasMore,
             },
-            categories
+            categories,
         });
 
     } catch (err) {

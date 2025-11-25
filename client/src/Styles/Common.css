@@ -833,6 +833,7 @@ Parallax
 =================================================================================*/
 .parallax-container {
     overflow: hidden;
+    width: 100%;
     height: 40vh;
     max-height: 600px;
     background-attachment: fixed;
@@ -849,7 +850,7 @@ Parallax
 
 }
 
-.parallax-container::before{
+.parallax-container::before {
     content: "";
     height: 100%;
     width: 100%;
@@ -876,4 +877,42 @@ loader
 
     border-radius: 8px;
 
+}
+
+
+/*=================================================================================
+Home Section Category Styes
+=================================================================================*/
+
+.display-category-section {
+    background-color: white;
+    padding-bottom: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.see-all-button{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.see-all-button button {
+    padding: clamp(4px, 2vw, 8px) clamp(12px, 4vw, 20px);
+    font-size: clamp(8px, 2vw, 14px);
+    background: #ff5757;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 50px;
 }

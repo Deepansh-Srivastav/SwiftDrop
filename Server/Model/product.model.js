@@ -49,10 +49,18 @@ const productSchema = new mongoose.Schema({
         default: true
     }
 }, {
-    timestamps: true
+    timestamps: true 
 });
 
-//create a text index
+productSchema.virtual("finalPrice").get(function () {
+    if (!this.discount || this.discount <= 0) return this.price;
+    const discounted = this.price - (this.price * this.discount) / 100;
+    return Math.round(discounted); // or keep decimals if you want
+});
+
+productSchema.set("toJSON", { virtuals: true });
+productSchema.set("toObject", { virtuals: true });
+
 productSchema.index({
     name: "text",
     description: 'text'
@@ -60,6 +68,7 @@ productSchema.index({
     name: 10,
     description: 5
 });
+
 
 
 const ProductModel = mongoose.model('product', productSchema);
