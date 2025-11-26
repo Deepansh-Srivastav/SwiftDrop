@@ -1,6 +1,6 @@
 import { Router } from "express";
 import auth from "../Middleware/authMiddleware.js";
-import { addCategoryController, getAllCategoryController, editCategoryController, deleteCategoryController, categoryPreviewController, getCategoriesAndProductsController } from "../Controller/category.controller.js";
+import { addCategoryController, getAllCategoryController, editCategoryController, deleteCategoryController, categoryPreviewController, getCategoriesAndProductsController, getSubCategoryAndProducts } from "../Controller/category.controller.js";
 
 const categoryRouter = Router();
 
@@ -10,5 +10,6 @@ categoryRouter.patch("/update-category", auth, editCategoryController);
 categoryRouter.delete("/delete-category", auth, deleteCategoryController);
 categoryRouter.get("/category-preview", categoryPreviewController);
 categoryRouter.get("/", getCategoriesAndProductsController);
+categoryRouter.get("/get-subcategories-and-products", getSubCategoryAndProducts);
 
 export default categoryRouter;

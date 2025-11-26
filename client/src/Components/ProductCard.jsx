@@ -15,6 +15,7 @@ const ProductCard = ({
 
     const finalPriceRounded = Math.round(finalPrice);
 
+
     return (
         <div className='product-card-container'>
 

@@ -3,6 +3,7 @@ import otpVerificationReducer from './Features/OtpVerificationSlice'
 import userDetailsReducer from "./Features/UserDetailsSlice"
 import categoryDetailsReducer from "./Features/CategoryDetailsSlice";
 import subCategoryDetailsSlice from "./Features/SubCategoryDetailsSlice";
+import globalCategoryDetailsSlice from "./Features/GlobalCategorySlice";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         userDetails: userDetailsReducer,
         categoryDetails: categoryDetailsReducer,
         subCategoryDetails: subCategoryDetailsSlice,
+        globalCategoryDetails: globalCategoryDetailsSlice,
     },
     devTools: import.meta.env.MODE !== 'production',
 });
