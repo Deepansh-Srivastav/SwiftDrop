@@ -23,7 +23,10 @@
 .banner-section {
     width: 100%;
     background: linear-gradient(-225deg, #473B7B 1%, #3584A7 41%, #30D2BE 100%);
-    clip-path: polygon(100% 0%, 98% 50%, 100% 100%, 0 100%, 2% 50%, 0 0);
+    clip-path: polygon(100% 0%, 98% 50%, 100% 100%, 0 100%, 0% 50%, 0 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -35,7 +38,7 @@
     overflow-y: auto;
 }
 
-.subcategory-side-menu::-webkit-scrollbar {
+.hide-scroll-bar::-webkit-scrollbar {
     display: none;
 }
 
@@ -45,7 +48,7 @@
     flex-direction: column;
 }
 
-.product-display{
+.product-display {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -61,7 +64,7 @@
     padding-inline-start: 1rem;
 }
 
-.pagination-container{
+.pagination-container {
     height: 70px;
     display: flex;
     justify-content: center;
@@ -98,5 +101,42 @@
 
 .menu-list-name-container {
     margin-top: 7%;
+    font-size: clamp(0.6rem, 0.7rem + 0.4vw, 1rem);
+
+    font-weight: 500;
+    line-height: 1.3;
+
+    /* Optional but usually nice for side menus */
+    white-space: nowrap;
+    /* keep on one line */
+    overflow: hidden;
+    /* hide overflow */
     text-overflow: ellipsis;
+}
+
+
+@media(max-width:940px) {
+    .subcategory-side-menu li {
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        min-height: 70px;
+    }
+
+    .menu-list-image-container img {
+        width: 100%;
+    }
+
+    .menu-list-name-container {
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        display: inline-block;
+        max-width: 95%;
+        padding: 2px 6px;
+        border-radius: 4px;
+        text-align: center;
+    }
 }

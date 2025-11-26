@@ -370,7 +370,7 @@ export async function getSubCategoryAndProducts(req, res) {
             })
         }
 
-        const allSubCategories = null
+        let allSubCategories = null
 
         if (category) {
             allSubCategories = await SubCategoryModel.find({
@@ -397,12 +397,17 @@ export async function getSubCategoryAndProducts(req, res) {
             }
         ).sort({ createdAt: 1 })
 
+        const subCategoryName = await SubCategoryModel.findById({ _id: subCategory }, { name: 1, _id: 0 })
+
+
+
         return res.status(200).json({
             message: "",
             error: false,
             success: true,
             ...(allSubCategories && { subCategory: allSubCategories }),
             products: allProducts,
+            subCategoryName: subCategoryName?.name,
             meta: {}
         })
 
