@@ -244,25 +244,22 @@ export async function getCategoriesAndProductsController(req, res) {
                 }
             },
 
-            // lookup subcategories that belong to this category
             {
                 $lookup: {
-                    from: "subcategories", // adjust if your collection name is different
+                    from: "subcategories",
                     let: { catId: "$_id" },
                     pipeline: [
                         {
                             $match: {
-                                $expr: { $in: ["$$catId", "$category"] } // category is an array in subCategorySchema
+                                $expr: { $in: ["$$catId", "$category"] }
                             }
                         },
                         {
                             $project: {
                                 _id: 1,
-                                name: 1,
-                                image: 1
                             }
                         },
-                        { $sort: { createdAt: 1 } } // optional, remove/change if you want
+                        { $sort: { createdAt: 1 } }
                     ],
                     as: "subCategories"
                 }
@@ -316,9 +313,8 @@ export async function getCategoriesAndProductsController(req, res) {
                     as: "products"
                 }
             }
+
         ];
-
-
 
         const categoriesAgg = await CategoryModel.aggregate(pipeline).exec();
 
@@ -361,3 +357,62 @@ export async function getCategoriesAndProductsController(req, res) {
         });
     }
 };
+
+export async function getSubCategoryAndProducts(req, res) {
+    try {
+        const { category, subCategory } = req?.query;
+
+        if (!category && !subCategory) {
+            return res.status(400).json({
+                message: "Provide the category.",
+                error: true,
+                success: false
+            })
+        }
+
+        const allSubCategories = null
+
+        if (category) {
+            allSubCategories = await SubCategoryModel.find({
+                category: { $in: category }
+            },
+                {
+                    name: 1,
+                    image: 1,
+                }
+            ).sort({ createdAt: 1 })
+        }
+
+        const allProducts = await ProductModel.find({
+            subCategory: { $in: subCategory }
+        },
+            {
+                name: 1,
+                image: { $slice: 1 },
+                price: 1,
+                discount: 1,
+                finalPrice: 1,
+                unit: 1,
+                stock: 1
+            }
+        ).sort({ createdAt: 1 })
+
+        return res.status(200).json({
+            message: "",
+            error: false,
+            success: true,
+            ...(allSubCategories && { subCategory: allSubCategories }),
+            products: allProducts,
+            meta: {}
+        })
+
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Failed to fetch Products and Sub Categories. Please try again.",
+            error: true,
+            success: false,
+            categories: []
+        });
+    }
+}

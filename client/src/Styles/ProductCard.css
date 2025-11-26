@@ -18,13 +18,14 @@
 
 .product-card-container {
     width: 100%;
-    aspect-ratio: 2 / 3;
-    border: 1px solid #000;
+    aspect-ratio: 2 / 4;
+    border: 1px solid var(--border-color);
+    /* border: 1px solid #000; */
     border-radius: 6px;
     overflow: hidden;
     background: #fff;
     max-width: 220px;
-    max-height: 320px;
+    max-height: 340px;
     display: flex;
     flex-direction: column;
 }
@@ -152,11 +153,13 @@
     flex-direction: column;
     gap: 3px;
 }
-.add-to-cart{
+
+.add-to-cart {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .add-to-cart button {
     width: 100%;
     color: white;

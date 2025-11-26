@@ -23,12 +23,15 @@ import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 
 import { loggedInNavMenu } from "../Constants/menuConfig.js";
 
+import { setGlobalCategoryDetails } from "../Redux/Features/GlobalCategorySlice.js";
 
 
 const PRODUCTS_LIMIT = 6;
 const CATEGORY_LIMIT = 4;
 
 const Home = () => {
+
+    const dispatch = useDispatch();
 
     const [preview, setPreview] = useState(null);
     const [categories, setCategories] = useState([]);
@@ -68,6 +71,7 @@ const Home = () => {
                     ...response?.categories || null
                 ]
             })
+            dispatch(setGlobalCategoryDetails(response?.categories || []));
             return setIsLoading(false);
         };
         setIsLoading(false);

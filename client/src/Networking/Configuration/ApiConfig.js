@@ -38,6 +38,7 @@ export const APIConfig = {
         deleteCategory: `${API_BASE.category}/delete-category`,
         previewCategory: `${API_BASE.category}/category-preview`,
         getCategoryAndProducts: `${API_BASE.category}/`,
+        getSubCategoryAndProducts: `${API_BASE.category}/get-subcategories-and-products`,
     },
 
     subCategoryApiPath: {

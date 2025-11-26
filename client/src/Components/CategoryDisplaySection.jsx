@@ -3,9 +3,8 @@ import ProductCard from "./ProductCard";
 import { useNavigate } from "react-router-dom";
 
 const CategoryDisplaySection = ({
-  category_id,
   name,
-  banner = 'https://res.cloudinary.com/dqo7vuizb/image/upload/v1763464071/SwiftDrop/ybljtd4o9cagyghv23cs.png',
+  banner,
   data,
   path = "/"
 }) => {
