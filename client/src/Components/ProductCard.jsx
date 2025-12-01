@@ -1,5 +1,6 @@
 import '../Styles/ProductCard.css'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useSelector, useDispatch } from "react-redux";
 
 const ProductCard = ({
     _id,
@@ -12,9 +13,49 @@ const ProductCard = ({
     discount,
 }) => {
 
+    const userData = useSelector((state) => {
+        return state.userDetails
+    });
+
+    const isUserLoggedIn = userData && Object.keys(userData).length > 0;
+
 
     const finalPriceRounded = Math.round(finalPrice);
 
+    function handleAddToCart() {
+        const payload = {
+            productId: _id,
+            name: name,
+            unit: unit,
+            price: price,
+            finalPrice: finalPriceRounded,
+            discount: discount,
+            image: image[0],
+            quantity: 1
+        }
+
+        if (isUserLoggedIn) {
+            return;
+        }
+        else {
+            // localStorage.setItem(cartItems, )
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            const existingItem = cart.find((item) => {
+                return item?.productId === payload?.productId;
+            })
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            }
+            else {
+                cart.push(payload);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+        }
+    };
 
     return (
         <div className='product-card-container'>
@@ -37,8 +78,8 @@ const ProductCard = ({
 
             <div className="product-card-footer">
 
-                <div className="add-to-cart">
-                    <button>🛒 Add</button>
+                <div className="add-to-cart" >
+                    <button onClick={handleAddToCart}>🛒 Add</button>
                 </div>
 
                 <div className="price-container">
