@@ -1,7 +1,5 @@
-import { useState } from "react";
 import CartProductModel from "../Model/cartproduct.model.js";
 import ProductModel from "../Model/product.model.js";
-
 
 export const createCartProductController = async (req, res) => {
     try {
@@ -9,7 +7,7 @@ export const createCartProductController = async (req, res) => {
         const { payload } = req.body
 
         if (!payload || payload.length === 0) {
-            return res.status(200).json({
+            return res.status(400).json({
                 success: false, error: true, message: "No item provided."
             })
         };
@@ -70,3 +68,63 @@ export const createCartProductController = async (req, res) => {
             .json({ success: false, message: "Something went wrong" });
     }
 };
+
+export const getAllCartProductsController = async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        if (!userId) {
+            return res.status(400).json({
+                error: true,
+                success: false,
+                message: "User not authenticated"
+            })
+        }
+
+
+        let cartItem = await CartProductModel.findOne({ user: userId });
+
+        console.log(cartItem._doc);
+
+
+        const productIds = cartItem?.items?.map((item) => {
+            return item?.productId.toString();
+        })
+
+        const cartProductDetails = await ProductModel.find({ _id: { $in: productIds } }, { name: 1, image: { $slice: 1 }, unit: 1, discount: 1, price: 1 })
+
+        const productMap = new Map(
+            cartProductDetails.map(product => [product._id.toString(), product])
+        );
+
+        const mergedItems = cartItem?.items?.map((item) => {
+            const product = productMap.get(item?.productId.toString());
+            const { name, image, unit, price, discount, finalPrice, } = product;
+            return {
+                ...item._doc,
+                name,
+                image,
+                unit,
+                price,
+                discount,
+                finalPrice,
+            }
+        })
+
+
+        return res.status(200).json({
+            error: false,
+            success: true,
+            cart: {
+                ...cartItem._doc,
+                items: mergedItems
+            }
+        })
+
+    } catch (error) {
+        console.error("Cant fetch items", error);
+        return res
+            .status(500)
+            .json({ success: false, message: "Something went wrong" });
+    }
+}

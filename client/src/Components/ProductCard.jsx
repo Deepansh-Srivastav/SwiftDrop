@@ -30,7 +30,7 @@ const ProductCard = ({
             price: price,
             finalPrice: finalPriceRounded,
             discount: discount,
-            image: image[0],
+            image: [image[0]],
             quantity: 1
         }
 
