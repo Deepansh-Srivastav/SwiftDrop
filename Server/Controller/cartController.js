@@ -14,38 +14,35 @@ export const createCartProductController = async (req, res) => {
             })
         };
 
-        const cartItem = await CartProductModel.findOne({ user: userId })
+        let cartItem = await CartProductModel.findOne({ user: userId })
 
-        
+        const productIds = payload?.map((item) => {
+            return item?.productId
+        })
+
+        const existingProducts = await ProductModel?.find({ _id: { $in: productIds } }, { name: 1, price: 1, discount: 1 })
+
+        const ProductsPriceMap = new Map(
+            existingProducts?.map((product) => {
+                return [product?._id.toString(), product?.finalPrice];
+            })
+        )
 
         if (!cartItem) {
-            const totalBill = payload.reduce((sum, product) => {
-                return sum + product?.price * product?.quantity;
-            }, 0)
-
-            await CartProductModel.create({
-                user: userId,
-                items: payload,
-                bill: totalBill
-            })
-            return res.status(200).json({
-                success: true,
-                error: false,
-                message: "Item added to cart."
-            })
-
-
+            cartItem = new CartProductModel({ user: userId, items: [], bill: 0 })
         };
 
         for (const product of payload) {
-            const { productId, quantity, price } = product;
+            const { productId, quantity } = product;
+
+            const price = ProductsPriceMap.get(productId);
 
             const existingCartItem = cartItem?.items?.find((item) => {
                 return item?.productId.toString() === productId
             })
 
             if (existingCartItem) {
-
+                existingCartItem.price = price
                 existingCartItem.quantity += 1;
             }
             else {
@@ -54,13 +51,9 @@ export const createCartProductController = async (req, res) => {
 
         }
 
-
         cartItem.bill = cartItem.items.reduce((sum, item) => {
             return sum + item?.price * item?.quantity;
         }, 0)
-
-        console.log(`The bill is = ${cartItem.bill}`);
-
 
         await cartItem.save();
 
@@ -71,7 +64,7 @@ export const createCartProductController = async (req, res) => {
         });
 
     } catch (err) {
-        console.error("Cart upsert error:", err.message);
+        console.error("Cart upsert error:", err);
         return res
             .status(500)
             .json({ success: false, message: "Something went wrong" });
