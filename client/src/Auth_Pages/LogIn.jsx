@@ -40,7 +40,25 @@ const LogIn = () => {
     await handleLogin(loginFormData);
   };
 
-  
+  async function fetchUserDetails() {
+    const FETCH_USER_DETAILS_ENDPOINT = APIConfig.userApiPath.getUserDetails;
+
+    const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT);
+
+    return userDetails;
+  };
+
+  async function upsertUserCart() {
+    const data = JSON.parse(localStorage.getItem("cart"));
+
+    const CART_URL = APIConfig?.cartItemPath?.addCartItem;
+
+    const response = await postApiRequestWrapper(CART_URL, { payload: data });
+
+    return response;
+  };
+
+
   const handleLogin = async (payload) => {
     try {
       setIsLoading(true);
@@ -49,13 +67,15 @@ const LogIn = () => {
 
       if (response?.success === true && response?.error === false) {
 
-        const FETCH_USER_DETAILS_ENDPOINT = APIConfig.userApiPath.getUserDetails;
-
-        const userDetails = await getApiRequestWrapper(FETCH_USER_DETAILS_ENDPOINT);
+        const userDetails = await fetchUserDetails();
 
         localStorage.setItem('userData', JSON.stringify(userDetails?.data));
 
         dispatch(setUserDetails(userDetails?.data));
+
+        if (localStorage.getItem("cart")) {
+          const cartData = await upsertUserCart();
+        }
 
         setIsLoading(false);
         navigate('/');

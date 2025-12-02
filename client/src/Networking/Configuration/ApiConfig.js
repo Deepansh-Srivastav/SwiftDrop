@@ -12,6 +12,7 @@ export const API_BASE = {
     category: "/api/category",
     subCategory: "/api/sub-category",
     product: "/api/product",
+    cart: "/api/cart",
     file: "/api/file",
 };
 
@@ -51,6 +52,11 @@ export const APIConfig = {
     productPath: {
         addProduct: `${API_BASE.product}/add-product`,
         getProducts: `${API_BASE.product}/get-products`,
+    },
+
+    cartItemPath: {
+        addCartItem: `${API_BASE.cart}/create-cart-item`,
+        getCartItem: `${API_BASE.cart}/get-cart-item`,
     },
 
     uploadImageApiPath: {
