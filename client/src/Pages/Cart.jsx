@@ -32,6 +32,8 @@ const Cart = () => {
 
     }
 
+    // payload = [{productId: , quantity:,}]
+
     useEffect(() => {
         loadCart();
     }, []);
