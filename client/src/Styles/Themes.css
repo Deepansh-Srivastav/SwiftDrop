@@ -31,7 +31,7 @@ body {
 }
 
 :root {
-    --max-width:2000px;
+    --max-width: 2000px;
     --secondary-color: #f7b42c;
     --background-color: #f5f5f5;
     --text-color: #333333;
@@ -41,7 +41,7 @@ body {
     --white-theme: #ffffff;
     --card-background: rgba(225, 225, 225, 0.625);
     --card-background2: rgb(193, 193, 193);
-    --badge-theme-background:rgba(27, 167, 52, 0.835);
+    --badge-theme-background: rgba(27, 167, 52, 0.835);
     --button-theme-blue: #3A7F99;
     --button-hover-theme-blue: #035776;
     /* --button-color: #4CAF50; */
@@ -93,7 +93,7 @@ body {
     color: var(--purple-theme);
 }
 
-.no-resize-textarea{
+.no-resize-textarea {
     resize: none;
 }
 
@@ -109,6 +109,10 @@ body {
 
 .margin-top-50 {
     margin-top: 50px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
 }
 
 .margin-bottom-20 {
@@ -135,6 +139,14 @@ body {
     font-size: 38px;
     color: var(--color-one);
     font-weight: 650;
+}
+
+.bold {
+    font-weight: 900;
+}
+
+.text-size-custom {
+    font-size: 22px;
 }
 
 .text-size-2 {
@@ -184,6 +196,10 @@ body {
 
     .text-size-1 {
         font-size: 28px;
+    }
+
+    .text-size-custom {
+        font-size: 20px;
     }
 
     .text-size-2 {
@@ -238,6 +254,10 @@ body {
         font-size: 22px;
     }
 
+    .text-size-custom {
+        font-size: 16px;
+    }
+
     .text-size-2 {
         font-family: "Nunito Sans", sans-serif;
         font-size: 16px;
@@ -277,6 +297,10 @@ body {
         font-size: 18px;
     }
 
+    .text-size-custom {
+        font-size: 13px;
+    }
+
     .text-size-2 {
         font-family: "Nunito Sans", sans-serif;
         font-size: 12px;
@@ -304,6 +328,10 @@ body {
 
     .text-size-1 {
         font-size: 16px;
+    }
+
+    .text-size-custom {
+        font-size: 12px;
     }
 
     .text-size-2 {
