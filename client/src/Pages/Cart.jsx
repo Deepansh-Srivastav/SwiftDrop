@@ -96,6 +96,7 @@ const Cart = () => {
                     <div className="cart-data-container hide-scroll-bar">
 
                         <div className="cart-products-container hide-scroll-bar">
+                            
                             <div className="products-container">
                                 <Divider sx={{ width: "100%" }} />
 
@@ -103,7 +104,7 @@ const Cart = () => {
                                     return (
                                         <>
                                             <CartProductCard {...product} key={index} />
-                                            <Divider sx={{ width: "100%" }} />
+                                            <Divider sx={{ width: "100%",color:"black" }} />
                                         </>
                                     )
                                 })}
@@ -167,14 +168,39 @@ export default Cart;
 
 
 function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image }) {
+
+    const [itemQuantity, setItemQuantity] = useState(quantity);
+
+    function handleQuantity(action) {
+        if (action === "add") {
+            setItemQuantity((prev) => {
+                return prev += 1;
+            });
+        }
+        if (action === "sub" && itemQuantity > 1) {
+            setItemQuantity((prev) => {
+                return prev = prev - 1;
+            });
+        }
+    }
+
     return (
         <article className="cart-product-card-wrapper">
 
             <div className="cart-product-card-info-container">
-                <p className="text-size-2">{name}</p>
-                <p className="text-size-3">₹{finalPrice}</p>
-                <p className="text-size-3">{unit}</p>
-                -1+
+                <p className="text-size-custom bold" style={{ textOverflow: "ellipsis" }}>{name}</p>
+                <div className="price-container">
+                    <span className='price'>₹{price}</span>
+                    <span className='final-price'>₹{finalPrice}</span>
+                </div>
+                <p className="text-size-4">{unit}</p>
+
+                <div className="quantity-counter">
+                    <button className="qty-btn" onClick={() => { handleQuantity("sub") }}>-</button>
+                    <span className="qty-value">{itemQuantity}</span>
+                    <button className="qty-btn" onClick={() => { handleQuantity("add") }}>+</button>
+                </div>
+
             </div>
 
             <div className="cart-product-card-image-container">
@@ -184,7 +210,6 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
         </article>
     )
 }
-
 
 
 export function NoItemsFound({ message }) {
@@ -214,4 +239,3 @@ export function NoItemsFound({ message }) {
         </div>
     );
 };
-
