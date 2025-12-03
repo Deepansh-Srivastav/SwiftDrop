@@ -85,74 +85,79 @@ const Cart = () => {
         <main className="cart-page">
             <BackButton />
             <section className="cart-page-container">
-                
+
                 <div className="heading-container">
                     <h3 className="largest-heading " style={{ fontWeight: "800" }}>
                         SHOPPING CART
                     </h3>
                 </div>
 
-                <div className="cart-data-container hide-scroll-bar">
+                {cartData ? (
+                    <div className="cart-data-container hide-scroll-bar">
 
-                    <div className="cart-products-container hide-scroll-bar">
-                        <div className="products-container">
-                            <Divider sx={{ width: "100%" }} />
+                        <div className="cart-products-container hide-scroll-bar">
+                            <div className="products-container">
+                                <Divider sx={{ width: "100%" }} />
 
-                            {cart?.map((product, index) => {
-                                return (
-                                    <>
-                                        <CartProductCard {...product} key={index} />
-                                        <Divider sx={{ width: "100%" }} />
-                                    </>
-                                )
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="cart-price-container">
-
-                        <article className="cart-price-card">
-                            <div className="cart-price-card-heading-container">
-                                <h3 className="text-size-1">Order Summary</h3>
-                                {/* <h3 className="text-size-1" style={{color:"black"}}>Order Summary</h3> */}
+                                {cart?.map((product, index) => {
+                                    return (
+                                        <>
+                                            <CartProductCard {...product} key={index} />
+                                            <Divider sx={{ width: "100%" }} />
+                                        </>
+                                    )
+                                })}
                             </div>
-
-                            <div className="cart-price-card-data-container">
-
-                                <ul className="cart-price-data-list">
-                                    <li className="cart-price-data-list-item">
-                                        <span className="cart-detail text-size-3">Item Total</span>
-                                        <span className="cart-detail-value">₹800</span>
-                                    </li>
-                                    <li className="cart-price-data-list-item">
-                                        <span className="cart-detail text-size-3">Discount</span>
-                                        <span className="cart-detail-value">₹300</span>
-                                    </li>
-                                    <li className="cart-price-data-list-item">
-                                        <span className="cart-detail text-size-3">GST</span>
-                                        <span className="cart-detail-value">18%</span>
-                                    </li>
-                                    <li className="cart-price-data-list-item">
-                                        <span className="cart-detail text-size-3">Shipping</span>
-                                        <span className="cart-detail-value">Free</span>
-                                    </li>
-                                </ul>
-
-                            </div>
-
-                            <div className="cart-price-card-total-container">
-                                <span className="cart-detail text-size-2">Subtotal</span>
-                                <span className="cart-detail-value">₹{cartData?.cart?.bill}</span>
-                            </div>
-                        </article>
-
-                        <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Checkout</button>
                         </div>
 
-                    </div>
+                        <div className="cart-price-container">
 
-                </div>
+                            <article className="cart-price-card">
+                                <div className="cart-price-card-heading-container">
+                                    <h3 className="text-size-1">Order Summary</h3>
+                                    {/* <h3 className="text-size-1" style={{color:"black"}}>Order Summary</h3> */}
+                                </div>
+
+                                <div className="cart-price-card-data-container">
+
+                                    <ul className="cart-price-data-list">
+                                        <li className="cart-price-data-list-item">
+                                            <span className="cart-detail text-size-3">Item Total</span>
+                                            <span className="cart-detail-value">₹800</span>
+                                        </li>
+                                        <li className="cart-price-data-list-item">
+                                            <span className="cart-detail text-size-3">Discount</span>
+                                            <span className="cart-detail-value">₹300</span>
+                                        </li>
+                                        <li className="cart-price-data-list-item">
+                                            <span className="cart-detail text-size-3">GST</span>
+                                            <span className="cart-detail-value">18%</span>
+                                        </li>
+                                        <li className="cart-price-data-list-item">
+                                            <span className="cart-detail text-size-3">Shipping</span>
+                                            <span className="cart-detail-value">Free</span>
+                                        </li>
+                                    </ul>
+
+                                </div>
+
+                                <div className="cart-price-card-total-container">
+                                    <span className="cart-detail text-size-2">Subtotal</span>
+                                    <span className="cart-detail-value">₹{cartData?.cart?.bill}</span>
+                                </div>
+                            </article>
+
+                            <div className="checkout-button-container">
+                                <button className="text-size-4 checkout-button">Checkout</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                ) : (
+                    <NoItemsFound message={"No item found in the cart"} />
+                )}
+
             </section>
         </main>
     )
@@ -179,3 +184,34 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
         </article>
     )
 }
+
+
+
+export function NoItemsFound({ message }) {
+    return (
+        <div
+            style={{
+                width: "100%",
+                padding: "2rem 1rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                color: "#777",
+                height: "60%"
+            }}
+        >
+            <img
+                src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png"
+                alt="Empty"
+                style={{ width: "clamp(100px, 10vw, 120px)", opacity: 0.8, marginBottom: "1rem" }}
+            />
+            <h3 style={{ marginBottom: "0.5rem", color: "#444" }} className="text-size-2">{message}</h3>
+            <p style={{ color: "#777" }} className="text-size-3">
+                Please add some items to continue.
+            </p>
+        </div>
+    );
+};
+
