@@ -146,6 +146,10 @@ const Cart = () => {
                             </div>
                         </article>
 
+                        <div className="checkout-button-container">
+                            <button className="text-size-4 checkout-button">Checkout</button>
+                        </div>
+
                     </div>
 
                 </div>
