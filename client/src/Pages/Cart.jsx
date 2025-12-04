@@ -7,6 +7,7 @@ import { useState, useEffect, useCallback } from "react";
 import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { showErrorToast } from "../Components/CostomAlert.jsx";
+import { CloseIcon, DeleteIcon } from "../Assets/Icons.js";
 
 
 const Cart = () => {
@@ -74,10 +75,59 @@ const Cart = () => {
 
     }
 
+
+    async function handleItemDelete(productId) {
+
+        console.log(productId);
+
+
+        if (!productId) return;
+
+        if (productId && isUserLoggedIn) {
+            return;
+        };
+
+        if (productId && !isUserLoggedIn) {
+
+            const cartData = JSON.parse(localStorage.getItem("cart"));
+            console.log("cartData is - ", cartData);
+
+            const updatedCartData = cartData?.filter((item) => {
+                return item?.productId !== productId;
+            })
+
+            console.log(updatedCartData);
+
+            localStorage.removeItem("cart");
+
+            localStorage.setItem("cart", JSON.stringify(updatedCartData));
+
+            console.log(updatedCartData);
+
+            const bill = updatedCartData?.reduce((sum, item) => {
+                return sum + item?.finalPrice * item?.quantity
+            })
+
+            const data = {
+                cart: {
+                    items: [...updatedCartData],
+                    bill
+                }
+            }
+
+            setCartData(data);
+
+        }
+
+    }
+
     useEffect(() => {
         loadCart();
     }, [userData]);
 
+
+    console.log(cartData);
+    
 
 
 
@@ -100,10 +150,10 @@ const Cart = () => {
                             <div className="products-container">
                                 <Divider sx={{ width: "100%" }} />
 
-                                {cart?.map((product, index) => {
+                                {cartData?.cart?.items?.map((product, index) => {
                                     return (
                                         <>
-                                            <CartProductCard {...product} key={index} />
+                                            <CartProductCard {...product} key={index} handleDelete={handleItemDelete} />
                                             <Divider sx={{ width: "100%", color: "black" }} />
                                         </>
                                     )
@@ -144,7 +194,7 @@ const Cart = () => {
 
                                 <div className="cart-price-card-total-container">
                                     <span className="cart-detail text-size-2">Subtotal</span>
-                                    <span className="cart-detail-value">₹{cartData?.cart?.bill}</span>
+                                    {/* <span className="cart-detail-value">₹{cartData?.cart?.bill}</span> */}
                                 </div>
                             </article>
 
@@ -167,7 +217,7 @@ const Cart = () => {
 export default Cart;
 
 
-function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image }) {
+function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image, handleDelete }) {
 
     const [itemQuantity, setItemQuantity] = useState(quantity);
 
@@ -190,8 +240,17 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
             <div className="cart-product-info">
 
                 <div className="product-card-info-container">
+
+                    {/* <span className="hover-delete-option">
+                        <DeleteIcon />
+                    </span> */}
+
+                    <span className="cart-delete-button" onClick={() => handleDelete(productId)}>
+                        <DeleteIcon />
+                    </span>
+
                     <p className='text-size-3 product-name'>{name}</p>
-                    <div style={{display:"flex",gap:"0.5rem"}}>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
                         <p className='unit-badge'>{unit}</p>
                         <p className='unit-badge'>Discount - {discount}%</p>
                     </div>
