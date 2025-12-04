@@ -213,7 +213,7 @@ const Cart = () => {
         loadCart();
     }, [userData]);
 
-    if (cartData?.cart?.items.length === 0) {
+    if (cartData?.cart?.items?.length === 0) {
         localStorage.removeItem("cart")
     }
 
@@ -228,7 +228,7 @@ const Cart = () => {
                     </h3>
                 </div>
 
-                {cartData?.cart?.items.length > 0 ? (
+                {cartData?.cart?.items?.length > 0 ? (
                     <div className="cart-data-container hide-scroll-bar">
 
                         <div className="cart-products-container hide-scroll-bar">
