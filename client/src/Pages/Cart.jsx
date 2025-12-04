@@ -16,7 +16,7 @@ const Cart = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const [cartData, setCartData] = useState(null);
+    const [cartData, setCartData] = useState({});
 
     const fetchCartDetails = useCallback(async () => {
 
@@ -98,15 +98,13 @@ const Cart = () => {
 
             console.log(updatedCartData);
 
-            localStorage.removeItem("cart");
 
             localStorage.setItem("cart", JSON.stringify(updatedCartData));
 
-            console.log(updatedCartData);
 
             const bill = updatedCartData?.reduce((sum, item) => {
                 return sum + item?.finalPrice * item?.quantity
-            })
+            }, 0)
 
             const data = {
                 cart: {
@@ -116,7 +114,6 @@ const Cart = () => {
             }
 
             setCartData(data);
-
         }
 
     }
@@ -126,8 +123,10 @@ const Cart = () => {
     }, [userData]);
 
 
-    console.log(cartData);
-    
+    if (cartData?.cart?.items.length === 0) {
+        localStorage.removeItem("cart")
+    }
+
 
 
 
@@ -142,7 +141,7 @@ const Cart = () => {
                     </h3>
                 </div>
 
-                {cartData ? (
+                {cartData?.cart?.items.length > 0 ? (
                     <div className="cart-data-container hide-scroll-bar">
 
                         <div className="cart-products-container hide-scroll-bar">
@@ -194,7 +193,7 @@ const Cart = () => {
 
                                 <div className="cart-price-card-total-container">
                                     <span className="cart-detail text-size-2">Subtotal</span>
-                                    {/* <span className="cart-detail-value">₹{cartData?.cart?.bill}</span> */}
+                                    <span className="cart-detail-value">₹{cartData?.cart?.bill}</span>
                                 </div>
                             </article>
 
