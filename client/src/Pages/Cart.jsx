@@ -8,15 +8,49 @@ import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Servi
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { showErrorToast } from "../Components/CostomAlert.jsx";
 import { CloseIcon, DeleteIcon } from "../Assets/Icons.js";
+import { cartDataFromLocalStorage } from "../Utils/commonFunctions.js";
 
 
 const Cart = () => {
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const userData = useSelector((state) => {
+        return state.userDetails
+    });
+
+    const isUserLoggedIn = userData && Object.keys(userData).length > 0;
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const [cartData, setCartData] = useState({});
+    const [cartData, setCartData] = useState(isUserLoggedIn ? {} : {
+        cart: {
+            items: cartDataFromLocalStorage("cart", "get"),
+        },
+        bill: 0
+    });
+
+    const items = cartData?.cart?.items || [];
+
+    const totals = items?.reduce((acc, item) => {
+        const price = Number(item?.price) || 0;
+        const final = Number(item.finalPrice) || price;
+        const qty = Number(item.quantity) || 1;
+
+        acc.totalPrice += price * qty;
+        acc.totalFinalPrice += final * qty;
+        acc.totalDiscountAmount += (price - final) * qty;
+
+        return acc;
+
+    }, {
+        totalPrice: 0,
+        totalFinalPrice: 0,
+        totalDiscountAmount: 0
+    })
+
+    const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals
+
+
+
 
     const fetchCartDetails = useCallback(async () => {
 
@@ -39,17 +73,6 @@ const Cart = () => {
 
     }, [])
 
-    const cartDataFromLocalStorage = useCallback((name, action, value) => {
-        if (name && action === "get") {
-            return JSON.parse(localStorage.getItem(name));
-        }
-        if (name && action === "set") {
-            localStorage.setItem(name, JSON.stringify(value));
-        }
-        if (name && action === "remove") {
-            localStorage.removeItem(name)
-        }
-    }, [])
 
     function generateData() {
         const cartData = JSON.parse(localStorage.getItem("cart"))
@@ -66,11 +89,6 @@ const Cart = () => {
         setCartData(data)
     }
 
-    const userData = useSelector((state) => {
-        return state.userDetails
-    });
-
-    const isUserLoggedIn = userData && Object.keys(userData).length > 0;
 
     async function loadCart() {
 
@@ -86,7 +104,6 @@ const Cart = () => {
         }
 
     }
-
 
     async function handleItemDelete(productId) {
 
@@ -133,13 +150,57 @@ const Cart = () => {
         }
 
         if (productId && !isUserLoggedIn && action) {
-            const data = cartDataFromLocalStorage("cart", "get")
+            const data = cartDataFromLocalStorage("cart", "get");
 
             if (action === "increment") {
+                const updatedData = data?.map((item) => {
+                    if (item?.productId === productId) {
+                        item.quantity += 1
+                    }
+                    return item;
+                });
+
+                const bill = updatedData?.reduce((sum, item) => {
+                    return sum + item?.finalPrice * item?.quantity
+                }, 0);
+
+                const incrementedData = {
+                    cart: {
+                        items: [...updatedData],
+                        bill
+                    }
+                };
+
+                cartDataFromLocalStorage("cart", "set", updatedData);
+
+                setCartData(incrementedData);
+
                 return
             }
 
             if (action === "decrement") {
+                const updatedData = data?.map((item) => {
+                    if (item?.productId === productId && item?.quantity > 1) {
+                        item.quantity -= 1
+                    }
+                    return item;
+                });
+
+                const bill = updatedData?.reduce((sum, item) => {
+                    return sum + item?.finalPrice * item?.quantity
+                }, 0);
+
+                const decrementData = {
+                    cart: {
+                        items: [...updatedData],
+                        bill
+                    }
+                };
+
+                cartDataFromLocalStorage("cart", "set", updatedData);
+
+                setCartData(decrementData);
+
                 return
             }
 
@@ -203,15 +264,15 @@ const Cart = () => {
 
                                     <ul className="cart-price-data-list">
                                         <li className="cart-price-data-list-item">
-                                            <span className="cart-detail text-size-3">Item Total</span>
-                                            <span className="cart-detail-value">₹800</span>
+                                            <span className="cart-detail text-size-3">Total amount</span>
+                                            <span className="cart-detail-value">₹{totalPrice}</span>
                                         </li>
                                         <li className="cart-price-data-list-item">
-                                            <span className="cart-detail text-size-3">Discount</span>
-                                            <span className="cart-detail-value">₹300</span>
+                                            <span className="cart-detail text-size-3">Total discount</span>
+                                            <span className="cart-detail-value">₹{totalDiscountAmount}</span>
                                         </li>
                                         <li className="cart-price-data-list-item">
-                                            <span className="cart-detail text-size-3">GST</span>
+                                            <span className="cart-detail text-size-3">GST <sup>Included</sup></span>
                                             <span className="cart-detail-value">18%</span>
                                         </li>
                                         <li className="cart-price-data-list-item">
@@ -224,9 +285,12 @@ const Cart = () => {
 
                                 <div className="cart-price-card-total-container">
                                     <span className="cart-detail text-size-2">Subtotal</span>
-                                    <span className="cart-detail-value">₹{cartData?.cart?.bill}</span>
+                                    <span className="cart-detail-value">₹{totalFinalPrice}</span>
                                 </div>
                             </article>
+
+
+                            <p className="text-size-4 congrats-text">{`Congratulation's you saved ₹${totalDiscountAmount} on this order`} </p>
 
                             <div className="checkout-button-container">
                                 <button className="text-size-4 checkout-button">Checkout</button>
@@ -248,21 +312,6 @@ export default Cart;
 
 
 function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image, handleDelete, handleQuantity }) {
-
-    const [itemQuantity, setItemQuantity] = useState(quantity);
-
-    function handleLocalQuantity(action) {
-        if (action === "add") {
-            setItemQuantity((prev) => {
-                return prev += 1;
-            });
-        }
-        if (action === "sub" && itemQuantity > 1) {
-            setItemQuantity((prev) => {
-                return prev = prev - 1;
-            });
-        }
-    }
 
     return (
         <article className="cart-product-card-wrapper">
@@ -298,9 +347,9 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
                 </div>
 
                 <div className="quantity-counter margin-top-20">
-                    <button className="qty-btn" onClick={() => { handleLocalQuantity("sub") }}>-</button>
-                    <span className="qty-value">{itemQuantity}</span>
-                    <button className="qty-btn" onClick={() => { handleLocalQuantity("add") }}>+</button>
+                    <button className="qty-btn" onClick={() => handleQuantity(productId, "decrement")} disabled={quantity > 1 ? false : true}>-</button>
+                    <span className="qty-value">{quantity}</span>
+                    <button className="qty-btn" onClick={() => handleQuantity(productId, "increment")}>+</button>
                 </div>
 
             </div>
