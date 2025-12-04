@@ -260,6 +260,8 @@ export function HomeNavbar() {
                                 color={"var(--color-one)"}
                                 fontWeight="800" />
                         </div>
+                        
+                                
                     }
 
                     {showDropdown && (
