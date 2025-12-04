@@ -39,6 +39,18 @@ const Cart = () => {
 
     }, [])
 
+    const cartDataFromLocalStorage = useCallback((name, action, value) => {
+        if (name && action === "get") {
+            return JSON.parse(localStorage.getItem(name));
+        }
+        if (name && action === "set") {
+            localStorage.setItem(name, JSON.stringify(value));
+        }
+        if (name && action === "remove") {
+            localStorage.removeItem(name)
+        }
+    }, [])
+
     function generateData() {
         const cartData = JSON.parse(localStorage.getItem("cart"))
         const bill = cartData?.reduce((sum, item) => {
@@ -78,9 +90,6 @@ const Cart = () => {
 
     async function handleItemDelete(productId) {
 
-        console.log(productId);
-
-
         if (!productId) return;
 
         if (productId && isUserLoggedIn) {
@@ -90,13 +99,10 @@ const Cart = () => {
         if (productId && !isUserLoggedIn) {
 
             const cartData = JSON.parse(localStorage.getItem("cart"));
-            console.log("cartData is - ", cartData);
 
             const updatedCartData = cartData?.filter((item) => {
                 return item?.productId !== productId;
             })
-
-            console.log(updatedCartData);
 
 
             localStorage.setItem("cart", JSON.stringify(updatedCartData));
@@ -118,17 +124,37 @@ const Cart = () => {
 
     }
 
+    async function handleItemQuantity(productId, action) {
+
+        if (!productId) return;
+
+        if (productId && isUserLoggedIn) {
+            return;
+        }
+
+        if (productId && !isUserLoggedIn && action) {
+            const data = cartDataFromLocalStorage("cart", "get")
+
+            if (action === "increment") {
+                return
+            }
+
+            if (action === "decrement") {
+                return
+            }
+
+
+        }
+
+    }
+
     useEffect(() => {
         loadCart();
     }, [userData]);
 
-
     if (cartData?.cart?.items.length === 0) {
         localStorage.removeItem("cart")
     }
-
-
-
 
     return (
         <main className="cart-page">
@@ -152,7 +178,12 @@ const Cart = () => {
                                 {cartData?.cart?.items?.map((product, index) => {
                                     return (
                                         <>
-                                            <CartProductCard {...product} key={index} handleDelete={handleItemDelete} />
+                                            <CartProductCard
+                                                {...product}
+                                                key={index}
+                                                handleDelete={handleItemDelete}
+                                                handleQuantity={handleItemQuantity}
+                                            />
                                             <Divider sx={{ width: "100%", color: "black" }} />
                                         </>
                                     )
@@ -216,11 +247,11 @@ const Cart = () => {
 export default Cart;
 
 
-function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image, handleDelete }) {
+function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image, handleDelete, handleQuantity }) {
 
     const [itemQuantity, setItemQuantity] = useState(quantity);
 
-    function handleQuantity(action) {
+    function handleLocalQuantity(action) {
         if (action === "add") {
             setItemQuantity((prev) => {
                 return prev += 1;
@@ -267,9 +298,9 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
                 </div>
 
                 <div className="quantity-counter margin-top-20">
-                    <button className="qty-btn" onClick={() => { handleQuantity("sub") }}>-</button>
+                    <button className="qty-btn" onClick={() => { handleLocalQuantity("sub") }}>-</button>
                     <span className="qty-value">{itemQuantity}</span>
-                    <button className="qty-btn" onClick={() => { handleQuantity("add") }}>+</button>
+                    <button className="qty-btn" onClick={() => { handleLocalQuantity("add") }}>+</button>
                 </div>
 
             </div>
