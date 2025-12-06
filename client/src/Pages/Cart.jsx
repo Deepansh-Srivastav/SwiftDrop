@@ -61,7 +61,7 @@ const Cart = () => {
         const res = await getApiRequestWrapper(CART_URL);
 
         if (res?.error === false && res?.success === true && res?.cart) {
-            setCartData(res?.cart);
+            setCartData(res);
             setIsLoading(false);
             return;
         }
@@ -72,7 +72,6 @@ const Cart = () => {
 
 
     }, [])
-
 
     function generateData() {
         const cartData = JSON.parse(localStorage.getItem("cart"))
@@ -88,7 +87,6 @@ const Cart = () => {
 
         setCartData(data)
     }
-
 
     async function loadCart() {
 
