@@ -1,6 +1,7 @@
 import CartProductModel from "../Model/cartproduct.model.js";
 import ProductModel from "../Model/product.model.js";
 
+// Create Cart Controller
 export const createCartProductController = async (req, res) => {
     try {
         const { userId } = req;
@@ -69,6 +70,7 @@ export const createCartProductController = async (req, res) => {
     }
 };
 
+// Fetch all Cart Items
 export const getAllCartProductsController = async (req, res) => {
     try {
         const userId = req.userId;
@@ -127,4 +129,55 @@ export const getAllCartProductsController = async (req, res) => {
             .status(500)
             .json({ success: false, message: "Something went wrong" });
     }
-}
+};
+
+// Update cart product.
+export const updateCartItemController = async (req, res) => {
+    try {
+
+        const userId = req.userId;
+        const { productId, quantity } = req?.body;
+
+        const q = Number(quantity);
+
+        if (!productId || !Number.isInteger(q) || q < 1) {
+            return res.status(400).json({
+                error: true,
+                success: false,
+                message: "Invalid productId or quantity"
+            });
+        };
+
+        const cart = await CartProductModel.findOne({ user: userId });
+        if (!cart) return res.status(404).json({ success: false, message: "Cart not found" });
+
+        let found = false;
+        cart.items = cart.items.map(item => {
+            if (item.productId.toString() === productId) {
+                item.quantity = q;
+                found = true;
+            }
+            return item;
+        });
+
+        if (!found) return res.status(404).json({ success: false, message: "Item not found in cart" });
+
+        cart.bill = cart.items.reduce((s, it) => s + (it.quantity * it.price), 0);
+
+        await cart.save();
+
+        return res.status(200).json({
+            error: false,
+            success: true,
+            message:"Item's quantity updated successfully."
+        });
+
+
+
+    } catch (error) {
+        console.error("Cant update items", error);
+        return res
+            .status(500)
+            .json({ success: false, message: "Something went wrong" });
+    }
+};
