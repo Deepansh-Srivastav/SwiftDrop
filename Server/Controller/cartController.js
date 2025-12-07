@@ -86,7 +86,13 @@ export const getAllCartProductsController = async (req, res) => {
 
         let cartItem = await CartProductModel.findOne({ user: userId });
 
-        console.log(cartItem._doc);
+        if (!cartItem) {
+            return res.status(200).json({
+                success: true,
+                error: false,
+                message: "Empty user cart."
+            })
+        }
 
 
         const productIds = cartItem?.items?.map((item) => {
@@ -169,7 +175,7 @@ export const updateCartItemController = async (req, res) => {
         return res.status(200).json({
             error: false,
             success: true,
-            message:"Item's quantity updated successfully."
+            message: "Item's quantity updated successfully."
         });
 
 
