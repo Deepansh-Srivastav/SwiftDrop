@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
 import { patchApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
-import { showErrorToast } from "../Components/CostomAlert.jsx";
+import { showErrorToast, showSuccessToast } from "../Components/CostomAlert.jsx";
 import { CloseIcon, DeleteIcon } from "../Assets/Icons.js";
 import { cartDataFromLocalStorage } from "../Utils/commonFunctions.js";
 
@@ -50,8 +50,6 @@ const Cart = () => {
     const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals
 
 
-
-
     const fetchCartDetails = useCallback(async () => {
 
         setIsLoading(true);
@@ -60,16 +58,14 @@ const Cart = () => {
 
         const res = await getApiRequestWrapper(CART_URL);
 
-        if (res?.error === false && res?.success === true && res?.cart) {
+        if (res?.error === false && res?.success === true) {
             setCartData(res);
             setIsLoading(false);
             return;
         }
 
-        showErrorToast(res?.message || "Cant fetch cart details")
+        showErrorToast(res?.message || "No user items found in the cart")
         setIsLoading(false);
-
-
 
     }, [])
 
@@ -147,12 +143,27 @@ const Cart = () => {
 
             const URL = APIConfig?.cartItemPath?.updateCartItem;
 
-            const payload = {
-                quantity: 2,
+            let { quantity } = cartData?.cart?.items.find((item) => {
+                return item?.productId === productId;
+            }) || null;
+
+            let payload = {
                 productId
             };
 
+            if (action === "increment") payload.quantity = quantity + 1;
+
+            if (action === "decrement") payload.quantity = quantity - 1;
+
             const response = await patchApiRequestWrapper(URL, payload);
+
+            if (response && response?.success === true && response?.error === false) {
+                showSuccessToast(response?.message);
+                await fetchCartDetails();
+                return
+            };
+
+            showErrorToast(response?.message);
 
             return;
         }
