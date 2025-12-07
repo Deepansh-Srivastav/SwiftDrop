@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Divider } from '@mui/material'
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
-import { postApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls";
+import { patchApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { showErrorToast } from "../Components/CostomAlert.jsx";
 import { CloseIcon, DeleteIcon } from "../Assets/Icons.js";
@@ -141,9 +141,19 @@ const Cart = () => {
 
     async function handleItemQuantity(productId, action) {
 
-        if (!productId) return;
+        if (!productId || !action) return;
 
-        if (productId && isUserLoggedIn) {
+        if (isUserLoggedIn && productId && action) {
+
+            const URL = APIConfig?.cartItemPath?.updateCartItem;
+
+            const payload = {
+                quantity: 2,
+                productId
+            };
+
+            const response = await patchApiRequestWrapper(URL, payload);
+
             return;
         }
 
@@ -317,10 +327,6 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
             <div className="cart-product-info">
 
                 <div className="product-card-info-container">
-
-                    {/* <span className="hover-delete-option">
-                        <DeleteIcon />
-                    </span> */}
 
                     <span className="cart-delete-button" onClick={() => handleDelete(productId)}>
                         <DeleteIcon />
