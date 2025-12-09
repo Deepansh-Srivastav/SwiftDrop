@@ -16,6 +16,7 @@ import Products from "../Pages/Account/Products";
 import AllProducts from "../Pages/Account/AllProducts";
 import CategoryProductsPage from "../Pages/CategoryProductsPage";
 import Cart from "../Pages/Cart";
+import AddressPage from "../Pages/Account/AddressPage";
 
 const AppRouter = () => {
 
@@ -64,7 +65,9 @@ const AppRouter = () => {
                     <Route path="all-products" element={<AllProducts />} />
 
                     <Route path="orders" element={<h1>thi si the Orders page</h1>} />
-                    <Route path="address" element={<h1>thi si the address page</h1>} />
+
+                    <Route path="address" element={<AddressPage />} />
+
                     <Route path="delete" element={<h1>thi si the delete page</h1>} />
                 </Route>
 
