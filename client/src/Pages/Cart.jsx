@@ -45,10 +45,9 @@ const Cart = () => {
         totalPrice: 0,
         totalFinalPrice: 0,
         totalDiscountAmount: 0
-    })
+    });
 
-    const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals
-
+    const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals;
 
     const fetchCartDetails = useCallback(async () => {
 
@@ -67,7 +66,7 @@ const Cart = () => {
         showErrorToast(res?.message || "No user items found in the cart")
         setIsLoading(false);
 
-    }, [])
+    }, []);
 
     function generateData() {
         const cartData = JSON.parse(localStorage.getItem("cart"))
@@ -82,7 +81,7 @@ const Cart = () => {
         }
 
         setCartData(data)
-    }
+    };
 
     async function loadCart() {
 
@@ -97,7 +96,7 @@ const Cart = () => {
             }
         }
 
-    }
+    };
 
     async function handleItemDelete(productId) {
 
@@ -133,7 +132,7 @@ const Cart = () => {
             setCartData(data);
         }
 
-    }
+    };
 
     async function handleItemQuantity(productId, action) {
 
@@ -226,7 +225,7 @@ const Cart = () => {
 
         }
 
-    }
+    };
 
     useEffect(() => {
         loadCart();
@@ -234,7 +233,7 @@ const Cart = () => {
 
     if (cartData?.cart?.items?.length === 0) {
         localStorage.removeItem("cart")
-    }
+    };
 
     return (
         <main className="cart-page">
@@ -324,11 +323,10 @@ const Cart = () => {
 
             </section>
         </main>
-    )
-}
+    );
+};
 
 export default Cart;
-
 
 function CartProductCard({ discount, finalPrice, name, price, productId, quantity, unit, image, handleDelete, handleQuantity }) {
 
@@ -395,8 +393,7 @@ function CartProductCard({ discount, finalPrice, name, price, productId, quantit
 
         </article>
     )
-}
-
+};
 
 export function NoItemsFound({ message }) {
     return (

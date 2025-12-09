@@ -66,6 +66,7 @@ const Category = () => {
         <>
             <section className="category-page">
 
+
                 <PageBanner heading={"category"} />
 
                 <aside className="add-category-button">

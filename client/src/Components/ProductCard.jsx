@@ -1,6 +1,9 @@
 import '../Styles/ProductCard.css'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useSelector, useDispatch } from "react-redux";
+import { postApiRequestWrapper } from "../Networking/Services/ApiCalls";
+import { APIConfig } from "../Networking/Configuration/ApiConfig";
+import { showErrorToast, showSuccessToast } from "../Components/CostomAlert.jsx";
 
 const ProductCard = ({
     _id,
@@ -22,6 +25,22 @@ const ProductCard = ({
 
     const finalPriceRounded = Math.round(finalPrice);
 
+    async function upsertUserCart(productId) {
+        const data = [
+            {
+                productId
+            }
+        ];
+
+        const CART_URL = APIConfig?.cartItemPath?.addCartItem;
+
+        const response = await postApiRequestWrapper(CART_URL, { payload: data });
+        if (response && response?.error === false && response?.success === true) {
+            return showSuccessToast(response?.message || "Item added to cart.");
+        }
+        return showSuccessToast(response?.message || "Failed to add this item .");
+    };
+
     function handleAddToCart() {
         const payload = {
             productId: _id,
@@ -32,13 +51,13 @@ const ProductCard = ({
             discount: discount,
             image: [image[0]],
             quantity: 1
-        }
+        };
 
         if (isUserLoggedIn) {
+            upsertUserCart(_id);
             return;
         }
         else {
-            // localStorage.setItem(cartItems, )
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
             const existingItem = cart.find((item) => {
@@ -53,8 +72,9 @@ const ProductCard = ({
             }
 
             localStorage.setItem("cart", JSON.stringify(cart));
+            showSuccessToast("Item added to cart.");
 
-        }
+        };
     };
 
     return (

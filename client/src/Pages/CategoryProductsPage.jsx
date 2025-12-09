@@ -10,6 +10,7 @@ import PaginationComponent from '../Common/PaginationComponent';
 import { useNavigate } from 'react-router-dom';
 import SkeletonLoader from '../Common/SkeletonLoader';
 import NoProductsAvailable from '../Common/NoProductsAvailable';
+import BackButton from '../Common/BackButton';
 
 
 const CategoryProductsPage = () => {
@@ -72,6 +73,8 @@ const CategoryProductsPage = () => {
 
     return (
         <section className='category-products-page'>
+
+            <BackButton/>
 
             <div className="banner-section" style={{ gridArea: "banner" }}>
                 <p className="text-size-1">
