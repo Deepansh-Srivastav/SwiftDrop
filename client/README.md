@@ -29,6 +29,8 @@ TODO remaining changes to be done-
 - managing the user data into localstorage correctly .
 - clearing the local storage when the tokens are expired and cleared.
 - the way of checking the role of user (ADMIN,USER) is best practice or not ?
+- adding the provision of max quantity per user for a particular product.
+- link the add quantity of cart product and stock in inventory.
 
 
 #Today TODO
@@ -37,3 +39,8 @@ TODO remaining changes to be done-
 
 
 Timestamp-
+v-4  1:28:46
+
+## Remaining Major Features
+
+- Adding address of user on both user's dashboard and on the proceed to order page .

@@ -1,0 +1,63 @@
+.modal-wrapper {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    width: 80%;
+    max-width: 600px;
+    padding: 1rem 0rem;
+    border-radius: 10px;
+
+}
+
+.modal-heading{
+    padding: 0 1rem 1rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-form-container{
+    padding: 1rem;
+}
+
+
+.address-type {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+}
+
+/* Hide the native radios but keep them focusable & working */
+.address-type input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Custom pill buttons */
+.address-type label {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    font-size: 0.875rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+/* Selected state */
+.address-type input[type="radio"]:checked+label {
+    background: var(--purple-theme);
+    color: #fff;
+    /* border-color: #1976d2; */
+}
+
+/* Optional hover */
+.address-type label:hover {
+    border-color: #999;
+}
