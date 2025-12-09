@@ -58,5 +58,44 @@ export async function addAddressController(req, res) {
             success: false
         })
     };
-
 };
+
+// Get all address controller
+export async function getAddressController(req, res) {
+    try {
+        const userId = req?.userId;
+
+        if (!userId) {
+            return res.status(404).json({
+                message: "User not authenticate.",
+                error: true,
+                success: false
+            });
+        };
+
+        const userAddress = await AddressModel.findOne({ user: userId })
+
+        if (!userAddress) {
+            return res.status(200).json({
+                error: false,
+                success: true,
+                address: []
+            });
+        };
+
+        return res.status(200).json({
+            error: false,
+            success: true,
+            address: userAddress.address
+        });
+
+
+    } catch (error) {
+        console.log("Failed to fetch address");
+        return res.status(500).json({
+            message: error,
+            error: true,
+            success: false
+        })
+    };
+}

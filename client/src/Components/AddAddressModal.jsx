@@ -11,8 +11,9 @@ import { useState } from 'react';
 
 import "../Styles/Modal.css"
 import { showErrorToast } from './CostomAlert';
-import { postApiRequestWrapper } from '../Networking/Services/ApiCalls';
+import { postApiRequestWrapper, getApiRequestWrapper } from '../Networking/Services/ApiCalls';
 import { APIConfig } from '../Networking/Configuration/ApiConfig';
+import { useEffect } from 'react';
 
 const AddAddressModal = () => {
 
@@ -25,6 +26,15 @@ const AddAddressModal = () => {
         addressType: "Home",
         mobile: null
     })
+
+    async function fetchUserAddress() {
+
+        const FINAL_URL = APIConfig?.addressPath?.getAddress;
+
+        const response = await getApiRequestWrapper(FINAL_URL);
+
+
+    }
 
     function handleAddressInput(e) {
         const { name, value } = e.target;
@@ -61,6 +71,10 @@ const AddAddressModal = () => {
 
 
     };
+
+    useEffect(() => {
+        fetchUserAddress();
+    }, [])
 
     return (
         <div className='modal-wrapper hide-scroll-bar'>
