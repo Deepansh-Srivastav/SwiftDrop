@@ -68,7 +68,7 @@ const AddAddressModal = () => {
                 <h3 className='text-size-2'>Add New Address</h3>
             </div>
 
-            <div className="modal-form-container">
+            <div className="modal-form-container hide-scroll-bar">
 
                 <div className="address-type">
                     <input
