@@ -63,6 +63,7 @@ export const APIConfig = {
 
     addressPath: {
         addAddress: `${API_BASE.address}/add-address`,
+        getAddress: `${API_BASE.address}/get-user-address`,
     },
 
     uploadImageApiPath: {
