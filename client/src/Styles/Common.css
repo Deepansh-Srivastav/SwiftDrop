@@ -1001,6 +1001,7 @@ back button
     align-items: center;
     justify-content: center;
     position: absolute;
+    z-index: 10;
     top: clamp(0.2rem, 0.5vw, 1rem);
     left: clamp(0.2rem, 0.5vw, 1rem);
 
