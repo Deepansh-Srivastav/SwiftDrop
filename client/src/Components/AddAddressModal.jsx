@@ -11,6 +11,8 @@ import { useState } from 'react';
 
 import "../Styles/Modal.css"
 import { showErrorToast } from './CostomAlert';
+import { postApiRequestWrapper } from '../Networking/Services/ApiCalls';
+import { APIConfig } from '../Networking/Configuration/ApiConfig';
 
 const AddAddressModal = () => {
 
@@ -51,7 +53,11 @@ const AddAddressModal = () => {
 
         const payload = addressData;
 
-        
+        const FINAL_URL = APIConfig?.addressPath?.addAddress;
+
+        const response = await postApiRequestWrapper(FINAL_URL, payload);
+
+
 
 
     };

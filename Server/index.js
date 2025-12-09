@@ -12,6 +12,7 @@ import uploadImageRouter from './Routes/uploadImage.route.js';
 import subCategoryRouter from './Routes/subCategory.route.js';
 import productRouter from './Routes/product.route.js';
 import cartRouter from './Routes/cart.route.js';
+import addressRouter from './Routes/address.route.js';
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/file", uploadImageRouter);
 app.use("/api/sub-category", subCategoryRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter)
+app.use("/api/address", addressRouter)
 
 app.get('/', (req, res) => {
     res.send("This is the home page");

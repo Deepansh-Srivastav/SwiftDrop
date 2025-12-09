@@ -10,29 +10,33 @@ const addressSchema = new mongoose.Schema({
         {
             address_line: {
                 type: String,
-                default: ""
+                required: true,
             },
             city: {
                 type: String,
-                default: ""
+                required: true,
             },
             state: {
                 type: String,
-                default: ""
+                required: true,
             },
             pin: {
-                type: String
+                type: String,
+                required: true,
             },
             country: {
-                type: String
+                type: String,
+                required: true,
+                default: "India"
             },
             addressType: {
-                type: Number,
+                type: String,
+                enum: ["Home", "Office", "Other"],
                 default: "Home"
             },
             mobile: {
-                type: Number,
-                default: "India"
+                type: String,
+                required: true
             },
             // status: {
             //     type: Boolean,
