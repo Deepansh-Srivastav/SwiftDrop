@@ -116,11 +116,6 @@ const EditCategoryModal = ({
         });
     };
 
-
-    console.log("Sc image is this ", secondaryImage);
-    console.log("Banner image is this ", banner);
-
-
     return (
         <div className="modal-overlay">
             <div className="modal-container">

@@ -1,21 +1,20 @@
-import React from 'react'
 import {
-    Box,
-    Container,
     Typography,
     TextField,
     Button,
-    IconButton,
 } from "@mui/material";
 import { useState } from 'react';
 
 import "../Styles/Modal.css"
-import { showErrorToast } from './CostomAlert';
-import { postApiRequestWrapper, getApiRequestWrapper } from '../Networking/Services/ApiCalls';
+import { showErrorToast, showSuccessToast } from './CostomAlert';
+import { postApiRequestWrapper } from '../Networking/Services/ApiCalls';
 import { APIConfig } from '../Networking/Configuration/ApiConfig';
-import { useEffect } from 'react';
+import {
+    CancelIcon,
+    CloseIcon
+} from "../Assets/Icons.js";
 
-const AddAddressModal = () => {
+const AddAddressModal = ({ handleModal }) => {
 
     const [addressData, setAddressData] = useState({
         address_line: null,
@@ -27,14 +26,19 @@ const AddAddressModal = () => {
         mobile: null
     })
 
-    async function fetchUserAddress() {
-
-        const FINAL_URL = APIConfig?.addressPath?.getAddress;
-
-        const response = await getApiRequestWrapper(FINAL_URL);
-
-
+    function resetAddressForm() {
+        return setAddressData({
+            address_line: null,
+            city: null,
+            state: null,
+            pin: null,
+            country: "India",
+            addressType: "Home",
+            mobile: null
+        })
     }
+
+
 
     function handleAddressInput(e) {
         const { name, value } = e.target;
@@ -67,20 +71,29 @@ const AddAddressModal = () => {
 
         const response = await postApiRequestWrapper(FINAL_URL, payload);
 
+        if (response && response?.error === false && response?.success === true) {
+            resetAddressForm();
+            showSuccessToast(response?.message || "Address added successfully.");
+            handleModal("close")
+            return;
+        };
 
-
+        showErrorToast(response?.message || "Failed to add address.")
 
     };
 
-    useEffect(() => {
-        fetchUserAddress();
-    }, [])
+
 
     return (
         <div className='modal-wrapper hide-scroll-bar'>
             <div className="modal-heading">
                 <h3 className='text-size-2'>Add New Address</h3>
             </div>
+
+            <CancelIcon
+                sx={{ position: "absolute", top: "10px", right: "10px", cursor: "pointer" }}
+                onClick={() => { handleModal('close') }}
+            />
 
             <div className="modal-form-container hide-scroll-bar">
 
