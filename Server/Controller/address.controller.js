@@ -170,25 +170,14 @@ export async function updateAddressController(req, res) {
 export async function deleteAddressController(req, res) {
     try {
         const userId = req?.userId;
-        const payload = req?.body;
-        const { addressId, data } = payload;
+        const { address_id } = req?.query;
 
-        const { address_line, city, state, pin, country, addressType, mobile } = data;
-
-        if (
-            !address_line?.trim() ||
-            !city?.trim() ||
-            !state?.trim() ||
-            !pin?.trim() ||
-            !country?.trim() ||
-            !addressType ||
-            !mobile?.trim()
-        ) {
+        if (!address_id) {
             return res.status(400).json({
-                success: false,
+                message: "Address ID not provided.",
                 error: true,
-                message: "All address fields are required"
-            });
+                success: false
+            })
         }
 
         const userAddress = await AddressModel.findOne({ user: userId });
@@ -201,33 +190,23 @@ export async function deleteAddressController(req, res) {
             });
         };
 
-        let selectedAddress = userAddress.address.id(addressId);
+        addr.deleteOne();
 
-        if (!selectedAddress) {
-            return res.status(404).json({
-                message: "Address not found",
-                error: true,
-                success: false,
-            });
-        };
+        await userAddress.save()
 
-        Object.assign(selectedAddress, data);
-
-        await userAddress.save();
-
-        return res.json({
-            message: "Address updated successfully",
+        return res.status(200).json({
+            message: "Address removed",
             error: false,
-            success: true,
-        });
+            success: true
+        })
 
 
     } catch (error) {
         console.log("Failed to update address");
         return res.status(500).json({
-            message: error,
+            message: "Error while deleting the address.",
             error: true,
             success: false
         })
     };
-}
+};
