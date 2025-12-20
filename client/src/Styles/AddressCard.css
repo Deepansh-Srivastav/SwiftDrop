@@ -1,0 +1,69 @@
+.user-address-card-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: clamp(0.5rem, 2vw, 1rem);
+}
+
+.user-address-card {
+    width: 100%;
+    max-width: clamp(320px, 90vw, 420px);
+    background: var(--white-theme);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: clamp(0.8rem, 2vw, 1.2rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.25rem, 1vw, 0.45rem);
+}
+
+/* Heading */
+.user-address-card h3 {
+    color: var(--black-theme);
+    font-weight: 700;
+    margin-bottom: clamp(0.2rem, 1vw, 0.4rem);
+}
+
+/* Text */
+.user-address-card p {
+    color: var(--text-color);
+    line-height: 1.4;
+}
+
+/* Buttons container */
+.address-card-actions {
+    display: flex;
+    gap: clamp(0.4rem, 1.5vw, 0.6rem);
+    margin-top: clamp(0.6rem, 2vw, 0.9rem);
+}
+
+/* Base button */
+.address-btn {
+    flex: 1;
+    padding: clamp(0.4rem, 1.5vw, 0.55rem) 0;
+    border-radius: 8px;
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+/* Edit */
+.edit-btn {
+    background-color: var(--button-theme-blue);
+    color: var(--white-theme);
+}
+
+.edit-btn:hover {
+    background-color: var(--button-hover-theme-blue);
+}
+
+/* Remove */
+.delete-btn {
+    background-color: var(--btn-delete-bg);
+    color: var(--white-theme);
+}
+
+.delete-btn:hover {
+    background-color: var(--btn-delete-hover);
+}
