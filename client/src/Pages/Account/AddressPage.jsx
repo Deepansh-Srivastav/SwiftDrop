@@ -6,6 +6,7 @@ import { getApiRequestWrapper, deleteApiRequestWrapper } from '../../Networking/
 import AddressCard from '../../Components/AddressCard';
 
 import { showSuccessToast, showErrorToast } from '../../Components/CostomAlert';
+import EditAddressModal from '../../Components/EditAddressModal';
 
 const AddressPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,7 +76,7 @@ const AddressPage = () => {
 
             <div className="display-category-container">
                 {addressData?.map((address) => {
-                    return <AddressCard key={address?._id} {...address} deleteUserAddress={deleteUserAddress} />
+                    return <AddressCard key={address?._id} {...address} deleteUserAddress={deleteUserAddress} setAddressChanged={setAddressChanged} />
                 })}
             </div>
 
