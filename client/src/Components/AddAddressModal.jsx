@@ -14,7 +14,7 @@ import {
     CloseIcon
 } from "../Assets/Icons.js";
 
-const AddAddressModal = ({ handleModal }) => {
+const AddAddressModal = ({ handleModal, setAddressChanged }) => {
 
     const [addressData, setAddressData] = useState({
         address_line: null,
@@ -37,8 +37,6 @@ const AddAddressModal = ({ handleModal }) => {
             mobile: null
         })
     }
-
-
 
     function handleAddressInput(e) {
         const { name, value } = e.target;
@@ -74,15 +72,14 @@ const AddAddressModal = ({ handleModal }) => {
         if (response && response?.error === false && response?.success === true) {
             resetAddressForm();
             showSuccessToast(response?.message || "Address added successfully.");
-            handleModal("close")
+            handleModal("close");
+            setAddressChanged((prev) => !prev);
             return;
         };
 
         showErrorToast(response?.message || "Failed to add address.")
 
     };
-
-
 
     return (
         <div className='modal-wrapper hide-scroll-bar'>
