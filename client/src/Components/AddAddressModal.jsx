@@ -17,6 +17,7 @@ import {
 const AddAddressModal = ({ handleModal, setAddressChanged }) => {
 
     const [addressData, setAddressData] = useState({
+        receiver_name: null,
         address_line: null,
         city: null,
         state: null,
@@ -24,10 +25,11 @@ const AddAddressModal = ({ handleModal, setAddressChanged }) => {
         country: "India",
         addressType: "Home",
         mobile: null
-    })
+    });
 
     function resetAddressForm() {
         return setAddressData({
+            receiver_name: null,
             address_line: null,
             city: null,
             state: null,
@@ -51,6 +53,7 @@ const AddAddressModal = ({ handleModal, setAddressChanged }) => {
 
     async function handleAddressSubmitRequest() {
         if (
+            !addressData?.receiver_name ||
             !addressData?.address_line ||
             !addressData?.city ||
             !addressData?.state ||
@@ -128,6 +131,21 @@ const AddAddressModal = ({ handleModal, setAddressChanged }) => {
                     />
                     <label htmlFor="addr-other">Other</label>
                 </div>
+
+                <Typography fontWeight={500} mb={-1} mt={2}>
+                    Name
+                </Typography>
+
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    name="receiver_name"
+                    value={addressData?.receiver_name}
+                    required
+                    type="text"
+                    placeholder="Enter receiver's name"
+                    onChange={handleAddressInput}
+                />
 
                 <Typography fontWeight={500} mb={-1} mt={2}>
                     Phone

@@ -5,9 +5,9 @@ export async function addAddressController(req, res) {
     try {
         const userId = req?.userId;
         const payload = req?.body;
-        const { address_line, city, state, pin, country, addressType, mobile } = payload;
+        const { receiver_name,address_line, city, state, pin, country, addressType, mobile } = payload;
 
-        if (!address_line || !city || !state || !pin || !country || !addressType || !mobile) {
+        if (!receiver_name || !address_line || !city || !state || !pin || !country || !addressType || !mobile) {
             return res.status(404).json({
                 message: "Provide all the required fields.",
                 error: true,
@@ -171,7 +171,7 @@ export async function deleteAddressController(req, res) {
     try {
         const userId = req?.userId;
         const { address_id } = req?.query;
-        
+
         if (!address_id) {
             return res.status(400).json({
                 message: "Address ID not provided.",
