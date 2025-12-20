@@ -1,6 +1,6 @@
 import "../Styles/AddressCard.css"
 
-const AddressCard = ({ address_line, city, state, pin, country, addressType, mobile }) => {
+const AddressCard = ({ address_line, city, state, pin, country, addressType, mobile, _id, deleteUserAddress }) => {
     return (
         <div className="user-address-card-wrapper">
             <div className="user-address-card">
@@ -15,7 +15,7 @@ const AddressCard = ({ address_line, city, state, pin, country, addressType, mob
 
                 <div className="address-card-actions">
                     <button className="address-btn edit-btn">Edit</button>
-                    <button className="address-btn delete-btn">Remove</button>
+                    <button className="address-btn delete-btn" onClick={() => deleteUserAddress(_id)}>Remove</button>
                 </div>
 
             </div>

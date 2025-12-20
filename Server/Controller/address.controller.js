@@ -171,7 +171,7 @@ export async function deleteAddressController(req, res) {
     try {
         const userId = req?.userId;
         const { address_id } = req?.query;
-
+        
         if (!address_id) {
             return res.status(400).json({
                 message: "Address ID not provided.",
@@ -190,7 +190,9 @@ export async function deleteAddressController(req, res) {
             });
         };
 
-        addr.deleteOne();
+        userAddress.address = userAddress.address.filter(
+            addr => addr._id.toString() !== address_id
+        );
 
         await userAddress.save();
 
@@ -202,7 +204,7 @@ export async function deleteAddressController(req, res) {
 
 
     } catch (error) {
-        console.log("Failed to update address");
+        console.log(error);
         return res.status(500).json({
             message: "Error while deleting the address.",
             error: true,
