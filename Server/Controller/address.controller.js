@@ -177,8 +177,8 @@ export async function deleteAddressController(req, res) {
                 message: "Address ID not provided.",
                 error: true,
                 success: false
-            })
-        }
+            });
+        };
 
         const userAddress = await AddressModel.findOne({ user: userId });
 
@@ -192,13 +192,13 @@ export async function deleteAddressController(req, res) {
 
         addr.deleteOne();
 
-        await userAddress.save()
+        await userAddress.save();
 
         return res.status(200).json({
             message: "Address removed",
             error: false,
             success: true
-        })
+        });
 
 
     } catch (error) {
@@ -207,6 +207,6 @@ export async function deleteAddressController(req, res) {
             message: "Error while deleting the address.",
             error: true,
             success: false
-        })
+        });
     };
 };

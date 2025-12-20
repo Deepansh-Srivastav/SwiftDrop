@@ -70,5 +70,5 @@ export const APIConfig = {
 
     uploadImageApiPath: {
         uploadImage: `${API_BASE.file}/upload-image`,
-    }
+    },
 };

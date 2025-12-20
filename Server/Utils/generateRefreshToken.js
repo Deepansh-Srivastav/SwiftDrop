@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import UserModel from '../Model/user.model.js';
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
 
 export default async function generateRefreshToken(userId) {
 
@@ -26,4 +26,4 @@ export default async function generateRefreshToken(userId) {
     }
 
     return token;
-}
+};
