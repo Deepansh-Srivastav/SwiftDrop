@@ -17,6 +17,7 @@ import AllProducts from "../Pages/Account/AllProducts";
 import CategoryProductsPage from "../Pages/CategoryProductsPage";
 import Cart from "../Pages/Cart";
 import AddressPage from "../Pages/Account/AddressPage";
+import Checkout from "../Pages/Checkout";
 
 const AppRouter = () => {
 
@@ -52,6 +53,8 @@ const AppRouter = () => {
                 <Route path="/search-product" element={<h1>This is the search page</h1>}></Route>
 
                 <Route path="/cart" element={<Cart />}></Route>
+
+                <Route path="/checkout" element={<Checkout />}></Route>
 
                 <Route path="/my-account" element={<AccountPage />}>
                     <Route path="profile" element={<MyProfile />} />
