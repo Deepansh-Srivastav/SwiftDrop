@@ -10,8 +10,8 @@ import { showErrorToast, showSuccessToast } from "../Components/CostomAlert.jsx"
 import { CloseIcon, DeleteIcon } from "../Assets/Icons.js";
 import { cartDataFromLocalStorage } from "../Utils/commonFunctions.js";
 
-
 const Cart = () => {
+    const navigate = useNavigate();
 
     const userData = useSelector((state) => {
         return state.userDetails
@@ -61,9 +61,9 @@ const Cart = () => {
             setCartData(res);
             setIsLoading(false);
             return;
-        }
+        };
 
-        showErrorToast(res?.message || "No user items found in the cart")
+        showErrorToast(res?.message || "No user items found in the cart");
         setIsLoading(false);
 
     }, []);
@@ -78,9 +78,9 @@ const Cart = () => {
                 items: [...cartData],
                 bill
             }
-        }
+        };
 
-        setCartData(data)
+        setCartData(data);
     };
 
     async function loadCart() {
@@ -311,7 +311,9 @@ const Cart = () => {
                             <p className="text-size-4 congrats-text">{`Congratulation's you saved ₹${totalDiscountAmount} on this order`} </p>
 
                             <div className="checkout-button-container">
-                                <button className="text-size-4 checkout-button">Checkout</button>
+                                <button className="text-size-4 checkout-button" 
+                                onClick={()=>navigate("/checkout")}
+                                >Checkout</button>
                             </div>
 
                         </div>

@@ -83,14 +83,15 @@ export const getAllCartProductsController = async (req, res) => {
             })
         }
 
-
         let cartItem = await CartProductModel.findOne({ user: userId });
 
         if (!cartItem) {
             return res.status(200).json({
                 success: true,
                 error: false,
-                message: "Empty user cart."
+                cart: {
+                    items: []
+                }
             })
         }
 
