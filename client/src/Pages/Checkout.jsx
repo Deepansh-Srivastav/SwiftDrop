@@ -89,6 +89,14 @@ const Checkout = () => {
 
                                 <ul className="cart-price-data-list">
                                     <li className="cart-price-data-list-item">
+                                        <span className="cart-detail text-size-3">Total Items</span>
+                                        <span className="cart-detail-value">{cartData?.cart?.items?.length}</span>
+                                    </li>
+                                    <li className="cart-price-data-list-item">
+                                        <span className="cart-detail text-size-3">Shipping</span>
+                                        <span className="cart-detail-value">Free</span>
+                                    </li>
+                                    <li className="cart-price-data-list-item">
                                         <span className="cart-detail text-size-3">Total amount</span>
                                         <span className="cart-detail-value">₹{totalPrice}</span>
                                     </li>
@@ -96,29 +104,23 @@ const Checkout = () => {
                                         <span className="cart-detail text-size-3">Total discount</span>
                                         <span className="cart-detail-value">₹{totalDiscountAmount}</span>
                                     </li>
-                                    <li className="cart-price-data-list-item">
-                                        <span className="cart-detail text-size-3">GST <sup>Included</sup></span>
-                                        <span className="cart-detail-value">18%</span>
-                                    </li>
-                                    <li className="cart-price-data-list-item">
-                                        <span className="cart-detail text-size-3">Shipping</span>
-                                        <span className="cart-detail-value">Free</span>
-                                    </li>
                                 </ul>
 
                             </div>
 
                             <div className="cart-price-card-total-container">
-                                <span className="cart-detail text-size-2">Subtotal</span>
+                                <span className="cart-detail text-size-2">Grand Total</span>
                                 <span className="cart-detail-value">₹{totalFinalPrice}</span>
                             </div>
                         </article>
 
 
-                        <p className="text-size-4 congrats-text">{`Congratulation's you saved ₹${totalDiscountAmount} on this order`} </p>
+                        <div className="checkout-button-container">
+                            <button className="text-size-4 checkout-button">Cash on delivery</button>
+                        </div>
 
                         <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Checkout</button>
+                            <button className="text-size-4 checkout-button">Pay Online</button>
                         </div>
 
                     </div>
