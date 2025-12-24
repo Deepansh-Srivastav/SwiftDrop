@@ -9,7 +9,7 @@ export default async function generateRefreshToken(userId) {
 
     const secretKey = process.env.REFRESH_TOKEN_KEY;
 
-    const expiresIn = '10d';
+    const expiresIn = '5s';
 
     const token = jwt.sign(payload, secretKey, { expiresIn });
 

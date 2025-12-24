@@ -652,8 +652,9 @@ export async function refreshTokenController(req, res) {
         const refreshToken = req?.cookies?.refreshToken || req?.header?.authorization?.split(" ")[1]
 
         if (!refreshToken) {
+
             return res.status(401).json({
-                message: "Invalid Token",
+                message: "No refresh token provided.",
                 success: false,
                 error: false
             })
@@ -663,6 +664,7 @@ export async function refreshTokenController(req, res) {
             const verifyToken = await jwt.verify(refreshToken, process.env.REFRESH_TOKEN_KEY);
 
             if (!verifyToken) {
+
                 return res.status(401).json({
                     message: "Token Expired",
                     success: false,
