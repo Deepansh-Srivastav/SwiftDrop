@@ -4,6 +4,13 @@ import { APIConfig } from "./ApiConfig";
 
 const BASE_URL = getBaseUrl();
 
+function logoutUser() {
+    localStorage.clear();
+    sessionStorage.clear();
+    window.location.href = "/auth/log-in";
+}
+
+
 const Axios = axios.create({
     baseURL: BASE_URL,
     withCredentials: true,
@@ -22,9 +29,17 @@ Axios.interceptors.response.use(
         if (err.response?.status === 409 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
+
                 await Axios.post(APIConfig.userApiPath.refreshAccessToken);
+
+
                 return Axios(originalRequest);
             } catch (refreshError) {
+
+                console.log("Catch block ran");
+                if (refreshError.response?.status === 498) {
+                    logoutUser();
+                }
                 return Promise.reject(refreshError);
             };
         };

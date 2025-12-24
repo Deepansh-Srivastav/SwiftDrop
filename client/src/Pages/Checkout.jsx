@@ -116,11 +116,11 @@ const Checkout = () => {
 
 
                         <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Cash on delivery</button>
+                            <button className="text-size-4 checkout-button">Pay Online</button>
                         </div>
 
                         <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Pay Online</button>
+                            <button className="text-size-4 checkout-button">Cash on delivery</button>
                         </div>
 
                     </div>
