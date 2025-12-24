@@ -5,7 +5,14 @@ dotenv.config();
 const auth = async (req, res, next) => {
 
     try {
-        const token = req?.cookies?.accessToken || req?.header?.authorization?.split(" ")[1]
+        const authHeader = req.headers.authorization;
+        let token = null;
+        if (req.cookies?.accessToken) {
+            token = req.cookies.accessToken;
+        }
+        else if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.split(" ")[1];
+        }
 
         if (!token) {
             return res.status(409).json({
