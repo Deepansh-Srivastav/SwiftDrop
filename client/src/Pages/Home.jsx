@@ -27,7 +27,7 @@ import { setGlobalCategoryDetails } from "../Redux/Features/GlobalCategorySlice.
 import { IoCartOutline } from "../Assets/Icons.js";
 
 
-const PRODUCTS_LIMIT = 6;
+const PRODUCTS_LIMIT = 8;
 const CATEGORY_LIMIT = 4;
 
 const Home = () => {
