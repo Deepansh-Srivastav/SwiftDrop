@@ -1,78 +1,219 @@
+/* =========================
+   NAVBAR (TRANSPARENT)
+========================= */
+
 .home-nav {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    height: auto;
-    padding: 20px 20px 0 20px;
     position: absolute;
-    top: 0;
-}
+    top: 1rem;
+    z-index: 1000;
 
-.nav-button {
-    padding: 0px 32px;
-    border-radius: 50px;
-    cursor: pointer;
-    background-color: var(--purple-theme);
-    border: 1px solid var(--black-theme);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-}
-
-.nav-menu{
-    /* background-color: red; */
-    min-width: 160px;
-    width: fit-content;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-}
-
-.dropDown {
-    background: white;
-    min-width: 160px;
-    padding: 20px 20px 10px 20px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.menu-list-container{
     width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
+    height: 64px;
 
-.menu-list-container span {
-    cursor: pointer;
-    margin-bottom: 10px;
-    padding: 8px 8px;
+    background: transparent;
+    backdrop-filter: blur(2px);
+
+
     display: flex;
-    justify-content: start;
     align-items: center;
-    border-radius: 50px;
+    justify-content: space-between;
 
+    padding: 0 1.5rem;
 }
 
-.dropDown span:hover {
-    background-color: var(--purple-theme);
-    color: white;
-    /* transition: background-color 0.6s; */
+/* =========================
+   LOGO
+========================= */
+
+.swiftdrop-logo h1 {
+    font-size: clamp(18px, 2.5vw, 22px);
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+.swiftdrop-logo h1:hover{
+   transform: scale(1.03);
+    cursor: pointer;
+}
+
+.highlighter {
+    color: var(--button-theme-blue);
+}
+
+/* =========================
+   RIGHT SECTION
+========================= */
+
+.cart-menu-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* =========================
+   MENU / AVATAR
+========================= */
+
+.nav-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .userAvatar {
-    background-color: white;
-    width: auto;
-    padding: 10px 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
+
+.userAvatar:hover {
+    transform: scale(1.08);
+}
+
+/* =========================
+   DROPDOWN (GLASS STYLE)
+========================= */
+
+.dropDown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+
+    min-width: 200px;
+
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+
+    border: 1px solid var(--dd-border);
+    border-radius: 12px;
+    box-shadow: var(--dd-shadow);
+
+    z-index: 999;
+}
+
+.menu-list-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem;
+}
+
+/* =========================
+   MENU ITEMS (WITH ICONS)
+========================= */
+
+.menu-list-container span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 0.65rem 0.75rem;
+    font-size: 14px;
+    font-weight: 600;
+
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 8px;
+
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.menu-list-container span svg {
+    font-size: 20px;
+    color: var(--dd-muted);
+}
+
+.menu-list-container span:hover {
+    background: var(--color-one);
+}
+
+.menu-list-container span:hover svg {
+    color: var(--button-theme-blue);
+}
+
+/* =========================
+   CART BUTTON (TRANSPARENT)
+========================= */
+
+.nav-cart-button {
+    position: relative;
+
+    width: clamp(36px, 4vw, 44px);
+    height: clamp(36px, 4vw, 44px);
+
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+
+    border: 1px solid var(--black-border-theme);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-cart-button svg {
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--button-theme-blue);
+}
+
+.nav-cart-button:hover {
+    background: var(--button-theme-blue);
+}
+
+.nav-cart-button:hover svg {
+    color: var(--white-theme);
+}
+
+.nav-cart-button:active {
+    transform: scale(0.95);
+}
+
+/* =========================
+   CART BADGE (OPTIONAL)
+========================= */
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+
+    min-width: 18px;
+    height: 18px;
+
+    background: var(--badge-theme-background);
+    color: var(--white-theme);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+    .home-nav {
+        padding: 0 1rem;
+    }
+
+    .cart-menu-container {
+        gap: 0.6rem;
+    }
+
+    .dropDown {
+        right: -10px;
+    }
+}
+
 
 
 .parallax1 {
@@ -169,80 +310,6 @@
     display: flex;
     flex-direction: column;
 }
-
-
-.cart-menu-container{
-    width: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-}
-
-.nav-cart-button {
-    position: relative;
-
-    width: clamp(36px, 4vw, 44px);
-    height: clamp(36px, 4vw, 44px);
-
-    border-radius: 10px;
-    background: var(--white-theme);
-    border: 1px solid var(--border-color);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.15s ease;
-}
-
-/* icon */
-.nav-cart-button svg {
-    font-size: clamp(18px, 2.5vw, 22px);
-    color: var(--button-theme-blue);
-}
-
-/* hover */
-.nav-cart-button:hover {
-    background: var(--purple-theme);
-    /* background: var(--button-theme-blue); */
-    border-color: var(--button-theme-blue);
-}
-
-.nav-cart-button:hover svg {
-    color: var(--white-theme);
-}
-
-/* active */
-.nav-cart-button:active {
-    transform: scale(0.95);
-    background: var(--button-hover-theme-blue);
-}
-
-/* cart count badge */
-.nav-cart-button .cart-badge {
-    position: absolute;
-    top: -20%;
-    right: -20%;
-
-    min-width: clamp(16px, 2.5vw, 18px);
-    height: clamp(16px, 2.5vw, 18px);
-
-    padding: 0 4px;
-    font-size: clamp(10px, 2vw, 11px);
-    font-weight: 600;
-
-    background: var(--badge-theme-background);
-    color: var(--white-theme);
-
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
 /* 
 .text-container {
     display: flex;
