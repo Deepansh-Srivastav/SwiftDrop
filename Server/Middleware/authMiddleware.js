@@ -5,7 +5,14 @@ dotenv.config();
 const auth = async (req, res, next) => {
 
     try {
-        const token = req.cookies.accessToken || req.header.authorization.split(" ")[1]
+        const authHeader = req.headers.authorization;
+        let token = null;
+        if (req.cookies?.accessToken) {
+            token = req.cookies.accessToken;
+        }
+        else if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.split(" ")[1];
+        }
 
         if (!token) {
             return res.status(409).json({
@@ -44,3 +51,46 @@ const auth = async (req, res, next) => {
 };
 
 export default auth;
+
+
+// const auth = (req, res, next) => {
+//     try {
+//         const authHeader = req.headers.authorization;
+//         let token = null;
+
+//         if (req.cookies?.accessToken) {
+//             token = req.cookies.accessToken;
+//         } else if (authHeader && authHeader.startsWith("Bearer ")) {
+//             token = authHeader.split(" ")[1];
+//         }
+
+//         if (!token) {
+//             return res.status(401).json({
+//                 message: "Unauthorized: token missing",
+//                 code: "NO_TOKEN"
+//             });
+//         }
+
+//         try {
+//             const decoded = jwt.verify(token, process.env.ACCESS_SECRET_KEY);
+//             req.userId = decoded.userId;
+//             next();
+//         } catch (err) {
+//             if (err.name === "TokenExpiredError") {
+//                 return res.status(401).json({
+//                     message: "Access token expired",
+//                     code: "ACCESS_TOKEN_EXPIRED"
+//                 });
+//             }
+
+//             return res.status(401).json({
+//                 message: "Invalid token",
+//                 code: "INVALID_TOKEN"
+//             });
+//         }
+//     } catch {
+//         return res.status(500).json({
+//             message: "Internal server error"
+//         });
+//     }
+// };

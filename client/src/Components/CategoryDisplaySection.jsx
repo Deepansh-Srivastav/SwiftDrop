@@ -35,8 +35,6 @@ const CategoryDisplaySection = ({
 
       <div className="see-all-button">
         <button onClick={() => navigate(path)}>... See All ...</button>
-        <button onClick={() => navigate("/cart")}>Cart</button>
-        {/* <button onClick={() => navigate("/my-account")}>... See All ...</button> */}
       </div>
 
     </section>

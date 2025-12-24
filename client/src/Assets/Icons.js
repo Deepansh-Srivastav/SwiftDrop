@@ -29,6 +29,9 @@ import SearchIcon from '@mui/icons-material/Search';
 
 // import { CiEdit } from "react-icons/ci";
 
+import { IoCartOutline } from "react-icons/io5";
+
+
 export {
     EmailIcon,
     LockIcon,
@@ -57,4 +60,5 @@ export {
     XIcon,
     EditIcon,
     SearchIcon,
+    IoCartOutline,
 };

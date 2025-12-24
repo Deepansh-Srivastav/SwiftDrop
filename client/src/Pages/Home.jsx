@@ -24,9 +24,10 @@ import { getApiRequestWrapper } from "../Networking/Services/ApiCalls.js";
 import { loggedInNavMenu } from "../Constants/menuConfig.js";
 
 import { setGlobalCategoryDetails } from "../Redux/Features/GlobalCategorySlice.js";
+import { IoCartOutline } from "../Assets/Icons.js";
 
 
-const PRODUCTS_LIMIT = 6;
+const PRODUCTS_LIMIT = 8;
 const CATEGORY_LIMIT = 4;
 
 const Home = () => {
@@ -235,68 +236,71 @@ export function HomeNavbar() {
                     <h1><span className="highlighter">SW</span>IFTDROP</h1>
                 </div>
 
-                <div className="nav-menu">
+                <div className="cart-menu-container">
 
-                    {isUserLoggedIn ?
-                        <>
-                            <div className="userAvatar" onClick={() => {
-                                dropdownHandler()
-                            }}>
-                                <Avatar src={userData?.avatar} alt={name} sx={{
-                                    width: "40px",
-                                    height: "420x",
-                                    marginRight: "15px"
+
+                    <div className="nav-menu">
+
+                        {isUserLoggedIn ?
+                            <>
+                                <div className="userAvatar" onClick={() => {
+                                    dropdownHandler()
                                 }}>
-                                    {userData?.name?.charAt(0).toUpperCase() || '?'}
-                                </Avatar>
+                                    <Avatar src={userData?.avatar} alt={name} sx={{
+                                        width: "40px",
+                                        height: "420x",
+                                        marginRight: "15px"
+                                    }}>
+                                        {userData?.name?.charAt(0).toUpperCase() || '?'}
+                                    </Avatar>
 
+                                </div>
+                            </>
+                            :
+                            <div className="nav-button"
+                                onClick={dropdownHandler}>
+                                <CustomButtons
+                                    buttonText={"Menu"}
+                                    color={"var(--color-one)"}
+                                    fontWeight="800" />
                             </div>
-                        </>
-                        :
-                        <div className="nav-button"
-                            onClick={dropdownHandler}>
-                            <CustomButtons
-                                buttonText={"Menu"}
-                                color={"var(--color-one)"}
-                                fontWeight="800" />
-                        </div>
-                        
-                                
-                    }
-
-                    {showDropdown && (
-
-                        <div className="dropDown">
-
-                            <div className="menu-list-container">
-                                {isUserLoggedIn ?
-                                    <>
-
-                                        {loggedInNavMenu?.map((item, index) => {
-
-                                            const Icon = item?.icon
-                                            return <>
-                                                <span
-                                                    key={index}
-                                                    onClick={() => {
-                                                        navigate(item?.path);
-                                                        handleClose();
-                                                    }} >
-                                                    <Icon sx={{ mr: 2 }} fontSize='medium' />
-                                                    {item?.label}
-                                                </span>
-                                            </>
-                                        })}
 
 
-                                        <Divider />
+                        }
 
-                                        <span onClick={() => {
-                                            logoutHandler()
-                                        }} >
-                                            <LogoutIcon sx={{ mr: 2 }} />
-                                            Log Out
-                                        </span>
+                        {showDropdown && (
+
+                            <div className="dropDown">
+
+                                <div className="menu-list-container">
+                                    {isUserLoggedIn ?
+                                        <>
+
+                                            {loggedInNavMenu?.map((item, index) => {
+
+                                                const Icon = item?.icon
+                                                return <>
+                                                    <span
+                                                        key={index}
+                                                        onClick={() => {
+                                                            navigate(item?.path);
+                                                            handleClose();
+                                                        }} >
+                                                        <Icon sx={{ mr: 2 }} fontSize='medium' />
+                                                        {item?.label}
+                                                    </span>
+                                                </>
+                                            })}
+
+
+                                            <Divider />
+
+                                            <span onClick={() => {
+                                                logoutHandler()
+                                            }} >
+                                                <LogoutIcon sx={{ mr: 2 }} />
+                                                Log Out
+                                            </span>
 
 
 
@@ -306,16 +310,23 @@ export function HomeNavbar() {
 
 
 
-                                    </>
-                                    :
-                                    <>
-                                        <span onClick={() => navigate("/auth/log-in")}> Login </span>
-                                        <span onClick={() => navigate("/auth/register-user")}> Signup </span>
-                                    </>
-                                }
+                                        </>
+                                        :
+                                        <>
+                                            <span onClick={() => navigate("/auth/log-in")}> Login </span>
+                                            <span onClick={() => navigate("/auth/register-user")}> Signup </span>
+                                        </>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
+
+                    <button className="nav-cart-button" onClick={()=>navigate("/cart")}>
+                        <IoCartOutline />
+                        {/* <span className="cart-badge">1</span> */}
+                    </button>
+
                 </div>
             </motion.nav >
 
