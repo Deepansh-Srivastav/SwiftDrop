@@ -59,6 +59,8 @@ export const APIConfig = {
         addCartItem: `${API_BASE.cart}/create-cart-item`,
         getCartItem: `${API_BASE.cart}/get-cart-item`,
         updateCartItem: `${API_BASE.cart}/update-cart-item`,
+        deleteCartItem: `${API_BASE.cart}/delete-cart-item`,
+        
     },
 
     addressPath: {
