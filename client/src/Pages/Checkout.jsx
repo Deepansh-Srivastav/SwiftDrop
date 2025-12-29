@@ -17,7 +17,6 @@ const Checkout = () => {
     const [orderDetails, setOrderDetails] = useState({
         payment_method: "",
         delivery_address: "69526aab455d65d73e005346",
-        products: [],
     });
 
     const fetchCartDetails = useCallback(async () => {
@@ -61,32 +60,25 @@ const Checkout = () => {
 
     const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals;
 
-    function handleOrderDetails(ORDER_TYPE) {
-        const allProductsId = cartData?.cart?.items?.map((item) => {
-            return item?.productId;
-        })
-
-        setOrderDetails((prev) => {
-            return {
-                ...prev,
-                products: allProductsId,
-                payment_method: ORDER_TYPE
-            };
-        });
-
-    };
+    // function handleOrderDetails(ORDER_TYPE) {
+    //     setOrderDetails((prev) => {
+    //         return {
+    //             payment_method: ORDER_TYPE,
+    //             ...prev,
+    //         };
+    //     });
+    // };
 
     async function handleCashOnDelivery() {
-        handleOrderDetails(ORDER_TYPE?.COD_ORDER);
+        // handleOrderDetails(ORDER_TYPE?.COD_ORDER);
 
         const FINAL_URL = APIConfig?.orderPath?.createOrder;
-        const payload = orderDetails;
+        const payload = {
+            ...orderDetails,
+            payment_method: ORDER_TYPE.COD_ORDER,
+        };
 
         const response = await postApiRequestWrapper(FINAL_URL, payload);
-
-        console.log(response);
-
-
 
     };
 

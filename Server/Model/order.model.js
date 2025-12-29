@@ -13,7 +13,7 @@ const orderSchema = new mongoose.Schema({
     },
     products: [
         {
-            productId: {
+            _id: {
                 type: mongoose.Schema.ObjectId,
                 ref: "product",
                 required: true
@@ -21,7 +21,8 @@ const orderSchema = new mongoose.Schema({
             name: { type: String, required: true },
             image: { type: String, required: true },
             price: { type: Number, required: true },
-            quantity: { type: Number, required: true }
+            quantity: { type: Number, required: true },
+            totalPrice: { type: Number, required: true },
 
         }
     ],
@@ -35,25 +36,32 @@ const orderSchema = new mongoose.Schema({
         default: "PENDING"
     },
     delivery_address: {
-        name: { type: String, required: true },
-        phone: { type: String, required: true },
-        street: { type: String, required: true },
+        receiver_name: { type: String, required: true },
+        mobile: { type: String, required: true },
+        address_line: { type: String, required: true },
         city: { type: String, required: true },
         state: { type: String, required: true },
-        pincode: { type: String, required: true }
+        country: { type: String, required: true },
+        addressType: {
+            type: String,
+            enum: ["Home", "Office", "Other"],
+            default: "Home"
+        },
+        pin: { type: String, required: true }
     },
     order_status: {
         type: String,
         enum: ["PLACED", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"],
         default: "PLACED"
     },
-    subTotalAmt: {
-        type: Number,
-        default: 0
-    },
     totalAmt: {
         type: Number,
         default: 0
+    },
+    orderType: {
+        type: String,
+        enum: ["ONLINE", "COD"],
+        required: true
     },
     invoice_receipt: {
         type: String,

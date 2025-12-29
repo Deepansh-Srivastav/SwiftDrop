@@ -211,8 +211,6 @@ export const deleteCartItemController = async (req, res) => {
             return item?.productId.toString() === cartProductId;
         })
 
-        console.log('doesCartItemExists', doesCartItemExists);
-
         if (!doesCartItemExists) {
             return res.status(404).json({
                 error: false,
