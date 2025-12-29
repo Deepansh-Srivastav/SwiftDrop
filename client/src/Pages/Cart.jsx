@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Divider } from '@mui/material'
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useCallback } from "react";
-import { patchApiRequestWrapper, getApiRequestWrapper } from "../Networking/Services/ApiCalls";
+import { patchApiRequestWrapper, getApiRequestWrapper, deleteApiRequestWrapper } from "../Networking/Services/ApiCalls";
 import { APIConfig } from "../Networking/Configuration/ApiConfig";
 import { showErrorToast, showSuccessToast } from "../Components/CostomAlert.jsx";
 import { CloseIcon, DeleteIcon } from "../Assets/Icons.js";
@@ -103,6 +103,23 @@ const Cart = () => {
         if (!productId) return;
 
         if (productId && isUserLoggedIn) {
+
+            const URL = APIConfig?.cartItemPath?.deleteCartItem;
+
+            const FINAL_URL = `${URL}?product_id=${productId}`;
+
+            const response = await deleteApiRequestWrapper(FINAL_URL);
+
+            if (response && response?.success === true && response?.error === false) {
+                showSuccessToast(response?.message);
+                await fetchCartDetails();
+                return;
+            };
+
+            showErrorToast(response?.message);
+
+
+
             return;
         };
 
@@ -159,7 +176,7 @@ const Cart = () => {
             if (response && response?.success === true && response?.error === false) {
                 showSuccessToast(response?.message);
                 await fetchCartDetails();
-                return
+                return;
             };
 
             showErrorToast(response?.message);
@@ -311,8 +328,8 @@ const Cart = () => {
                             <p className="text-size-4 congrats-text">{`Congratulation's you saved ₹${totalDiscountAmount} on this order`} </p>
 
                             <div className="checkout-button-container">
-                                <button className="text-size-4 checkout-button" 
-                                onClick={()=>navigate("/checkout")}
+                                <button className="text-size-4 checkout-button"
+                                    onClick={() => navigate("/checkout")}
                                 >Checkout</button>
                             </div>
 

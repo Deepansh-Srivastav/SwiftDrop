@@ -7,36 +7,61 @@ const orderSchema = new mongoose.Schema({
     },
     orderId: {
         type: String,
-        required: [true, "Provide orderId"],
-        unique: true
+        required: [true],
+        unique: true,
+        index: true
     },
-    productId: {
-        type: mongoose.Schema.ObjectId,
-        ref: "product"
-    },
-    product_details: {
-        name: String,
-        image: Array,
-    },
+    products: [
+        {
+            _id: {
+                type: mongoose.Schema.ObjectId,
+                ref: "product",
+                required: true
+            },
+            name: { type: String, required: true },
+            image: { type: String, required: true },
+            price: { type: Number, required: true },
+            quantity: { type: Number, required: true },
+            totalPrice: { type: Number, required: true },
+
+        }
+    ],
     paymentId: {
         type: String,
         default: ""
     },
     payment_status: {
         type: String,
-        default: ""
+        enum: ["PENDING", "PAID", "FAILED", "REFUNDED"],
+        default: "PENDING"
     },
     delivery_address: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'address'
+        receiver_name: { type: String, required: true },
+        mobile: { type: String, required: true },
+        address_line: { type: String, required: true },
+        city: { type: String, required: true },
+        state: { type: String, required: true },
+        country: { type: String, required: true },
+        addressType: {
+            type: String,
+            enum: ["Home", "Office", "Other"],
+            default: "Home"
+        },
+        pin: { type: String, required: true }
     },
-    subTotalAmt: {
-        type: Number,
-        default: 0
+    order_status: {
+        type: String,
+        enum: ["PLACED", "CONFIRMED", "SHIPPED", "DELIVERED", "CANCELLED"],
+        default: "PLACED"
     },
     totalAmt: {
         type: Number,
         default: 0
+    },
+    orderType: {
+        type: String,
+        enum: ["ONLINE", "COD"],
+        required: true
     },
     invoice_receipt: {
         type: String,

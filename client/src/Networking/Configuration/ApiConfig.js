@@ -14,6 +14,7 @@ export const API_BASE = {
     product: "/api/product",
     cart: "/api/cart",
     address: "/api/address",
+    order: "/api/order",
     file: "/api/file",
 };
 
@@ -59,6 +60,8 @@ export const APIConfig = {
         addCartItem: `${API_BASE.cart}/create-cart-item`,
         getCartItem: `${API_BASE.cart}/get-cart-item`,
         updateCartItem: `${API_BASE.cart}/update-cart-item`,
+        deleteCartItem: `${API_BASE.cart}/delete-cart-item`,
+
     },
 
     addressPath: {
@@ -66,6 +69,10 @@ export const APIConfig = {
         getAddress: `${API_BASE.address}/get-user-address`,
         updateAddress: `${API_BASE.address}/update-user-address`,
         deleteAddress: `${API_BASE.address}/delete-user-address`,
+    },
+
+    orderPath: {
+        createOrder: `${API_BASE.order}/`,
     },
 
     uploadImageApiPath: {

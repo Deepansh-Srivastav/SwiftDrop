@@ -69,8 +69,6 @@ productSchema.index({
     description: 5
 });
 
-
-
 const ProductModel = mongoose.model('product', productSchema);
 
 export default ProductModel;

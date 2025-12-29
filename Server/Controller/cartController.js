@@ -188,3 +188,54 @@ export const updateCartItemController = async (req, res) => {
             .json({ success: false, message: "Something went wrong" });
     }
 };
+
+// Delete cart product.
+export const deleteCartItemController = async (req, res) => {
+    try {
+
+        const userId = req.userId;
+        const cartProductId = req?.query?.product_id;
+
+        if (!cartProductId || !userId) {
+            return res.status(400).json({
+                error: true,
+                success: false,
+                message: "Provide the product id."
+            });
+        };
+
+        const cartItems = await CartProductModel?.findOne({ user: userId });
+
+        const doesCartItemExists = cartItems?.items?.find((item) => {
+            console.log('COMPARISON ----- ', item?.productId.toString(), " -- and -- ", cartProductId);
+            return item?.productId.toString() === cartProductId;
+        })
+
+        if (!doesCartItemExists) {
+            return res.status(404).json({
+                error: false,
+                success: true,
+                message: "Unable to find this item inside the cart."
+            });
+        };
+
+        cartItems.items = cartItems?.items?.filter((item) => {
+            return item?.productId.toString() !== cartProductId;
+        })
+
+        await cartItems.save();
+
+        return res.status(200).json({
+            error: false,
+            success: true,
+            message: "Item's quantity updated successfully."
+        });
+
+
+    } catch (error) {
+        console.error("Cant update items", error);
+        return res
+            .status(500)
+            .json({ success: false, message: "Something went wrong" });
+    }
+}

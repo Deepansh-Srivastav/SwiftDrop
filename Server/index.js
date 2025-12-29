@@ -13,6 +13,7 @@ import subCategoryRouter from './Routes/subCategory.route.js';
 import productRouter from './Routes/product.route.js';
 import cartRouter from './Routes/cart.route.js';
 import addressRouter from './Routes/address.route.js';
+import orderRouter from './Routes/order.route.js';
 
 dotenv.config();
 
@@ -46,6 +47,7 @@ app.use("/api/sub-category", subCategoryRouter);
 app.use("/api/product", productRouter);
 app.use("/api/cart", cartRouter)
 app.use("/api/address", addressRouter)
+app.use("/api/order", orderRouter)
 
 app.get('/', (req, res) => {
     res.send("This is the home page");
