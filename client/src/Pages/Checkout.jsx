@@ -1,9 +1,10 @@
 import { useCallback, useState, useEffect } from 'react'
 import BackButton from '../Common/BackButton'
-import { getApiRequestWrapper } from '../Networking/Services/ApiCalls';
+import { getApiRequestWrapper, postApiRequestWrapper } from '../Networking/Services/ApiCalls';
 import { APIConfig } from '../Networking/Configuration/ApiConfig';
 import { showErrorToast } from '../Components/CostomAlert';
 import { useNavigate } from 'react-router-dom';
+import { ORDER_TYPE } from "../Constants/enums.js"
 
 const Checkout = () => {
 
@@ -12,6 +13,12 @@ const Checkout = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const [cartData, setCartData] = useState([]);
+
+    const [orderDetails, setOrderDetails] = useState({
+        payment_method: "",
+        delivery_address: "69526aab455d65d73e005346",
+        products: [],
+    });
 
     const fetchCartDetails = useCallback(async () => {
 
@@ -54,9 +61,41 @@ const Checkout = () => {
 
     const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals;
 
+    function handleOrderDetails(ORDER_TYPE) {
+        const allProductsId = cartData?.cart?.items?.map((item) => {
+            return item?.productId;
+        })
+
+        setOrderDetails((prev) => {
+            return {
+                ...prev,
+                products: allProductsId,
+                payment_method: ORDER_TYPE
+            };
+        });
+
+    };
+
+    async function handleCashOnDelivery() {
+        handleOrderDetails(ORDER_TYPE?.COD_ORDER);
+
+        const FINAL_URL = APIConfig?.orderPath?.createOrder;
+        const payload = orderDetails;
+
+        const response = await postApiRequestWrapper(FINAL_URL, payload);
+
+        console.log(response);
+
+
+
+    };
+
     useEffect(() => {
         fetchCartDetails();
     }, [])
+
+    console.log(orderDetails);
+
 
     return (
         <main className="cart-page">
@@ -120,7 +159,7 @@ const Checkout = () => {
                         </div>
 
                         <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Cash on delivery</button>
+                            <button className="text-size-4 checkout-button" onClick={handleCashOnDelivery}>Cash on delivery</button>
                         </div>
 
                     </div>
