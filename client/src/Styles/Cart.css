@@ -390,3 +390,94 @@
     grid-template-rows: 1fr;
 
 }
+
+
+/*=================================================================================
+checkout page address design
+=================================================================================*/
+.address-card {
+    width: 100%;
+    /* FULL WIDTH */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+
+    border: 1.5px solid #e5e7eb;
+    border-radius: 14px;
+    background: #ffffff;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    font-size: clamp(0.9rem, 1vw, 1rem);
+}
+
+.address-card:hover {
+    border-color: #a78bfa;
+}
+
+.address-card.selected {
+    background: #f3e8ff;
+    border-color: #7c3aed;
+}
+
+/* LEFT CONTENT */
+.address-left {
+    flex: 1;
+}
+
+/* NAME + TAG */
+.top-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.name {
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    font-weight: 600;
+    color: #111827;
+}
+
+.tag {
+    background: #e9d5ff;
+    color: #6b21a8;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: clamp(0.7rem, 0.9vw, 0.8rem);
+    font-weight: 500;
+}
+
+.line {
+    margin: 0.15rem 0;
+    color: #374151;
+}
+
+.mobile {
+    margin-top: 0.3rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* RIGHT SIDE RADIO */
+.address-right {
+    display: flex;
+    align-items: center;
+}
+
+.radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #9ca3af;
+}
+
+.address-card.selected .radio {
+    border-color: #7c3aed;
+    background: #7c3aed;
+}
