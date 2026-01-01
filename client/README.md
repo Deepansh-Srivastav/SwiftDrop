@@ -39,7 +39,7 @@ TODO remaining changes to be done-
 
 
 Timestamp-
-v-5  2:04:00 implementing the order feature.
+v-5  2:52:049 implementing the online payment in order.
 
 ## Remaining Major Features
 
