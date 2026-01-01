@@ -14,9 +14,12 @@ const Checkout = () => {
 
     const [cartData, setCartData] = useState([]);
 
+    const [allAddresses, setAllAddresses] = useState([]);
+
     const [orderDetails, setOrderDetails] = useState({
         payment_method: "",
-        delivery_address: "69526aab455d65d73e005346",
+        delivery_address: "",
+        // delivery_address: "69526aab455d65d73e005346",
     });
 
     const fetchCartDetails = useCallback(async () => {
@@ -38,6 +41,27 @@ const Checkout = () => {
         setIsLoading(false);
 
     }, []);
+
+    const fetchAddressDetails = useCallback(async () => {
+        setIsLoading(true)
+        const FINAL_URL = APIConfig?.addressPath?.getAddress;
+        const res = await getApiRequestWrapper(FINAL_URL);
+
+        if (res?.error === false && res?.success === true) {
+
+            setAllAddresses(res?.address);
+            setIsLoading(false);
+            return;
+        };
+
+
+    },
+        [],
+    )
+
+    console.log(allAddresses);
+    
+
 
     const items = cartData?.cart?.items || [];
 
@@ -84,6 +108,7 @@ const Checkout = () => {
 
     useEffect(() => {
         fetchCartDetails();
+        fetchAddressDetails();
     }, [])
 
     console.log(orderDetails);
@@ -105,6 +130,43 @@ const Checkout = () => {
                     <div className="cart-products-container hide-scroll-bar">
 
                         <div className="products-container">
+                            {allAddresses?.map((address) => {
+                                const isSelected = orderDetails.delivery_address === address._id;
+
+                                return (
+                                    <div
+                                        key={address._id}
+                                        className={`address-card ${isSelected ? "selected" : ""}`}
+                                        onClick={() =>
+                                            setOrderDetails((prev) => ({
+                                                ...prev,
+                                                delivery_address: address._id,
+                                            }))
+                                        }
+                                    >
+                                        <div className="address-left">
+                                            <div className="top-row">
+                                                <span className="name">{address.receiver_name}</span>
+                                                <span className="tag">{address.addressType}</span>
+                                            </div>
+
+                                            <p className="line">
+                                                {address.address_line}, {address.city}
+                                            </p>
+
+                                            <p className="line">
+                                                {address.state} - {address.pin}, {address.country}
+                                            </p>
+
+                                            <p className="mobile">📞 {address.mobile}</p>
+                                        </div>
+
+                                        <div className="address-right">
+                                            <span className="radio" />
+                                        </div>
+                                    </div>
+                                );
+                            })}
 
                         </div>
                     </div>
