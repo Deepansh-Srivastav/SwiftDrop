@@ -4,6 +4,7 @@ import ProductModel from "../Model/product.model.js";
 import CartProductModel from "../Model/cartproduct.model.js";
 import { generateReadableOrderId } from "../Utils/generateId.js";
 import razorpay from "../Config/razorpay.js";
+import crypto from "crypto";
 
 export async function orderController(req, res) {
     try {
@@ -35,7 +36,6 @@ export async function orderController(req, res) {
             return add?._id.toString() === delivery_address;
         });
 
-
         if (!ORDER_ADDRESS) {
             return res.status(400).json({
                 success: false,
@@ -53,7 +53,6 @@ export async function orderController(req, res) {
                 message: "Cart is empty"
             });
         }
-
 
         const productIdsAndQuantity = new Map(
             cartItem?.items?.map(item => [
@@ -97,7 +96,6 @@ export async function orderController(req, res) {
             0
         );
 
-
         if (payment_method === "COD") {
 
             const ORDER_DATA = {
@@ -105,6 +103,7 @@ export async function orderController(req, res) {
                 orderId: generateReadableOrderId(),
                 products: ORDERED_PRODUCTS,
                 delivery_address: ORDER_ADDRESS,
+                order_status: "PLACED",
                 totalAmt: ORDER_TOTAL,
                 orderType: "COD"
             };
@@ -133,17 +132,30 @@ export async function orderController(req, res) {
         if (payment_method == "ONLINE") {
 
             const options = {
-                amount: 50000,
+                amount: Number(ORDER_TOTAL * 100),
                 currency: "INR",
             };
 
-            const ORDER = await razorpay?.orders?.create(options)
+            const ORDER_BY_RAZORPAY = await razorpay?.orders?.create(options);
+
+            const ORDER_DATA = {
+                userId,
+                orderId: ORDER_BY_RAZORPAY.id,
+                products: ORDERED_PRODUCTS,
+                payment_status: "PENDING",
+                delivery_address: ORDER_ADDRESS,
+                order_status: "PENDING",
+                totalAmt: ORDER_TOTAL,
+                orderType: "ONLINE"
+            };
+
+            const createPendingOnlinePaymentOrder = await OrderModel.create(ORDER_DATA);
 
             res.status(200).json({
                 error: false,
                 success: true,
                 api_key: process.env.RAZORPAY_KEY_ID,
-                ORDER
+                ORDER: ORDER_BY_RAZORPAY
             })
 
 
@@ -161,10 +173,35 @@ export async function orderController(req, res) {
     };
 };
 
-export async function verifyPayment(req, res) {
+export async function verifyPaymentController(req, res) {
     try {
         const userId = req?.userId;
-        const razorPayResponse = req?.body;
+
+        const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req?.body;
+
+        if (
+            !razorpay_payment_id ||
+            !razorpay_order_id ||
+            !razorpay_signature
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing payment details"
+            });
+        }
+
+        const body = (razorpay_order_id + "|" + razorpay_payment_id);
+
+        const expectedSignature = crypto
+            .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+            .update(body)
+            .digest("hex");
+
+        if (expectedSignature === razorpay_signature) {
+            return res.status(200).json({ success: true });
+        }
+
+        return res.status(400).json({ success: false });
 
 
     } catch (error) {
