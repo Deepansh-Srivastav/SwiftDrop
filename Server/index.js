@@ -23,8 +23,6 @@ const frontEndDevUrl = process.env.FRONTEND_DEV_URL;
 
 const frondEndProdUrl = process.env.FRONTEND_PROD_URL;
 
-console.log(frondEndProdUrl, frontEndDevUrl);
-
 app.use(cors({
     credentials: true,
     origin: true

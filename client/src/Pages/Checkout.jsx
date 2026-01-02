@@ -98,6 +98,25 @@ const Checkout = () => {
 
     };
 
+    async function handleOnlinePayment() {
+
+        const FINAL_URL = APIConfig?.orderPath?.createOrder;
+        const payload = {
+            ...orderDetails,
+            payment_method: ORDER_TYPE.ONLINE_ORDER,
+        };
+
+        const response = await postApiRequestWrapper(FINAL_URL, payload);
+
+        // if (response && response?.success === true && response?.error === false) {
+        //     navigate("/order-success");
+        //     return;
+        // };
+
+        // showErrorToast(response?.message || "Cant place the order.");
+
+    };
+
     useEffect(() => {
         fetchCartDetails();
         fetchAddressDetails();
@@ -198,7 +217,7 @@ const Checkout = () => {
 
 
                         <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Pay Online</button>
+                            <button className="text-size-4 checkout-button" onClick={handleOnlinePayment}>Pay Online</button>
                         </div>
 
                         <div className="checkout-button-container">

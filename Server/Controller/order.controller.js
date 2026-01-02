@@ -3,6 +3,7 @@ import AddressModel from "../Model/address.model.js";
 import ProductModel from "../Model/product.model.js";
 import CartProductModel from "../Model/cartproduct.model.js";
 import { generateReadableOrderId } from "../Utils/generateId.js";
+import razorpay from "../Config/razorpay.js";
 
 export async function orderController(req, res) {
     try {
@@ -12,7 +13,7 @@ export async function orderController(req, res) {
         const { delivery_address } = payload;
         const { payment_method } = payload;
 
-        if (!payload || !delivery_address || !payment_method) {
+        if (!payload || !payment_method) {
             return res.status(400).json({
                 error: true,
                 success: false,
@@ -128,6 +129,25 @@ export async function orderController(req, res) {
             });
 
         };
+
+        if (payment_method == "ONLINE") {
+
+            const options = {
+                amount: 50000,
+                currency: "INR",
+            };
+
+            const ORDER = await razorpay?.orders?.create(options)
+
+            res.status(200).json({
+                error: false,
+                success: true,
+                api_key: process.env.RAZORPAY_KEY_ID,
+                ORDER
+            })
+
+
+        }
 
 
     } catch (error) {
