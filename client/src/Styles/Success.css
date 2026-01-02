@@ -1,0 +1,47 @@
+.success-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #16a34a;
+}
+
+.success-card {
+    width: min(320px, 90vw);
+    padding: 2rem 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+    text-align: center;
+}
+
+.success-gif {
+    width: clamp(140px, 30vw, 180px);
+    height: clamp(140px, 30vw, 180px);
+    object-fit: contain;
+}
+
+.success-text {
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    font-weight: 600;
+    color: #16a34a;
+}
+
+.redirect-text {
+    font-size: clamp(0.85rem, 1.1vw, 0.85rem);
+    color: #4b5563;
+    margin-top: 20px;
+}
+
+.counter {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    font-weight: 700;
+    color: #16a34a;
+}

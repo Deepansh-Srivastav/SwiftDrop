@@ -18,6 +18,8 @@ import CategoryProductsPage from "../Pages/CategoryProductsPage";
 import Cart from "../Pages/Cart";
 import AddressPage from "../Pages/Account/AddressPage";
 import Checkout from "../Pages/Checkout";
+import SuccessPage from "../Pages/Success";
+import UserOrders from "../Pages/Account/UserOrders";
 
 const AppRouter = () => {
 
@@ -56,6 +58,8 @@ const AppRouter = () => {
 
                 <Route path="/checkout" element={<Checkout />}></Route>
 
+                <Route path="/order-success" element={<SuccessPage />}></Route>
+
                 <Route path="/my-account" element={<AccountPage />}>
                     <Route path="profile" element={<MyProfile />} />
 
@@ -67,7 +71,7 @@ const AppRouter = () => {
 
                     <Route path="all-products" element={<AllProducts />} />
 
-                    <Route path="orders" element={<h1>thi si the Orders page</h1>} />
+                    <Route path="orders" element={<UserOrders />} />
 
                     <Route path="address" element={<AddressPage />} />
 
