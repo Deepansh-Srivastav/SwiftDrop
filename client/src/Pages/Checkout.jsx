@@ -108,14 +108,38 @@ const Checkout = () => {
 
         const response = await postApiRequestWrapper(FINAL_URL, payload);
 
-        // if (response && response?.success === true && response?.error === false) {
-        //     navigate("/order-success");
-        //     return;
-        // };
+        if (response && response?.success === true && response?.error === false && response?.ORDER && response?.api_key) {
+            const { id, amount, currency, status } = response?.ORDER;
+            const key = response?.api_key;
 
-        // showErrorToast(response?.message || "Cant place the order.");
+            const options = {
+                key,
+                amount,
+                currency,
+                name: 'Acme Corp',
+                description: 'Test Transaction',
+                callback_url: 'http://localhost:5173/order-success',
+                prefill: {
+                    name: 'Deepansh Srivatsav',
+                    email: 'deepansh.kumar@example.com',
+                    contact: '9999999999'
+                },
+                theme: {
+                    color: '#979df7'
+                },
+            };
 
-    };
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+
+            return;
+        };
+
+
+
+
+    }
+
 
     useEffect(() => {
         fetchCartDetails();
