@@ -109,7 +109,7 @@ const Checkout = () => {
         const response = await postApiRequestWrapper(FINAL_URL, payload);
 
         if (response && response?.success === true && response?.error === false && response?.ORDER && response?.api_key) {
-            const { id, amount, currency, status } = response?.ORDER;
+            const { id, amount, currency } = response?.ORDER || {};
             const key = response?.api_key;
 
             const options = {
@@ -120,15 +120,11 @@ const Checkout = () => {
                 description: 'Test Transaction',
                 order_id: id,
                 handler: async function (paymentResponse) {
-
-                    console.log(paymentResponse);
                     try {
-                        const url = APIConfig.orderPath.verifyPayment;
-                        const verifyRes = await postApiRequestWrapper(url, paymentResponse);
+                        const URL = APIConfig.orderPath.verifyPayment;
 
+                        const response = await postApiRequestWrapper(URL, paymentResponse);
 
-
-                        if (!verifyRes?.success) throw new Error();
 
                         navigate("/order-success");
                     } catch {
@@ -146,11 +142,7 @@ const Checkout = () => {
             return;
         };
 
-
-
-
-    }
-
+    };
 
     useEffect(() => {
         fetchCartDetails();
