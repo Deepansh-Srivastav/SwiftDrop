@@ -160,3 +160,18 @@ export async function orderController(req, res) {
         });
     };
 };
+
+export async function verifyPayment(req, res) {
+    try {
+        const userId = req?.userId;
+        const razorPayResponse = req?.body;
+
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message,
+            error: true,
+            success: false,
+        });
+    };
+}

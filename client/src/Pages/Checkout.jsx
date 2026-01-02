@@ -118,11 +118,22 @@ const Checkout = () => {
                 currency,
                 name: 'Acme Corp',
                 description: 'Test Transaction',
-                callback_url: 'http://localhost:5173/order-success',
-                prefill: {
-                    name: 'Deepansh Srivatsav',
-                    email: 'deepansh.kumar@example.com',
-                    contact: '9999999999'
+                order_id: id,
+                handler: async function (paymentResponse) {
+
+                    console.log(paymentResponse);
+                    try {
+                        const url = APIConfig.orderPath.verifyPayment;
+                        const verifyRes = await postApiRequestWrapper(url, paymentResponse);
+
+
+
+                        if (!verifyRes?.success) throw new Error();
+
+                        navigate("/order-success");
+                    } catch {
+                        alert("Payment verification failed");
+                    }
                 },
                 theme: {
                     color: '#979df7'

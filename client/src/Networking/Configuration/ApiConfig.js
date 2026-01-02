@@ -73,6 +73,7 @@ export const APIConfig = {
 
     orderPath: {
         createOrder: `${API_BASE.order}/`,
+        verifyPayment: `${API_BASE.order}/verify-payment`,
     },
 
     uploadImageApiPath: {
