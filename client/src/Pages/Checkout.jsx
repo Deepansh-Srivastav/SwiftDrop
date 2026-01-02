@@ -19,7 +19,6 @@ const Checkout = () => {
     const [orderDetails, setOrderDetails] = useState({
         payment_method: "",
         delivery_address: "",
-        // delivery_address: "69526aab455d65d73e005346",
     });
 
     const fetchCartDetails = useCallback(async () => {
@@ -59,10 +58,6 @@ const Checkout = () => {
         [],
     )
 
-    console.log(allAddresses);
-    
-
-
     const items = cartData?.cart?.items || [];
 
     const totals = items?.reduce((acc, item) => {
@@ -84,17 +79,7 @@ const Checkout = () => {
 
     const { totalPrice, totalFinalPrice, totalDiscountAmount } = totals;
 
-    // function handleOrderDetails(ORDER_TYPE) {
-    //     setOrderDetails((prev) => {
-    //         return {
-    //             payment_method: ORDER_TYPE,
-    //             ...prev,
-    //         };
-    //     });
-    // };
-
     async function handleCashOnDelivery() {
-        // handleOrderDetails(ORDER_TYPE?.COD_ORDER);
 
         const FINAL_URL = APIConfig?.orderPath?.createOrder;
         const payload = {
@@ -104,15 +89,38 @@ const Checkout = () => {
 
         const response = await postApiRequestWrapper(FINAL_URL, payload);
 
+        if (response && response?.success === true && response?.error === false) {
+            navigate("/order-success");
+            return;
+        };
+
+        showErrorToast(response?.message || "Cant place the order.");
+
+    };
+
+    async function handleOnlinePayment() {
+
+        const FINAL_URL = APIConfig?.orderPath?.createOrder;
+        const payload = {
+            ...orderDetails,
+            payment_method: ORDER_TYPE.ONLINE_ORDER,
+        };
+
+        const response = await postApiRequestWrapper(FINAL_URL, payload);
+
+        // if (response && response?.success === true && response?.error === false) {
+        //     navigate("/order-success");
+        //     return;
+        // };
+
+        // showErrorToast(response?.message || "Cant place the order.");
+
     };
 
     useEffect(() => {
         fetchCartDetails();
         fetchAddressDetails();
     }, [])
-
-    console.log(orderDetails);
-
 
     return (
         <main className="cart-page">
@@ -209,7 +217,7 @@ const Checkout = () => {
 
 
                         <div className="checkout-button-container">
-                            <button className="text-size-4 checkout-button">Pay Online</button>
+                            <button className="text-size-4 checkout-button" onClick={handleOnlinePayment}>Pay Online</button>
                         </div>
 
                         <div className="checkout-button-container">
