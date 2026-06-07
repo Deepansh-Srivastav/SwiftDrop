@@ -236,6 +236,8 @@ export async function googleOAuthController(req, res) {
 
         const userData = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleResponse.tokens.access_token}`);
 
+        console.log(userData);
+        
         const { id, email, name, picture } = userData?.data;
 
         const existingUser = await validateUserAndUpdate({ email });

@@ -14,9 +14,10 @@ const OAuthComponent = ({ setIsLoading }) => {
 
   const googleResponse = async (result) => {
     try {
-      console.log(result.code);
-
       try {
+
+        console.log(result);
+        
 
         if (!result?.code) {
           return;

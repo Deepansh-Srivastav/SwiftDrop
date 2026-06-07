@@ -85,6 +85,40 @@ body {
     --dd-radius: 12px;
     --dd-shadow: 0 8px 30px rgba(18, 18, 18, 0.08);
 
+    --cpp-grad-start: #473B7B;
+        --cpp-grad-mid: #3584A7;
+        --cpp-grad-end: #30D2BE;
+    
+        --cpp-accent-1: #30D2BE;
+        /* teal */
+        --cpp-accent-2: #3584A7;
+        /* blue */
+        --cpp-accent-3: #473B7B;
+        /* purple */
+    
+        --cpp-surface: #ffffff;
+        --cpp-surface-2: #f8f9fc;
+        --cpp-surface-3: #f1f3f8;
+        --cpp-border: rgba(52, 73, 120, 0.12);
+        --cpp-border-hover: rgba(52, 73, 120, 0.28);
+    
+        --cpp-text-1: #1a1d2e;
+        --cpp-text-2: #4a5068;
+        --cpp-text-3: #8a90a8;
+    
+        --cpp-sidebar-w: 220px;
+        --cpp-banner-h: 180px;
+        --cpp-toolbar-h: 52px;
+        --cpp-pagination-h: 68px;
+    
+        --cpp-radius-sm: 8px;
+        --cpp-radius-md: 12px;
+        --cpp-radius-lg: 18px;
+    
+        --cpp-shadow-sm: 0 2px 8px rgba(55, 65, 120, 0.08);
+        --cpp-shadow-md: 0 4px 20px rgba(55, 65, 120, 0.12);
+        --cpp-trans: 160ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
 }
 
 
